@@ -38,6 +38,11 @@
       transform 0.3s,
       box-shadow 0.3s;
 }
+.scroll-list {
+   max-height: 500px;
+   overflow-y: auto;
+   overflow-x: hidden;
+}
 
 .magic-list:hover {
    transform: scale(1.05);

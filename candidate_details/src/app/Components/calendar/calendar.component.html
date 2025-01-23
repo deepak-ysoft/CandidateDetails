@@ -223,36 +223,38 @@
             <h5 class="card-title">
               Company Holidays <i class="fa-solid fa-mug-hot ms-2"></i>
             </h5>
-            <ul class="list-group" *ngFor="let Holiday of holidayList">
-              <li class="list-group-item magic-list">
-                <div class="row">
-                  <div class="col-5">
-                    <b
-                      ><img
-                        class="holiday-icon"
-                        src="assets/icon/Sun-Board-Holiday-Icon.png"
-                      />{{ Holiday.description }} holiday</b
-                    >
+            <div class="scroll-list p-3">
+              <ul class="list-group" *ngFor="let Holiday of holidayList">
+                <li class="list-group-item magic-list">
+                  <div class="row">
+                    <div class="col-5">
+                      <b
+                        ><img
+                          class="holiday-icon"
+                          src="assets/icon/Sun-Board-Holiday-Icon.png"
+                        />{{ Holiday.description }} holiday</b
+                      >
+                    </div>
+                    <div class="col-5">
+                      {{ Holiday.startDate | date : "dd/MM/yyyy" }} To
+                      {{ Holiday.endDate | date : "dd/MM/yyyy" }}
+                    </div>
+                    <div class="col-2">
+                      <span class="float-end"
+                        ><i
+                          class="fas fa-edit text-primary me-3 hover-scale"
+                          (click)="editcalendar(Holiday)"
+                        ></i
+                        ><i
+                          class="fa fa-trash text-danger hover-scale"
+                          (click)="DeleteCalendar(Holiday.calId)"
+                        ></i
+                      ></span>
+                    </div>
                   </div>
-                  <div class="col-5">
-                    {{ Holiday.startDate | date : "dd/MM/yyyy" }} To
-                    {{ Holiday.endDate | date : "dd/MM/yyyy" }}
-                  </div>
-                  <div class="col-2">
-                    <span class="float-end"
-                      ><i
-                        class="fas fa-edit text-primary me-3 hover-scale"
-                        (click)="editcalendar(Holiday)"
-                      ></i
-                      ><i
-                        class="fa fa-trash text-danger hover-scale"
-                        (click)="DeleteCalendar(Holiday.calId)"
-                      ></i
-                    ></span>
-                  </div>
-                </div>
-              </li>
-            </ul>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
@@ -262,34 +264,36 @@
             <h5 class="card-title">
               Birthday <i class="fas fa-birthday-cake ms-2"></i>
             </h5>
-            <ul class="list-group" *ngFor="let birthday of birthdayList">
-              <li class="list-group-item magic-list">
-                <div class="row">
-                  <div class="col-5">
-                    <img
-                      class="holiday-icon"
-                      src="assets/icon/birthday-cake-line-icon.png"
-                    />
-                    <b>{{ birthday.description }}</b>
+            <div class="scroll-list p-3">
+              <ul class="list-group" *ngFor="let birthday of birthdayList">
+                <li class="list-group-item magic-list">
+                  <div class="row">
+                    <div class="col-5">
+                      <img
+                        class="holiday-icon"
+                        src="assets/icon/birthday-cake-line-icon.png"
+                      />
+                      <b>{{ birthday.description }}</b>
+                    </div>
+                    <div class="col-5">
+                      {{ birthday.startDate | date : "dd/MM/yyyy" }}
+                    </div>
+                    <div class="col-2">
+                      <span class="float-end">
+                        <i
+                          class="fas fa-edit text-primary me-3 hover-scale"
+                          (click)="editcalendar(birthday)"
+                        ></i>
+                        <i
+                          class="fa fa-trash text-danger hover-scale"
+                          (click)="DeleteCalendar(birthday.calId)"
+                        ></i
+                      ></span>
+                    </div>
                   </div>
-                  <div class="col-5">
-                    {{ birthday.startDate | date : "dd/MM/yyyy" }}
-                  </div>
-                  <div class="col-2">
-                    <span class="float-end">
-                      <i
-                        class="fas fa-edit text-primary me-3 hover-scale"
-                        (click)="editcalendar(birthday)"
-                      ></i>
-                      <i
-                        class="fa fa-trash text-danger hover-scale"
-                        (click)="DeleteCalendar(birthday.calId)"
-                      ></i
-                    ></span>
-                  </div>
-                </div>
-              </li>
-            </ul>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>

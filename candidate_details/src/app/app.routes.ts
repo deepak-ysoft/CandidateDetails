@@ -14,11 +14,11 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'candidateList', // Redirect to candidateList by default
+        redirectTo: '', // Redirect to candidateList by default
         pathMatch: 'full',
       },
       {
-        path: 'candidateList',
+        path: '',
         component: CandidateListComponent,
       },
       {
