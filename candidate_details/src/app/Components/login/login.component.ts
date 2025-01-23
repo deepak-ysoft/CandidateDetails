@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
         //  localStorage.setItem('loginUser', JSON.stringify(res));
         this.service.triggerSomeEvent();
         localStorage.setItem('jwtToken', res.token);
-        this.router.navigateByUrl('index'); // navigate user on index page
+        this.router.navigateByUrl('candidateList'); // navigate user on index page
       } else {
         Swal.fire({
           title: 'Error!',
