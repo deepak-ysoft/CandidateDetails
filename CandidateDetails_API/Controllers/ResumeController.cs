@@ -9,11 +9,13 @@ using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas.Parser.Listener;
 using iText.Kernel.Pdf.Canvas.Parser;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CandidateDetails_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ResumeController : ControllerBase
     {
         /// <summary>
