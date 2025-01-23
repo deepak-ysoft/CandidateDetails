@@ -28,13 +28,13 @@ body {
    border-radius: 5px !important; /* Optional: Rounded corners */
 }
 .btn-success {
-   background-color: rgb(143, 238, 11);
+   background-color: rgb(196, 246, 126);
    border-color: rgb(143, 238, 11);
    color: darkblue;
 }
 
 .btn-success:hover {
-   background-color: #218838;
+   background-color: #32a84b;
    border-color: #1e7e34;
 }
 .btn-primary {
@@ -95,8 +95,8 @@ body {
       0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
-.magical-table thead tr th{
-border-bottom: none;
+.magical-table thead tr th {
+   border-bottom: none;
 }
 
 /* Header Styling */

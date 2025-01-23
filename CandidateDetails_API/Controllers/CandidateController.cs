@@ -11,7 +11,6 @@ namespace CandidateDetails_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class CandidateController : ControllerBase
     {
         private readonly ICandidateService _service;

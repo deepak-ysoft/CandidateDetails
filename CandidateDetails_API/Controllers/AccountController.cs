@@ -65,7 +65,6 @@ namespace CandidateDetails_API.Controllers
         /// </summary>
         /// <param name="empObj">Employee class object with properties value.</param>
         /// <returns></returns>
-        [Authorize]
         [HttpPost("ChangePassword")]
         public async Task<IActionResult> ChangePassword([FromForm] ChangePassword model)
         {
