@@ -29,34 +29,34 @@ body {
 }
 .btn-success {
    background-color: rgb(196, 246, 126);
-   border-color: rgb(143, 238, 11);
+   border-color: rgb(80, 133, 6);
    color: darkblue;
 }
 
 .btn-success:hover {
    background-color: #32a84b;
-   border-color: #1e7e34;
+   border-color: #075e1c;
 }
 .btn-primary {
-   background-color: #3ac7ff;
-   border-color: #3ac7ff;
+   background-color: #7ed2f3;
+   border-color: #1591c2;
    color: darkblue;
 }
 
 .btn-primary:hover {
-   background-color: #008ac0;
-   border-color: #008ac0;
+   background-color: #25a9de;
+   border-color: #0275a3;
 }
 
 .btn-danger {
-   background-color: #fc5454;
-   border-color: #fc5454;
+   background-color: #ff6d6d;
+   border-color: #be0e0e;
    color: darkblue;
 }
 
 .btn-danger:hover {
-   background-color: #c71616;
-   border-color: #c71616;
+   background-color: #f83434;
+   border-color: #8e0404;
 }
 .btn {
    border-radius: 25px !important;
