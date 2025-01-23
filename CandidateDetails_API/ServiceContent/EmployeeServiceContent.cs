@@ -40,11 +40,11 @@ namespace CandidateDetails_API.ServiceContent
 
                 if (result > 0)
                 {
-                    string sub = $"{employee.empName} birthday";
+                    string des = $"{employee.empName} birthday";
                     var calendar = new Calendar
                     {
-                        Subject = sub,
-                        Description = "Birthday",
+                        Subject = "Birthday",
+                        Description = des,
                         StartDate = employee.empDateOfBirth,
                         EndDate = employee.empDateOfBirth,
                     };

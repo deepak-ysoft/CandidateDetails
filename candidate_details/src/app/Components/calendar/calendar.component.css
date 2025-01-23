@@ -43,6 +43,15 @@
    overflow-y: auto;
    overflow-x: hidden;
 }
+.scroll-list {
+   -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
+   scrollbar-width: none; /* Hide scrollbar for Firefox */
+}
+
+.scroll-list {
+   width: 100%;
+   border-collapse: collapse;
+}
 
 .magic-list:hover {
    transform: scale(1.05);
