@@ -1,0 +1,184 @@
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+   height: 100%;
+}
+body {
+   margin: 0;
+   font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+/* .sticky-col {
+   position: sticky ;
+   left: 0;
+   z-index: 2; 
+} */
+
+.table-responsive {
+   overflow-y: auto;
+}
+
+.mat-mdc-tooltip-surface {
+   background-color: #ffdcd4 !important;
+   color: rgb(0, 0, 0) !important;
+   font-size: 18px !important;
+   z-index: 1000 !important; /* Ensure it appears above other elements */
+   padding: 10px !important; /* Optional: Adjust padding */
+   border-radius: 5px !important; /* Optional: Rounded corners */
+}
+.btn-success {
+   background-color: rgb(143, 238, 11);
+   border-color: rgb(143, 238, 11);
+   color: darkblue;
+}
+
+.btn-success:hover {
+   background-color: #218838;
+   border-color: #1e7e34;
+}
+.btn-primary {
+   background-color: #3ac7ff;
+   border-color: #3ac7ff;
+   color: darkblue;
+}
+
+.btn-primary:hover {
+   background-color: #008ac0;
+   border-color: #008ac0;
+}
+
+.btn-danger {
+   background-color: #fc5454;
+   border-color: #fc5454;
+   color: darkblue;
+}
+
+.btn-danger:hover {
+   background-color: #c71616;
+   border-color: #c71616;
+}
+.btn {
+   border-radius: 25px !important;
+   transition:
+      box-shadow 0.3s ease,
+      transform 0.3s ease;
+}
+.btn:hover {
+   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+   transform: translateY(-2px);
+}
+
+/* Sticky Column */
+.sticky-col {
+   position: sticky;
+   left: 0;
+   z-index: 3; /* Higher z-index to ensure visibility above others */
+   background-color: #ffffff; /* Optional: Matches table background */
+   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Magical Table Container */
+.magical-table-container {
+   max-width: 100%;
+   overflow-x: auto; /* Enable horizontal scrolling */
+   text-align: center;
+   font-family: "Arial", sans-serif;
+}
+
+/* Table Styling */
+.magical-table {
+   width: 100%;
+   background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+   box-shadow:
+      0 4px 6px rgba(0, 0, 0, 0.1),
+      0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.magical-table thead tr th{
+border-bottom: none;
+}
+
+/* Header Styling */
+.magical-table thead {
+   background: linear-gradient(135deg, #e3cbfc 0%, #c1d8ff 100%);
+   color: black;
+   font-weight: bold;
+}
+
+/* Sticky Column Header */
+.magical-table thead th.sticky-col {
+   background-color: #e3cbfc;
+}
+/* Sticky Column Body */
+.magical-table tbody td.sticky-col {
+   background: #ffffff;
+   border-bottom: none;
+}
+
+/* Body Styling */
+.magical-table tbody {
+   background: #ffffff;
+}
+/* Rows */
+.magical-table tbody tr {
+   transition:
+      transform 0.2s ease,
+      background-color 0.3s ease;
+}
+
+/* Hover Effect */
+.magical-table tbody tr:hover {
+   transform: scale(1.01);
+   color: black;
+   cursor: pointer;
+}
+
+/* Magical input box */
+/* General Input Field Style */
+.magic-input {
+   box-shadow:
+      0 3px 5px rgba(0, 0, 0, 0.1),
+      0 1px 3px rgba(255, 255, 255, 0.2);
+   border-radius: 12px;
+   color: rgb(0, 0, 0);
+   font-size: 18px;
+   padding: 10px 16px;
+}
+
+/* Glowing Effect on Focus */
+.magic-input:focus {
+   box-shadow:
+      0 0 8px rgba(49, 155, 255, 0.7),
+      0 0 20px rgba(49, 155, 255, 0.5);
+   transform: scale(1.02);
+}
+
+/* Additional Hover Effect */
+.magic-input:hover {
+   cursor: pointer;
+   box-shadow:
+      0 0 6px rgba(0, 255, 255, 0.5),
+      0 0 12px rgba(0, 255, 255, 0.3);
+}
+
+.magic-inputFile[type="file"]::file-selector-button {
+   border: 2px solid #95edeb;
+   padding: 0.2em 0.4em;
+   border-radius: 0.6em;
+   background-color: #cbfffe;
+}
+
+.magic-inputFile[type="file"]::file-selector-button:hover {
+   background-color: rgba(49, 155, 255, 0.7);
+   border: 2px solid rgba(10, 76, 139, 0.7);
+}
+
+/* Header Styling */
+.magical-header {
+   background: linear-gradient(135deg, #e3cbfc 0%, #c1d8ff 100%);
+}
+
+.cursorPointer {
+   cursor: pointer;
+}

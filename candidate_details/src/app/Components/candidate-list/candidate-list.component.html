@@ -1,0 +1,552 @@
+<!-- Add this in your component HTML file -->
+<div class="container-fluid mt-4">
+  <div class="row mb-1">
+    <div class="col-4 d-flex justify-content-start">
+      <div class="btn btn-success align-iten-center h-75 me-3 uploadDiv">
+        <i class="fa-solid fa-upload"></i>
+        Upload Excel
+        <input
+          type="file"
+          accept=".xlsx, .xls"
+          (change)="onUploadExcelFileChange($event)"
+          class="uploadinput"
+        />
+      </div>
+      <div
+        class="btn btn-primary align-iten-center h-75"
+        (click)="openAccCandidateModel()"
+      >
+        <i class="fa-solid fa-plus me-2"></i> Add Candidate
+      </div>
+    </div>
+    <div class="col-4 d-flex justify-content-center">
+      <h2>Candidates</h2>
+    </div>
+    <div class="col-4 d-flex justify-content-end">
+      <select
+        [(ngModel)]="SearchField"
+        (change)="onSearchFieldChange($event)"
+        class="form-select h-100 me-2 w-25 magic-input"
+      >
+        <option value="">Select field...</option>
+        <option value="Name">Name</option>
+        <option value="Contact_No">Contact No</option>
+        <option value="Linkedin_Profile">LinkedIn Profile</option>
+        <option value="Email_ID">Email</option>
+        <option value="Roles">Roles</option>
+        <option value="Experience">Experience</option>
+        <option value="Skills">Skills</option>
+        <option value="CTC">CTC</option>
+        <option value="ETC">ETC</option>
+        <option value="Schedule_Interview_status">Interview Status</option>
+      </select>
+      <input
+        type="text"
+        placeholder="Search..."
+        class="form-control rounded-pill w-75 magic-input"
+        id="searchTerm"
+        [(ngModel)]="searchTerms"
+        (input)="clickToSearchCandidate()"
+      />
+    </div>
+  </div>
+  <div class="magical-table-container">
+    <table class="table magical-table border">
+      <thead class="thead-dark bg-light">
+        <tr>
+          <th class="sticky-col">Actions</th>
+          <th class="mb-2">
+            <span
+              (click)="
+                clickToSortCandidate(
+                  PageNumber,
+                  pageSize,
+
+                  'Date',
+                  sortDirection,
+                  searchTerm,
+                  SearchField
+                )
+              "
+            >
+              Date
+            </span>
+          </th>
+
+          <th class="ellipsis-cell">
+            <span
+              (click)="
+                clickToSortCandidate(
+                  PageNumber,
+                  pageSize,
+
+                  'Name',
+                  sortDirection,
+                  searchTerm,
+                  SearchField
+                )
+              "
+            >
+              Name
+            </span>
+          </th>
+          <th class="ellipsis-cell">
+            <span
+              (click)="
+                clickToSortCandidate(
+                  PageNumber,
+                  pageSize,
+
+                  'Contact_No',
+                  sortDirection,
+                  searchTerm,
+                  SearchField
+                )
+              "
+            >
+              Contact No
+            </span>
+          </th>
+          <th class="ellipsis-cell">
+            <span
+              (click)="
+                clickToSortCandidate(
+                  PageNumber,
+                  pageSize,
+
+                  'LinkedIn_Profile',
+                  sortDirection,
+                  searchTerm,
+                  SearchField
+                )
+              "
+            >
+              LinkedIn Profile
+            </span>
+          </th>
+          <th class="ellipsis-cell">
+            <span
+              (click)="
+                clickToSortCandidate(
+                  PageNumber,
+                  pageSize,
+
+                  'Email_ID',
+                  sortDirection,
+                  searchTerm,
+                  SearchField
+                )
+              "
+            >
+              Email
+            </span>
+          </th>
+          <th class="ellipsis-cell">
+            <span
+              (click)="
+                clickToSortCandidate(
+                  PageNumber,
+                  pageSize,
+
+                  'Roles',
+                  sortDirection,
+                  searchTerm,
+                  SearchField
+                )
+              "
+            >
+              Roles
+            </span>
+          </th>
+          <th class="ellipsis-cell">
+            <span
+              (click)="
+                clickToSortCandidate(
+                  PageNumber,
+                  pageSize,
+
+                  'Experience',
+                  sortDirection,
+                  searchTerm,
+                  SearchField
+                )
+              "
+            >
+              Experience
+            </span>
+          </th>
+          <th class="ellipsis-cell">
+            <span
+              (click)="
+                clickToSortCandidate(
+                  PageNumber,
+                  pageSize,
+
+                  'Skills',
+                  sortDirection,
+                  searchTerm,
+                  SearchField
+                )
+              "
+            >
+              Skills
+            </span>
+          </th>
+          <th class="ellipsis-cell">
+            <span
+              (click)="
+                clickToSortCandidate(
+                  PageNumber,
+                  pageSize,
+
+                  'CTC',
+                  sortDirection,
+                  searchTerm,
+                  SearchField
+                )
+              "
+            >
+              CTC
+            </span>
+          </th>
+          <th class="ellipsis-cell">
+            <span
+              (click)="
+                clickToSortCandidate(
+                  PageNumber,
+                  pageSize,
+
+                  'ETC',
+                  sortDirection,
+                  searchTerm,
+                  SearchField
+                )
+              "
+            >
+              ETC
+            </span>
+          </th>
+          <th class="ellipsis-cell">
+            <span
+              (click)="
+                clickToSortCandidate(
+                  PageNumber,
+                  pageSize,
+
+                  'notice_Period',
+                  sortDirection,
+                  searchTerm,
+                  SearchField
+                )
+              "
+            >
+              Notice Period
+            </span>
+          </th>
+          <th class="ellipsis-cell">
+            <span
+              (click)="
+                clickToSortCandidate(
+                  PageNumber,
+                  pageSize,
+                  'current_Location',
+                  sortDirection,
+                  searchTerm,
+                  SearchField
+                )
+              "
+            >
+              Current Location
+            </span>
+          </th>
+          <th class="ellipsis-cell">
+            <span
+              (click)="
+                clickToSortCandidate(
+                  PageNumber,
+                  pageSize,
+                  'prefer_Location',
+                  sortDirection,
+                  searchTerm,
+                  SearchField
+                )
+              "
+            >
+              Prefer Location
+            </span>
+          </th>
+          <th class="ellipsis-cell">
+            <span
+              (click)="
+                clickToSortCandidate(
+                  PageNumber,
+                  pageSize,
+
+                  'reason_For_Job_Change',
+                  sortDirection,
+                  searchTerm,
+                  SearchField
+                )
+              "
+            >
+              Job Change Reason
+            </span>
+          </th>
+
+          <th class="ellipsis-cell">
+            <span
+              (click)="
+                clickToSortCandidate(
+                  PageNumber,
+                  pageSize,
+
+                  'schedule_Interview',
+                  sortDirection,
+                  searchTerm,
+                  SearchField
+                )
+              "
+            >
+              Schedule Interview
+            </span>
+          </th>
+
+          <th class="ellipsis-cell">
+            <span
+              (click)="
+                clickToSortCandidate(
+                  PageNumber,
+                  pageSize,
+                  'schedule_Interview_status',
+                  sortDirection,
+                  searchTerm,
+                  SearchField
+                )
+              "
+            >
+              Interview Status
+            </span>
+          </th>
+          <th class="ellipsis-cell">
+            <span
+              (click)="
+                clickToSortCandidate(
+                  PageNumber,
+                  pageSize,
+                  'comments',
+                  sortDirection,
+                  searchTerm,
+                  SearchField
+                )
+              "
+            >
+              Comments
+            </span>
+          </th>
+          <th class="ellipsis-cell">cv</th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let candidate of candidateList">
+        <tr *ngIf="candidateList && candidateList != null">
+          <td class="ellipsis-cell sticky-col">
+            <i
+              class="fas fa-edit text-primary fa-lg me-2 cursorPointer"
+              (click)="EditCandidate(candidate)"
+            ></i>
+            <i
+              class="fa fa-info-circle text-info fa-lg me-2 cursorPointer"
+              (click)="ShowCandidateDetails(candidate)"
+            ></i>
+            <i
+              class="fa fa-trash text-danger fa-lg cursorPointer"
+              (click)="deleteCandidate(candidate.id)"
+            ></i>
+          </td>
+          <td class="ellipsis-cell">
+            {{ candidate.date | date : "shortDate" }}
+          </td>
+
+          <td class="ellipsis-cell">
+            {{ candidate.name }}
+          </td>
+          <td class="ellipsis-cell">
+            {{ candidate.contact_No }}
+          </td>
+          <td
+            class="ellipsis-cell"
+            [matTooltip]="candidate.linkedin_Profile"
+            matTooltipPosition="above"
+            [matTooltipClass]="'custom-tooltip'"
+          >
+            {{ candidate.linkedin_Profile }}
+          </td>
+          <td
+            class="ellipsis-cell"
+            [matTooltip]="candidate.email_ID"
+            matTooltipPosition="above"
+            [matTooltipClass]="'custom-tooltip'"
+          >
+            {{ candidate.email_ID }}
+          </td>
+          <td class="ellipsis-cell">
+            {{ candidate.roleName }}
+          </td>
+          <td class="ellipsis-cell">
+            {{ candidate.experience }}
+          </td>
+          <td
+            class="ellipsis-cell"
+            [matTooltip]="candidate.skills"
+            matTooltipPosition="above"
+            [matTooltipClass]="'custom-tooltip'"
+          >
+            {{ candidate.skills }}
+          </td>
+          <td class="ellipsis-cell">
+            {{ candidate.ctc }}
+          </td>
+          <td class="ellipsis-cell">
+            {{ candidate.etc }}
+          </td>
+          <td class="ellipsis-cell">
+            {{ candidate.notice_Period }}
+          </td>
+          <td class="ellipsis-cell">
+            {{ candidate.current_Location }}
+          </td>
+          <td class="ellipsis-cell">
+            {{ candidate.prefer_Location }}
+          </td>
+          <td class="ellipsis-cell">
+            {{ candidate.reason_For_Job_Change }}
+          </td>
+          <td class="ellipsis-cell">
+            {{ candidate.schedule_Interview | date : "short" }}
+          </td>
+
+          <td
+            class="ellipsis-cell"
+            [matTooltip]="candidate.schedule_Interview_status"
+            matTooltipPosition="above"
+            [matTooltipClass]="'custom-tooltip'"
+          >
+            {{ candidate.schedule_Interview_status }}
+          </td>
+          <td class="ellipsis-cell">
+            {{ candidate.comments }}
+          </td>
+          <td class="ellipsis-cell">
+            <button
+              class="text-success rounded-pill border-primary"
+              [disabled]="!candidate.cvPath"
+              [ngClass]="{
+                'text-success border-primary cursorPointer': candidate.cvPath,
+                'text-secondary border-secondary cursornotallowed':
+                  !candidate.cvPath
+              }"
+              (click)="downloadCV(candidate.id, candidate.name)"
+            >
+              <i class="fa-solid fa-download"></i>
+              cv
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <span
+    >Showing {{ firstCandidateOfPage }} to {{ lastCandidateOfPage }} of
+    {{ totalcandidates }} candidates.</span
+  >
+
+  <!-- Pagination Controls -->
+  <nav
+    class="float-end me-4 mt-3"
+    aria-label="Page navigation example"
+    *ngIf="totalpages > 1"
+  >
+    <ul class="pagination">
+      <li class="page-item cursorPointer" [class.disabled]="currentPage === 1">
+        <a class="page-link" (click)="loadPage(currentPage - 1)">Previous</a>
+      </li>
+      <li
+        *ngFor="let page of getDisplayedPages()"
+        class="page-item cursorPointer"
+        [class.active]="page === currentPage"
+        [class.disabled]="page === '...'"
+      >
+        <a
+          *ngIf="page !== '...'; else ellipsis"
+          class="page-link cursor-pointer"
+          (click)="loadPage(page)"
+          >{{ page }}</a
+        >
+        <ng-template #ellipsis>
+          <span class="page-link">...</span>
+        </ng-template>
+      </li>
+      <li
+        class="page-item cursorPointer"
+        [class.disabled]="currentPage === totalpages"
+      >
+        <a class="page-link cursor-pointer" (click)="loadPage(currentPage + 1)"
+          >Next</a
+        >
+      </li>
+    </ul>
+  </nav>
+
+  <nav class="float-end me-4 mt-3">
+    <select
+      [(ngModel)]="pageSize"
+      (change)="onPageSizeChange($event)"
+      class="form-select"
+    >
+      <option value="10">10</option>
+      <option value="20">20</option>
+      <option value="50">50</option>
+      <option value="100">100</option>
+    </select>
+  </nav>
+
+  <span class="float-end me-2 mt-4">Select page size </span>
+
+  <ng-template #addCandidate let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">
+        {{ CandidateModalHeader }}
+      </h4>
+      <button
+        type="button"
+        class="btn btn-close"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      ></button>
+    </div>
+    <div class="modal-body">
+      <app-add-candidate
+        [candidateEdit]="clickedCandidateForEdit"
+        [addClicked]="addClicked"
+        (isclick)="modal.close('Save click')"
+      />
+    </div>
+  </ng-template>
+
+  <ng-template #candidateDetails let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Candidate Details</h4>
+      <button
+        type="button"
+        class="btn btn-close"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      ></button>
+    </div>
+    <div class="modal-body">
+      <app-candidate-details
+        [candidateDetail]="clickedCandidateForDetails"
+        [CandidateRole]="CandidateRole"
+      />
+    </div>
+  </ng-template>
+</div>

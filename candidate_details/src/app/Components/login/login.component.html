@@ -1,0 +1,115 @@
+
+   <div class="container">
+     <section
+       class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4"
+     >
+       <div class="container">
+         <div class="row justify-content-center">
+           <div
+             class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center"
+           >
+             <div class="d-flex justify-content-center py-4">
+               <a
+                 class="logo d-flex text-decoration-none align-items-center w-auto"
+               >
+                 <img src="assets/img/logo.png" alt="Logo" />
+                 <span class="d-none d-lg-block">ZippyCRM</span>
+               </a>
+             </div>
+             <!-- End Logo -->
+ 
+             <div class="card mb-3 border-0 shadow">
+               <div class="card-body">
+                 <div class="pt-4 pb-2">
+                   <h5 class="card-title text-center pb-0 fs-4">
+                     Login to Your Account
+                   </h5>
+                   <p class="text-center small">
+                     Enter your username & password to login
+                   </p>
+                 </div>
+ 
+                 <form class="row g-3 needs-validation">
+                   <div class="col-12 mb-3">
+                     <label for="yourUsername" class="form-label">Email</label>
+                     <div class="input-group has-validation">
+                       <input
+                         type="text"
+                         [(ngModel)]="login.email"
+                         name="email"
+                         class="form-control"
+                         required
+                       />
+                       <div class="invalid-feedback">
+                         Please enter your username.
+                       </div>
+                     </div>
+                   </div>
+ 
+                   <div class="col-12 mb-3">
+                     <label for="yourPassword" class="form-label"
+                       >Password</label
+                     >
+                     <div class="input-group has-validation">
+                       <input
+                         type="password"
+                         [(ngModel)]="login.password"
+                         name="password"
+                         class="form-control"
+                         required
+                       />
+ 
+                       <div class="invalid-feedback">
+                         Please enter your password!
+                       </div>
+                     </div>
+                     <div class="pt-2">
+                       <a routerLink="/user-forgot-password"
+                         >Forgot password ?</a
+                       >
+                     </div>
+                   </div>
+ 
+                   <div class="col-12 mb-3">
+                     <div class="form-check">
+                       <input
+                         class="form-check-input"
+                         type="checkbox"
+                         name="remember"
+                         value="true"
+                         id="rememberMe"
+                       />
+ 
+                       <label class="form-check-label" for="rememberMe"
+                         >Remember me</label
+                       >
+                     </div>
+                   </div>
+                   <div class="col-12">
+                     <button
+                       class="btn btn-primary w-100"
+                       type="submit"
+                       (click)="onLogin(login)"
+                     >
+                       Login
+                     </button>
+                   </div>
+                 </form>
+               </div>
+             </div>
+ 
+             <div class="credits">
+               Designed by
+               <a href="https://www.ysoftsolution.com/">YSoft Solution</a>
+             </div>
+           </div>
+         </div>
+       </div>
+     </section>
+   </div>
+ <!-- End #main -->
+ 
+ <a href="#" class="back-to-top d-flex align-items-center justify-content-center"
+   ><i class="bi bi-arrow-up-short"></i
+ ></a>
+ 

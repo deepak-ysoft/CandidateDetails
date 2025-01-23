@@ -1,0 +1,90 @@
+<div class="container-fluid mt-5">
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <strong class="me-4">Date &nbsp;&nbsp;&nbsp; :</strong>
+      <span>{{ candidateDetail?.date }}</span>
+    </div>
+    <div class="col-md-6">
+      <strong class="me-4">Name &nbsp;&nbsp;&nbsp; :</strong>
+      <span>{{ candidateDetail?.name }}</span>
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <strong class="me-4">Contact No &nbsp;&nbsp;&nbsp; :</strong>
+      <span>{{ candidateDetail?.contact_No }}</span>
+    </div>
+    <div class="col-md-6">
+      <strong class="me-4">LinkedIn Profile &nbsp;&nbsp;&nbsp; :</strong>
+      <a [href]="candidateDetail?.linkedin_Profile" target="_blank">{{
+        candidateDetail?.linkedin_Profile
+      }}</a>
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <strong class="me-4">Email ID &nbsp;&nbsp;&nbsp; :</strong>
+      <span>{{ candidateDetail?.email_ID }}</span>
+    </div>
+    <div class="col-md-6">
+      <strong class="me-4">Roles &nbsp;&nbsp;&nbsp; :</strong>
+      <span>{{ CandidateRole }}</span>
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <strong class="me-4">Experience &nbsp;&nbsp;&nbsp; :</strong>
+      <span>{{ candidateDetail?.experience }}</span>
+    </div>
+    <div class="col-md-6">
+      <strong class="me-4">Skills &nbsp;&nbsp;&nbsp; :</strong>
+      <span>{{ candidateDetail?.skills }}</span>
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <strong class="me-4">CTC &nbsp;&nbsp;&nbsp; :</strong>
+      <span>{{ candidateDetail?.ctc }}</span>
+    </div>
+    <div class="col-md-6">
+      <strong class="me-4">ETC &nbsp;&nbsp;&nbsp; :</strong>
+      <span>{{ candidateDetail?.etc }}</span>
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <strong class="me-4">Notice Period &nbsp;&nbsp;&nbsp; :</strong>
+      <span>{{ candidateDetail?.notice_Period }}</span>
+    </div>
+    <div class="col-md-6">
+      <strong class="me-4">Current Location &nbsp;&nbsp;&nbsp; :</strong>
+      <span>{{ candidateDetail?.current_Location }}</span>
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <strong class="me-4">Preferred Location &nbsp;&nbsp;&nbsp; :</strong>
+      <span>{{ candidateDetail?.prefer_Location }}</span>
+    </div>
+    <div class="col-md-6">
+      <strong class="me-4">Reason for Job Change &nbsp;&nbsp;&nbsp; :</strong>
+      <span>{{ candidateDetail?.reason_For_Job_Change }}</span>
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <strong class="me-4">Schedule Interview &nbsp;&nbsp;&nbsp; :</strong>
+      <span>{{ candidateDetail?.schedule_Interview }}</span>
+    </div>
+    <div class="col-md-6">
+      <strong class="me-4">Interview Status &nbsp;&nbsp;&nbsp; :</strong>
+      <span>{{ candidateDetail?.schedule_Interview_status }}</span>
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col-12">
+      <strong class="me-4">Comments &nbsp;&nbsp;&nbsp; :</strong>
+      <p>{{ candidateDetail?.comments }}</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,445 @@
+<div class="container mt-4 magical-table-container">
+  <div class="float-start mb-1">
+    <h2><b>Ysoft Employees</b></h2>
+  </div>
+  <button class="btn btn-primary float-end pe-4 ps-4" (click)="openModal()">
+    <b> <i class="fa-solid fa-plus me-2"></i>Add </b>
+  </button>
+
+  <table class="table magical-table">
+    <thead>
+      <tr class="row">
+        <th class="col d-flex justify-content-end">Profile</th>
+        <th class="col d-flex justify-content-center">Name</th>
+        <th class="col d-flex justify-content-center">Email</th>
+        <th class="col d-flex justify-content-center">Phone</th>
+        <th class="col d-flex justify-content-center">Date of Birth</th>
+        <th class="col d-flex justify-content-center">Gender</th>
+        <th class="col d-flex justify-content-center">Job Title</th>
+        <th class="col d-flex justify-content-center">Experience</th>
+        <th class="col d-flex justify-content-center">Date of Joining</th>
+        <th class="col d-flex justify-content-center">Address</th>
+        <th class="col d-flex justify-content-center">Actions</th>
+      </tr>
+    </thead>
+    <tbody class="tbody">
+      <tr class="row" *ngFor="let emp of employeeList">
+        <td class="col d-flex justify-content-center">
+          <img
+            *ngIf="emp?.imagePath != null"
+            [src]="emp?.imagePath"
+            class="rounded-circle"
+            alt="Emp image"
+          />
+          <img
+            *ngIf="emp?.imagePath == null"
+            class="rounded-circle"
+            src="assets/Image/Default.jpg"
+            alt="Emp image"
+          />
+        </td>
+        <td class="col d-flex justify-content-center">{{ emp.empName }}</td>
+        <td
+          class="col d-flex justify-content-center"
+          [matTooltip]="emp.empEmail"
+          matTooltipPosition="above"
+          [matTooltipClass]="'custom-tooltip'"
+        >
+          {{ emp.empEmail }}
+        </td>
+        <td class="col d-flex justify-content-center">{{ emp.empNumber }}</td>
+        <td class="col d-flex justify-content-center">
+          {{ emp.empDateOfBirth | date : "longDate" }}
+        </td>
+        <td class="col d-flex justify-content-center">{{ emp.empGender }}</td>
+        <td class="col d-flex justify-content-center">{{ emp.empJobTitle }}</td>
+
+        <td class="col d-flex justify-content-center">
+          {{ emp.empExperience }}
+        </td>
+        <td class="col d-flex justify-content-center">
+          {{ emp.empDateofJoining | date : "longDate" }}
+        </td>
+        <td
+          class="col d-flex justify-content-center ett"
+          [matTooltip]="emp.empAddress"
+          matTooltipPosition="above"
+          [matTooltipClass]="'custom-tooltip'"
+        >
+          {{ emp.empAddress }}
+        </td>
+        <td class="col d-flex justify-content-center">
+          <i
+            class="fas fa-edit text-primary me-2 cursorPointer"
+            (click)="editEmployee(emp)"
+          ></i>
+          <i
+            class="fa fa-info-circle text-info me-2 cursorPointer"
+            (click)="employeeDetails(emp)"
+          ></i>
+          <i
+            class="fa fa-trash text-danger cursorPointer"
+            (click)="DeleteEmployee(emp.empId)"
+          ></i>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<ng-template #employeeModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">
+      {{ EmployeeModelHeader }}
+    </h4>
+    <button
+      type="button"
+      class="btn btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <form class="p-5" [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+      <input type="hidden" formControlName="empId" />
+      <input type="hidden" formControlName="empPassword" />
+      <input type="hidden" formControlName="empPasswordConfirm" />
+      <div class="row mb-4">
+        <div class="col-12 d-flex justify-content-center">
+          <input
+            type="file"
+            #fileInput
+            (change)="onFileChange($event)"
+            formControlName="photo"
+            class="d-none"
+            accept="image/*"
+          />
+
+          <!-- Default or selected image -->
+          <div class="image-container">
+            <img
+              [src]="selectedImage || defaultImage"
+              alt="Profile Photo"
+              class="profile-photo"
+              (click)="fileInput.click()"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="row mb-4">
+        <div class="col">
+          <label class="ms-2 label" for="empName">Name</label>
+          <input
+            id="empName"
+            type="text"
+            class="form-control magic-input"
+            formControlName="empName"
+          />
+          <small
+            class="text-danger"
+            *ngIf="
+              !employeeForm.get('empName')?.hasError('serverError') &&
+              shouldShowError('empName') &&
+              !employeeForm.controls['empName'].hasError('pattern')
+            "
+          >
+            Name is required.
+          </small>
+          <small
+            class="text-danger"
+            *ngIf="employeeForm.get('empName')?.hasError('serverError')"
+            >{{ employeeForm.get('empName')?.errors?.['serverError'] }}</small
+          ><small
+            class="text-danger"
+            *ngIf="employeeForm.controls['empName'].hasError('pattern')"
+          >
+            Name must start with letters, followed by a surname (numbers
+            allowed).
+          </small>
+        </div>
+
+        <div class="col">
+          <label class="ms-1 label" for="empEmail">Email</label>
+          <input
+            id="empEmail"
+            type="email"
+            class="form-control magic-input"
+            formControlName="empEmail"
+          />
+          <small
+            class="text-danger"
+            *ngIf="
+              !employeeForm.get('empEmail')?.hasError('serverError') &&
+              shouldShowError('empEmail') &&
+              !employeeForm.controls['empEmail'].hasError('pattern')
+            "
+          >
+            Email is required.
+          </small>
+          <small
+            class="text-danger"
+            *ngIf="employeeForm.get('empEmail')?.hasError('serverError')"
+            >{{ employeeForm.get('empEmail')?.errors?.['serverError'] }}</small
+          >
+          <small
+            class="text-danger"
+            *ngIf="employeeForm.controls['empEmail'].hasError('pattern')"
+          >
+            Email address not valid.
+          </small>
+        </div>
+      </div>
+      <div class="row mb-4" *ngIf="EmployeeModelHeader != 'Edit Employee'">
+        <div class="col">
+          <label class="form-label" for="empPassword">Password</label>
+          <input
+            type="password"
+            formControlName="empPassword"
+            class="form-control magic-input"
+          />
+          <small
+            class="text-danger"
+            *ngIf="employeeForm.get('empPassword')?.hasError('serverError')"
+            >{{ employeeForm.get('empPassword')?.errors?.['serverError'] }}</small
+          ><small
+            *ngIf="
+              shouldShowError('empPassword') &&
+              !employeeForm.controls['empPassword'].hasError('pattern') &&
+              !employeeForm.get('empPassword')?.hasError('serverError')
+            "
+            class="text-danger"
+            >Please enter Password.</small
+          >
+          <small
+            class="text-danger"
+            *ngIf="employeeForm.controls['empPassword'].hasError('pattern')"
+          >
+            Password must be at least 8 characters long, with an uppercase,
+            lowercase, number, and special character.
+          </small>
+        </div>
+        <div class="col">
+          <label class="form-label" for="empPasswordConfirm"
+            >Confirm Password</label
+          >
+          <input
+            type="password"
+            formControlName="empPasswordConfirm"
+            class="form-control magic-input"
+          />
+          <small
+            *ngIf="
+              employeeForm.get('empPasswordConfirm')?.hasError('serverError')
+            "
+            >{{ employeeForm.get('empPasswordConfirm')?.errors?.['serverError'] }}</small
+          ><small
+            *ngIf="employeeForm.errors?.['mismatch']||submitted&&shouldShowError('empPasswordConfirm')"
+            class="text-danger"
+          >
+            Passwords do not match!</small
+          >
+        </div>
+      </div>
+      <div class="row mb-4">
+        <div class="col">
+          <label class="ms-1 label" for="empNumber">Phone Number</label>
+          <input
+            id="empNumber"
+            type="text"
+            class="form-control magic-input"
+            formControlName="empNumber"
+          />
+          <small
+            class="text-danger"
+            *ngIf="
+              !employeeForm.get('empNumber')?.hasError('serverError') &&
+              shouldShowError('empNumber') &&
+              !employeeForm.controls['empNumber'].hasError('pattern')
+            "
+          >
+            Mobile Number is required.
+          </small>
+          <small
+            class="text-danger"
+            *ngIf="employeeForm.get('empNumber')?.hasError('serverError')"
+            >{{ employeeForm.get('empNumber')?.errors?.['serverError'] }}</small
+          >
+          <small
+            class="text-danger"
+            *ngIf="employeeForm.controls['empNumber'].hasError('pattern')"
+          >
+            Mobile number not valid..
+          </small>
+        </div>
+
+        <div class="col">
+          <label class="ms-1 label" for="empDateOfBirth">Date of Birth</label>
+          <input
+            id="empDateOfBirth"
+            type="date"
+            class="form-control magic-input"
+            formControlName="empDateOfBirth"
+          />
+          <small
+            class="text-danger"
+            *ngIf="
+              !employeeForm.get('empDateOfBirth')?.hasError('serverError') &&
+              shouldShowError('empDateOfBirth')
+            "
+          >
+            Date of birth is required.
+          </small>
+          <small
+            class="text-danger"
+            *ngIf="employeeForm.get('empDateOfBirth')?.hasError('serverError')"
+            >{{ employeeForm.get('empDateOfBirth')?.errors?.['serverError'] }}</small
+          >
+        </div>
+      </div>
+
+      <div class="row mb-4">
+        <div class="col">
+          <label class="ms-1 label" for="empGender">Gender</label>
+          <select
+            id="empGender"
+            class="form-select magic-input"
+            formControlName="empGender"
+          >
+            <option value="" disabled>Select Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+          <small
+            class="text-danger"
+            *ngIf="
+              !employeeForm.get('empGender')?.hasError('serverError') &&
+              shouldShowError('empGender')
+            "
+          >
+            Gender is required.
+          </small>
+          <small
+            class="text-danger"
+            *ngIf="employeeForm.get('empGender')?.hasError('serverError')"
+            >{{ employeeForm.get('empGender')?.errors?.['serverError'] }}</small
+          >
+        </div>
+
+        <div class="col">
+          <label class="ms-1 label" for="empJobTitle">Job Title</label>
+          <input
+            id="empJobTitle"
+            type="text"
+            class="form-control magic-input"
+            formControlName="empJobTitle"
+          />
+          <small
+            class="text-danger"
+            *ngIf="
+              !employeeForm.get('empJobTitle')?.hasError('serverError') &&
+              shouldShowError('empJobTitle')
+            "
+          >
+            Job Title is required.
+          </small>
+          <small
+            class="text-danger"
+            *ngIf="employeeForm.get('empJobTitle')?.hasError('serverError')"
+            >{{ employeeForm.get('empJobTitle')?.errors?.['serverError'] }}</small
+          >
+        </div>
+      </div>
+
+      <div class="row mb-4">
+        <div class="col">
+          <label class="ms-1 label" for="empExperience">Experience</label>
+          <input
+            id="empExperience"
+            type="text"
+            class="form-control magic-input"
+            formControlName="empExperience"
+          />
+          <small
+            class="text-danger"
+            *ngIf="
+              !employeeForm.get('empExperience')?.hasError('serverError') &&
+              shouldShowError('empExperience')
+            "
+          >
+            Experience is required.
+          </small>
+          <small
+            class="text-danger"
+            *ngIf="employeeForm.get('empExperience')?.hasError('serverError')"
+            >{{ employeeForm.get('empExperience')?.errors?.['serverError'] }}</small
+          >
+        </div>
+        <div class="col">
+          <label class="ms-1 label" for="empDateofJoining"
+            >Date of Joining</label
+          >
+          <input
+            id="empDateofJoining"
+            type="date"
+            class="form-control magic-input"
+            formControlName="empDateofJoining"
+          />
+          <small
+            class="text-danger"
+            *ngIf="
+              !employeeForm.get('empDateofJoining')?.hasError('serverError') &&
+              shouldShowError('empDateofJoining')
+            "
+          >
+            Date of Joining is required.
+          </small>
+          <small
+            class="text-danger"
+            *ngIf="
+              employeeForm.get('empDateofJoining')?.hasError('serverError')
+            "
+            >{{ employeeForm.get('empDateofJoining')?.errors?.['serverError'] }}</small
+          >
+        </div>
+      </div>
+
+      <div class="row mb-4">
+        <div class="col">
+          <label class="ms-1 label" for="empAddress">Address</label>
+          <textarea
+            id="empAddress"
+            class="form-control magic-input"
+            formControlName="empAddress"
+          ></textarea>
+          <small
+            class="text-danger"
+            *ngIf="
+              !employeeForm.get('empAddress')?.hasError('serverError') &&
+              shouldShowError('empAddress')
+            "
+          >
+            Address is required.
+          </small>
+          <small
+            class="text-danger"
+            *ngIf="employeeForm.get('empAddress')?.hasError('serverError')"
+            >{{ employeeForm.get('empAddress')?.errors?.['serverError'] }}</small
+          >
+        </div>
+      </div>
+
+      <hr class="hr" />
+      <div class="row">
+        <div class="col-12 d-flex justify-content-center">
+          <button type="submit" class="btn btn-primary mt-4">
+            <i class="fa-regular fa-thumbs-up me-1"></i>Submit
+          </button>
+
+          <button type="reset" class="btn btn-danger mt-4 ms-4 shadow-sm">
+            <i class="fa-solid fa-arrows-rotate me-2"></i> Reset
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-template>

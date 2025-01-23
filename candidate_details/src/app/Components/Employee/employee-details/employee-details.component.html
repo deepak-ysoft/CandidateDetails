@@ -1,0 +1,400 @@
+<div class="container mt-4">
+  <section class="section profile">
+    <div class="row">
+      <!-- Profile Image and Info -->
+      <div class="col-xl-4">
+        <h1 class="text-center magical-header py-2">PROFILE</h1>
+        <div class="card border-0 shadow-lg rounded">
+          <div
+            class="card-body profile-card pt-4 d-flex flex-column align-items-center bg-gradient bg-light rounded"
+          >
+            <img
+              *ngIf="employee.imagePath != null"
+              [src]="employee.imagePath"
+              alt="Profile"
+              class="rounded-circle border border-primary shadow"
+              width="280"
+              height="280"
+            />
+            <img
+              *ngIf="employee.imagePath == null"
+              src="assets/Image/Default.jpg"
+              alt="Profile"
+              class="rounded-circle border border-secondary shadow"
+              width="280"
+              height="280"
+            />
+
+            <h2 class="mt-3 text-primary">{{ employee.empName }}</h2>
+            <h3 class="text-secondary">{{ employee.empJobTitle }}</h3>
+            <h4>Age {{ currentAge }}</h4>
+            <div class="social-links mt-3">
+              <a href="#" class="twitter text-primary me-2 fs-4"
+                ><i class="bi bi-twitter"></i
+              ></a>
+              <a href="#" class="facebook text-primary me-2 fs-4"
+                ><i class="bi bi-facebook"></i
+              ></a>
+              <a href="#" class="instagram text-danger me-2 fs-4"
+                ><i class="bi bi-instagram"></i
+              ></a>
+              <a href="#" class="linkedin text-primary fs-4"
+                ><i class="bi bi-linkedin"></i
+              ></a>
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-success px-4 mb-2 mt-5" routerLink="/employees">
+          <i class="fa-solid fa-rotate-left"></i> Employees
+        </button>
+      </div>
+
+      <!-- Profile Details and Leave -->
+      <div class="col-xl-8">
+        <div class="card border-0 shadow-lg rounded bg-light">
+          <div class="card-body pt-4">
+            <!-- Styled Tabs -->
+            <ul
+              class="nav nav-tabs nav-tabs-bordered justify-content-center border-0"
+              role="tablist"
+            >
+              <li class="nav-item me-2" role="presentation">
+                <button
+                  class="btn btn-primary border-success px-4 text-uppercase"
+                  data-bs-toggle="tab"
+                  data-bs-target="#profile-Details"
+                  aria-selected="true"
+                  role="tab"
+                >
+                  <i class="fa fa-info-circle fa-lg me-2 cursorPointer"></i>
+                  Details
+                </button>
+              </li>
+
+              <li class="nav-item" role="presentation">
+                <button
+                  class="btn btn-success border-secondary text-uppercase px-4"
+                  data-bs-toggle="tab"
+                  data-bs-target="#profile-Leave"
+                  aria-selected="false"
+                  tabindex="-1"
+                  role="tab"
+                >
+                  <i class="fa-solid fa-mug-hot fa-lg me-2"></i>leave
+                </button>
+              </li>
+            </ul>
+
+            <div class="tab-content pt-4">
+              <!-- Details Tab -->
+              <div
+                class="tab-pane fade show active border"
+                id="profile-Details"
+                role="tabpanel"
+              >
+                <h4 class="card-title">Profile Details</h4>
+                <hr class="hr" />
+                <div class="profile-Details">
+                  <div class="row mb-3">
+                    <div class="col-lg-3 col-md-4 label fw-bold text-secondary">
+                      Name
+                    </div>
+                    <div class="col-lg-9 col-md-8 text-dark">
+                      <i class="me-5">:</i>
+                      {{ employee.empName }}
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col-lg-3 col-md-4 label fw-bold text-secondary">
+                      Email
+                    </div>
+                    <div class="col-lg-9 col-md-8 text-dark">
+                      <i class="me-5">:</i>
+                      {{ employee.empEmail }}
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col-lg-3 col-md-4 label fw-bold text-secondary">
+                      Number
+                    </div>
+                    <div class="col-lg-9 col-md-8 text-dark">
+                      <i class="me-5">:</i>
+                      {{ employee.empNumber }}
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col-lg-3 col-md-4 label fw-bold text-secondary">
+                      Date of birth
+                    </div>
+                    <div class="col-lg-9 col-md-8 text-dark">
+                      <i class="me-5">:</i>
+                      {{ employee.empDateOfBirth | date : "dd-MM-yyyy" }}
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col-lg-3 col-md-4 label fw-bold text-secondary">
+                      Gender
+                    </div>
+                    <div class="col-lg-9 col-md-8 text-dark">
+                      <i class="me-5">:</i>
+                      {{ employee.empGender }}
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col-lg-3 col-md-4 label fw-bold text-secondary">
+                      Job Title
+                    </div>
+                    <div class="col-lg-9 col-md-8 text-dark">
+                      <i class="me-5">:</i>
+                      {{ employee.empJobTitle }}
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <div class="col-lg-3 col-md-4 label fw-bold text-secondary">
+                      Experience
+                    </div>
+                    <div class="col-lg-9 col-md-8 text-dark">
+                      <i class="me-5">:</i>
+                      {{ employee.empExperience }}
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col-lg-3 col-md-4 label fw-bold text-secondary">
+                      Date of joining
+                    </div>
+                    <div class="col-lg-9 col-md-8 text-dark">
+                      <i class="me-5">:</i>
+                      {{ employee.empDateofJoining | date : "dd-MM-yyyy" }}
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col-lg-3 col-md-4 label fw-bold text-secondary">
+                      Address
+                    </div>
+                    <div class="col-lg-9 col-md-8 text-dark">
+                      <i class="me-5">:</i>
+                      {{ employee.empAddress }}
+                    </div>
+                  </div>
+                </div>
+                <!-- More fields here -->
+              </div>
+
+              <!-- Leave Tab -->
+              <div
+                class="tab-pane fade pt-3 rounded"
+                id="profile-Leave"
+                role="tabpanel"
+              >
+                <div>
+                  <button
+                    class="btn btn-primary float-end mb-2"
+                    (click)="openModal()"
+                  >
+                    <i class="fa-solid fa-plus me-2"></i>Add Leave
+                  </button>
+                  <table class="table magical-table border">
+                    <thead>
+                      <tr class="row">
+                        <th class="col d-flex justify-content-center">
+                          Leave For
+                        </th>
+                        <th class="col d-flex justify-content-center">
+                          Start Date
+                        </th>
+                        <th class="col d-flex justify-content-center">
+                          End Date
+                        </th>
+                        <th class="col d-flex justify-content-center">
+                          Actions
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        class="row bg-light"
+                        *ngFor="let leave of empLeaveList"
+                      >
+                        <td class="col d-flex justify-content-center">
+                          {{ leave.leaveFor }}
+                        </td>
+                        <td class="col d-flex justify-content-center">
+                          {{ leave.startDate | date : "d, MMM, y " }}
+                        </td>
+                        <td class="col d-flex justify-content-center">
+                          {{ leave.endDate | date : "d, MMM, y" }}
+                        </td>
+                        <td class="col d-flex justify-content-center">
+                          <i
+                            class="fas fa-edit text-primary me-3 cursorPointer"
+                            (click)="editLeave(leave)"
+                          ></i>
+                          <i
+                            class="fa fa-trash text-danger cursorPointer"
+                            (click)="DeleteLeave(leave.leaveId)"
+                          ></i>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <span
+                    >Showing {{ firstCandidateOfPage }} to
+                    {{ lastCandidateOfPage }} of {{ totalEmpLeave }} Employee
+                    Leave.</span
+                  >
+
+                  <!-- Pagination Controls -->
+                  <nav
+                    class="float-end me-4 mt-3"
+                    aria-label="Page navigation example"
+                    *ngIf="totalpages > 1"
+                  >
+                    <ul class="pagination">
+                      <li
+                        class="page-item cursorPointer"
+                        [class.disabled]="currentPage === 1"
+                      >
+                        <a class="page-link" (click)="loadPage(currentPage - 1)"
+                          >Previous</a
+                        >
+                      </li>
+                      <li
+                        *ngFor="let page of getDisplayedPages()"
+                        class="page-item cursorPointer"
+                        [class.active]="page === currentPage"
+                        [class.disabled]="page === '...'"
+                      >
+                        <a
+                          *ngIf="page !== '...'; else ellipsis"
+                          class="page-link cursor-pointer"
+                          (click)="loadPage(page)"
+                          >{{ page }}</a
+                        >
+                        <ng-template #ellipsis>
+                          <span class="page-link">...</span>
+                        </ng-template>
+                      </li>
+                      <li
+                        class="page-item cursorPointer"
+                        [class.disabled]="currentPage === totalpages"
+                      >
+                        <a
+                          class="page-link cursor-pointer"
+                          (click)="loadPage(currentPage + 1)"
+                          >Next</a
+                        >
+                      </li>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+            </div>
+            <!-- End Styled Tabs -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<ng-template #leaveModal let-modal>
+  <div class="modal-header">
+    <h4 id="modal-basic-title">{{ LeaveModalHeader }}</h4>
+    <button
+      type="button"
+      class="btn btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="leaveForm" (ngSubmit)="onSubmit()">
+      <!-- Form fields -->
+      <input type="hidden" formControlName="leaveId" />
+      <input type="hidden" formControlName="empId" />
+
+      <div class="row mb-4 m-2">
+        <label class="p-0 label" for="leaveFor">Leave For</label>
+        <input
+          type="text"
+          class="form-control magic-input"
+          formControlName="leaveFor"
+        />
+        <small
+          class="text-danger"
+          *ngIf="
+            !leaveForm.get('leaveFor')?.hasError('serverError') &&
+            shouldShowError('leaveFor')
+          "
+        >
+          Field is required.
+        </small>
+        <small
+          class="text-danger"
+          *ngIf="leaveForm.get('leaveFor')?.hasError('serverError')"
+          >{{ leaveForm.get('leaveFor')?.errors?.['serverError'] }}</small
+        >
+      </div>
+      <div class="row mb-4 m-2">
+        <label class="p-0 label" for="startDate">Start Date</label>
+        <input
+          type="date"
+          class="form-control magic-input"
+          formControlName="startDate"
+        /><small
+          class="text-danger"
+          *ngIf="
+            !leaveForm.get('startDate')?.hasError('serverError') &&
+            shouldShowError('startDate')
+          "
+        >
+          Field is required.
+        </small>
+        <small
+          class="text-danger"
+          *ngIf="leaveForm.get('startDate')?.hasError('serverError')"
+          >{{ leaveForm.get('startDate')?.errors?.['serverError'] }}</small
+        >
+      </div>
+      <div class="row mb-4 m-2">
+        <label class="p-0 label" for="endDate">End Date</label>
+        <input
+          type="date"
+          class="form-control magic-input"
+          formControlName="endDate"
+        /><small
+          class="text-danger"
+          *ngIf="
+            !leaveForm.get('endDate')?.hasError('serverError') &&
+            shouldShowError('endDate')
+          "
+        >
+          Field is required.
+        </small>
+        <small
+          class="text-danger"
+          *ngIf="leaveForm.get('endDate')?.hasError('serverError')"
+          >{{ leaveForm.get('endDate')?.errors?.['serverError'] }}</small
+        ><small
+          class="text-danger"
+          *ngIf="leaveForm.hasError('dateRangeInvalid') && leaveForm.touched"
+        >
+          End date cannot be earlier than start date.
+        </small>
+      </div>
+      <hr class="hr" />
+      <div class="row">
+        <div class="col-12 d-flex justify-content-center">
+          <button type="submit" class="btn btn-primary mt-4">
+            <i class="fa-regular fa-thumbs-up me-1"></i>Submit
+          </button>
+
+          <button type="reset" class="btn btn-danger mt-4 ms-4 shadow-sm">
+            <i class="fa-solid fa-arrows-rotate me-2"></i> Reset
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-template>

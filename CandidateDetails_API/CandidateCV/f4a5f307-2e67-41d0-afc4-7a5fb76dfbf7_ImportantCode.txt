@@ -1,0 +1,269 @@
+Important code 
+
+
+	               
+========================================================================================
+For file saving 
+
+
+
+public string? Path { get; set; }
+[NotMapped]
+public IFormFile? EmpImg { get; set; }
+
+string folder = Path.Combine(_env.WebRootPath, "Img"); // finding Img folder path
+filename = Guid.NewGuid().ToString() + "_" + emp.EmpImg.FileName; // Retrive file name
+string FilePath = Path.Combine(folder, filename); // Combine file name and Img folder path
+emp.EmpImg.CopyTo(new FileStream(FilePath, FileMode.Create)); // Copy file from user selecting and save where we want
+ 
+Path = filename,
+ 
+ 
+==========================================================================================
+Validation
+
+For name 
+	[RegularExpression("^[A-Za-z\\s]+(?: [A-Za-z0-9\\s]+)*$", ErrorMessage = "Please enter a valid name!!")]
+ 
+For Email
+	[RegularExpression("^[a-zA-Z0-9._%+-]+@[a-zA-Z.-]+\\.[a-zA-Z]{2,}$", ErrorMessage = "Please enter a valid email address.")]
+ 
+For password
+	[DataType(DataType.Password)]
+	[RegularExpression("^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*#?&]{8,}$", ErrorMessage = "Must Enter At Least 8 characters and must include Uppercase, Lowercase, digit and Special character")]
+ 
+For Confirm Password
+	[DataType(DataType.Password)]
+	[Compare("Password", ErrorMessage = "Your password is not maching with privious password!!")]
+ 
+For pinCode
+	[DataType(DataType.PostalCode)]
+	[RegularExpression("^[0-9]{6,}$",ErrorMessage ="Enter minimum 6 digit!!")]
+	
+	
+	
+=================================================================================
+	Has Password
+public class UserService
+{
+    private readonly ApplicationDbContext _context;
+
+    public UserService(ApplicationDbContext context)
+    {
+        _context = context;
+    }
+
+    public async Task RegisterUserAsync(string username, string password)
+    {
+        var hasher = new PasswordHasher<User>();
+        var user = new User
+        {
+            Username = username,
+            PasswordHash = hasher.HashPassword(null, password)
+        };
+
+        _context.Users.Add(user);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task<bool> VerifyPasswordAsync(string username, string password)
+    {
+        var user = await _context.Users.SingleOrDefaultAsync(u => u.Username == username);
+        if (user == null)
+            return false;
+
+        var hasher = new PasswordHasher<User>();
+        var result = hasher.VerifyHashedPassword(null, user.PasswordHash, password);
+
+        return result == PasswordVerificationResult.Success;
+    }
+}
+
+2RYM32JMU8VY9CAWZSE98GW7
+
+
+
+DECLARE @Counter INT = 110001
+
+WHILE @Counter <= 120000
+BEGIN
+    INSERT INTO Customer (
+          Title, FirstName , MiddleName, LastName , Gender , Position, DayOfBirth, Phone, PhoneOther, Cell , Fax, Email, Email2, Language, Website, Comments, Imagepath, PAN, GST)
+    VALUES (
+          1
+        , 'FirstName', 'MiddleName' , 'LastName' +' '+ CAST(@Counter AS NVARCHAR(50))
+        , 1  , 'Position' + CAST(@Counter AS NVARCHAR(50))  , DATEADD(DAY, (-@Counter+(-8570)), GETDATE()) , '1234567890' , '0987654321' , '9876543210'
+        , '123456789' , 'email' + CAST(@Counter AS NVARCHAR(50)) + '@Test.com' , 'email2' + CAST(@Counter AS NVARCHAR(50)) + '@Test.com' , 1, 'www.Test.com'                           
+        , 'Comments for customer ' + CAST(@Counter AS NVARCHAR(50)), 'Default.jpg'   , 'PAN' + CAST(@Counter AS NVARCHAR(50)), 'GST' + CAST(@Counter AS NVARCHAR(50))        
+    )
+
+    SET @Counter = @Counter + 1
+END
+
+
+select count(*)from Customer
+
+truncate table Customer
+
+create table Task
+(taskId int primary key identity,
+activityTypt nvarchar(50),
+summary nvarchar(200),
+dueDate date,
+assignedTo nvarchar(100),
+comments nvarchar(max),
+customerId int foreign key references customer(cid),
+UserId int foreign key references Users(UserId),
+createDate date,
+updateDate date null,
+)
+
+
+BEGIN TRANSACTION;
+declare @customerId int =90682
+-- Delete from Contacts
+DELETE FROM Contact
+WHERE CId = @customerId;
+
+-- Delete from Addresses
+DELETE FROM Addresses
+WHERE customerId = @customerId;
+
+-- Delete from Task
+DELETE FROM Task
+WHERE customerId = @customerId;
+
+-- Delete from Notes
+DELETE FROM Notes
+WHERE customerId = @customerId;
+
+-- Delete from Appointment
+DELETE FROM Appointment
+WHERE CId = @customerId;
+
+-- Finally, delete the customer
+DELETE FROM Customer
+WHERE CId = @customerId;
+
+COMMIT TRANSACTION;
+
+
+
+Pagination================================================================
+
+
+Yes, in Angular, you can implement Take and Skip functionality by applying pagination logic on the client side, similar to how it's done on the server.
+
+In Angular, you would generally implement pagination by making use of APIs that return a subset of data. This could involve sending skip and take (or offset and limit) values in the HTTP request to the server to fetch only the required page of data.
+
+Here’s how you can implement Take (limit) and Skip (offset) in an Angular 18 application:
+
+1. Server-Side Setup
+On the server-side (e.g., in your ASP.NET Core API), you would need to accept skip and take parameters in your controller method:
+
+csharp
+Copy code
+[HttpGet]
+public async Task<IActionResult> GetCustomers(int skip = 0, int take = 10)
+{
+    try
+    {
+        var customerData = await _db.Customer.Skip(skip).Take(take).ToListAsync();
+        return Ok(customerData);
+    }
+    catch (Exception ex)
+    {
+        // Log the exception
+        Console.WriteLine(ex); // Replace with actual logging
+        return StatusCode(500, "Internal server error");
+    }
+}
+In this example:
+
+skip represents the number of records to skip (e.g., for pagination).
+take represents the number of records to return (limit).
+2. Client-Side (Angular 18)
+On the client side, you would call the API with skip and take parameters using Angular's HttpClient service. Here’s how to implement it:
+
+Step 1: Create a Service to Fetch Data with Pagination
+typescript
+Copy code
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class CustomerService {
+  private apiUrl = 'https://your-api-url/api/customers';
+
+  constructor(private http: HttpClient) { }
+
+  // Fetch customers with skip and take for pagination
+  getCustomers(skip: number, take: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}?skip=${skip}&take=${take}`);
+  }
+}
+Step 2: Create a Component to Display Paginated Data
+In your component, you can call the getCustomers method from the service and apply the logic for pagination (i.e., incrementing the skip value based on the page):
+
+typescript
+Copy code
+import { Component, OnInit } from '@angular/core';
+import { CustomerService } from './customer.service';
+
+@Component({
+  selector: 'app-customer-list',
+  templateUrl: './customer-list.component.html',
+  styleUrls: ['./customer-list.component.css']
+})
+export class CustomerListComponent implements OnInit {
+  customers: any[] = [];
+  skip = 0;
+  take = 10;  // Fetch 10 records at a time
+
+  constructor(private customerService: CustomerService) { }
+
+  ngOnInit(): void {
+    this.loadCustomers();
+  }
+
+  loadCustomers(): void {
+    this.customerService.getCustomers(this.skip, this.take).subscribe((data) => {
+      this.customers = data;  // Replace with fetched data
+    });
+  }
+
+  // Method to go to the next page
+  nextPage(): void {
+    this.skip += this.take;
+    this.loadCustomers();
+  }
+
+  // Method to go to the previous page
+  previousPage(): void {
+    if (this.skip > 0) {
+      this.skip -= this.take;
+      this.loadCustomers();
+    }
+  }
+}
+Step 3: HTML for Pagination
+In your component template, you can add buttons to navigate through the pages:
+
+html
+Copy code
+<div *ngFor="let customer of customers">
+  <p>{{ customer.FirstName }} {{ customer.LastName }}</p>
+</div>
+
+<button (click)="previousPage()" [disabled]="skip === 0">Previous</button>
+<button (click)="nextPage()">Next</button>
+Explanation:
+nextPage and previousPage: These methods adjust the skip value and re-fetch the data based on the new offset.
+[disabled]: The "Previous" button is disabled when you are on the first page (i.e., skip is 0).
+Final Thoughts:
+By using this approach, you’re fetching only the necessary data from the server, which is efficient for large datasets.
+You can expand this by showing the total number of records on the UI and improve the UX with more advanced pagination controls like page numbers.
+This pattern is often referred to as server-side pagination, and it's common for handling large datasets without overloading the client or the server.

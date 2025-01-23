@@ -1,0 +1,298 @@
+<div *ngIf="showCalendar">
+  <div class="container mt-3">
+    <!-- Trigger Button -->
+    <a class="btn btn-primary" (click)="onAdd()"
+      ><i class="fa-solid fa-plus me-2"></i>Add Event</a
+    >
+    <a class="btn btn-success float-end" (click)="ShowEventList()"
+      ><i class="fa-regular fa-calendar me-2"></i>Events</a
+    >
+    <full-calendar
+      #calendar
+      [options]="calendarOptions"
+      class="pb-5 pt-2"
+    ></full-calendar>
+  </div>
+</div>
+
+<!-- Modal -->
+
+<ng-template #calendarModel let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{ modalPopupAndMsg }}</h4>
+    <button
+      type="button"
+      class="btn btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <form
+      [formGroup]="onSubmitForm"
+      *ngIf="modalPopupAndMsg != 'Event Details'"
+      (ngSubmit)="onSubmit()"
+    >
+      <div class="mb-3 row">
+        <div class="col-12">
+          <label for="Calendar" class="form-label">Subject</label>
+          <select
+            id="subject"
+            class="form-select magic-input"
+            formControlName="subject"
+          >
+            <option value="" disabled>Select Subject</option>
+            <option value="Event">Event</option>
+            <option value="Meating">Meating</option>
+            <option value="Birthday">Birthday</option>
+            <option value="Company Holiday">Company Holiday</option>
+          </select>
+          <small
+            class="text-danger"
+            *ngIf="
+              !onSubmitForm.get('subject')?.hasError('serverError') &&
+              shouldShowError('subject')
+            "
+          >
+            Gender is required.
+          </small>
+          <small
+            class="text-danger"
+            *ngIf="onSubmitForm.get('subject')?.hasError('serverError')"
+            >{{ onSubmitForm.get('subject')?.errors?.['serverError'] }}</small
+          >
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <label for="Discription" class="form-label">Discription</label>
+          <textarea
+            type="text"
+            class="form-control magic-input"
+            placeholder="Enter Description..."
+            formControlName="description"
+            name="discription"
+          ></textarea
+          ><small
+            *ngIf="
+              shouldShowError('description') &&
+              !onSubmitForm.get('description')?.hasError('serverError')
+            "
+            class="text-danger"
+          >
+            Please enter Description. </small
+          ><small
+            class="text-danger"
+            *ngIf="onSubmitForm.get('description')?.hasError('serverError')"
+            >{{ onSubmitForm.get('description')?.errors?.['serverError'] }}</small
+          >
+          <input type="hidden" formControlName="calId" name="summary" />
+        </div>
+      </div>
+      <div class="mb-3 row mt-3">
+        <div class="col-6">
+          <label for="startDate" class="form-label">Start Date</label>
+          <input
+            type="datetime-local"
+            class="form-control magic-input"
+            formControlName="startDate"
+            name="startDate"
+          /><small
+            *ngIf="
+              shouldShowError('startDate') &&
+              !onSubmitForm.get('startDate')?.hasError('serverError')
+            "
+            class="text-danger"
+          >
+            Please enter Start Date. </small
+          ><small
+            class="text-danger"
+            *ngIf="onSubmitForm.get('startDate')?.hasError('serverError')"
+            >{{ onSubmitForm.get('startDate')?.errors?.['serverError'] }}</small
+          >
+        </div>
+        <div class="col-6">
+          <label for="endDate" class="form-label">End Date</label>
+          <input
+            type="datetime-local"
+            class="form-control magic-input"
+            formControlName="endDate"
+            name="endDate"
+          /><small
+            *ngIf="
+              shouldShowError('endDate') &&
+              !onSubmitForm.get('endDate')?.hasError('serverError')
+            "
+            class="text-danger"
+          >
+            Please enter End Date.
+          </small>
+          <small
+            class="text-danger"
+            *ngIf="
+              onSubmitForm.hasError('dateRangeInvalid') && onSubmitForm.touched
+            "
+          >
+            End date cannot be earlier than start date. </small
+          ><small
+            class="text-danger"
+            *ngIf="onSubmitForm.get('endDate')?.hasError('serverError')"
+            >{{ onSubmitForm.get('endDate')?.errors?.['serverError'] }}</small
+          >
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button
+          type="submit"
+          class="btn btn-primary"
+          aria-label="Close"
+          (click)="modal.dismiss('Cross click')"
+        >
+          <i class="fa-regular fa-circle-check me-2"></i>Save Event</button
+        ><button type="reset" class="btn btn-danger ms-5 shadow-sm">
+          <i class="fa-solid fa-arrows-rotate me-2"></i> Reset
+        </button>
+      </div>
+    </form>
+    <section
+      class="section profile"
+      *ngIf="modalPopupAndMsg == 'Event Details'"
+    >
+      <div class="tab-content">
+        <div class="row mb-2">
+          <div class="col-lg-3 col-md-4 label">Subject</div>
+          <div class="col-lg-9 col-md-8">
+            {{ fullcalendar.subject }}
+          </div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-lg-3 col-md-4 label">Description</div>
+          <div class="col-lg-9 col-md-8">
+            {{ fullcalendar.description }}
+          </div>
+        </div>
+
+        <div class="row mb-2">
+          <div class="col-lg-3 col-md-4 label">Start Date</div>
+          <div class="col-lg-9 col-md-8">
+            {{ fullcalendar.startDate | date : "medium" }}
+          </div>
+        </div>
+
+        <div class="row mb-2">
+          <div class="col-lg-3 col-md-4 label">End Date</div>
+          <div class="col-lg-9 col-md-8">
+            {{ fullcalendar.endDate | date : "medium" }}
+          </div>
+        </div>
+      </div>
+      <hr class="hr" *ngIf="!isUsed" />
+      <button
+        class="btn btn-primary"
+        *ngIf="!isUsed"
+        (click)="editcalendar(fullcalendar)"
+      >
+        <i class="fas fa-edit me-2"></i>Edit
+      </button>
+      <button
+        class="btn btn-danger ms-3"
+        *ngIf="!isUsed"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+        (click)="DeleteCalendar(fullcalendar.calId)"
+      >
+        <i class="fa fa-trash me-2"></i> Delete
+      </button>
+    </section>
+  </div>
+</ng-template>
+
+<div *ngIf="!showCalendar">
+  <div class="container">
+    <a
+      class="btn btn-success shadow-sm border rounded-pill"
+      (click)="ShowCalendar()"
+    >
+      <i class="fa-solid fa-calendar-days me-1"></i>Calendar
+    </a>
+    <div class="row">
+      <div class="col">
+        <div class="card mt-2 shadow magic-card">
+          <div class="card-body holiday-card">
+            <h5 class="card-title">
+              Company Holidays <i class="fa-solid fa-mug-hot ms-2"></i>
+            </h5>
+            <ul class="list-group" *ngFor="let Holiday of holidayList">
+              <li class="list-group-item magic-list">
+                <div class="row">
+                  <div class="col-5">
+                    <b
+                      ><img
+                        class="holiday-icon"
+                        src="assets/icon/Sun-Board-Holiday-Icon.png"
+                      />{{ Holiday.description }} holiday</b
+                    >
+                  </div>
+                  <div class="col-5">
+                    {{ Holiday.startDate | date : "dd/MM/yyyy" }} To
+                    {{ Holiday.endDate | date : "dd/MM/yyyy" }}
+                  </div>
+                  <div class="col-2">
+                    <span class="float-end"
+                      ><i
+                        class="fas fa-edit text-primary me-3 hover-scale"
+                        (click)="editcalendar(Holiday)"
+                      ></i
+                      ><i
+                        class="fa fa-trash text-danger hover-scale"
+                        (click)="DeleteCalendar(Holiday.calId)"
+                      ></i
+                    ></span>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card mt-2 shadow magic-card">
+          <div class="card-body birthday-card">
+            <h5 class="card-title">
+              Birthday <i class="fas fa-birthday-cake ms-2"></i>
+            </h5>
+            <ul class="list-group" *ngFor="let birthday of birthdayList">
+              <li class="list-group-item magic-list">
+                <div class="row">
+                  <div class="col-5">
+                    <img
+                      class="holiday-icon"
+                      src="assets/icon/birthday-cake-line-icon.png"
+                    />
+                    <b>{{ birthday.description }}</b>
+                  </div>
+                  <div class="col-5">
+                    {{ birthday.startDate | date : "dd/MM/yyyy" }}
+                  </div>
+                  <div class="col-2">
+                    <span class="float-end">
+                      <i
+                        class="fas fa-edit text-primary me-3 hover-scale"
+                        (click)="editcalendar(birthday)"
+                      ></i>
+                      <i
+                        class="fa fa-trash text-danger hover-scale"
+                        (click)="DeleteCalendar(birthday.calId)"
+                      ></i
+                    ></span>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

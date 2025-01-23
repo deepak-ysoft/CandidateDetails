@@ -1,0 +1,2655 @@
+							13th-Aug-2024 - Report
+========================================================================================
+To do list 
+
+1=> Email Address Validation Currection
+2=> Button Currection
+3=> File upload 
+4=> Exeption handling
+
+Today I have worked on below points
+
+1) Created new MVC Core project
+		- Added new controller file - Employee
+		- Added new Employee controller views(Create,Edit,Detail and Index)
+
+2) Created Index method to bring data from database.
+
+3) Desgin Create form for Employee
+
+4) Created employee data post method with file upload
+		- Check validation for each fields - Client side
+		- Also checked validation on server side
+		- Added data to database table
+		- Uploaded file to local directory
+		
+5) Detail employee form design and displayed details of selected employee
+
+6) Implemented delete employee with conformation.
+
+
+
+							14th-Aug-2024 - Report
+========================================================================================
+To do list 
+
+1 => Diffrent bg-color on rows (Even and odd Id).
+2 => Chack Email is already exist or not(in create and edit).
+
+
+Today I have worked on below points
+
+1) File upload
+      - Image upload and Image Change 
+	  
+2) Reduce the code from Create and Edit Action Method
+
+3) Diffrent bg-color on rows 
+      - with the help of 'ternary operator'
+	  - Create css class and used in View
+
+4) Chack Email is already exist or not(in create and edit)
+      - with Linq query in Create and Edit action
+	  - learn about 'ModelState.AddModelError("Field","Massage")' => Own error massage
+	  
+5) Use hidden feilds in View
+
+
+							15th-Aug-2024 - Report
+========================================================================================
+To do list 
+
+1) Create new database table "Company"
+		- CompanyId - int primary key
+		- Name - string
+		- CompanyCode - string
+		- Address - string
+		- ContactNo - string
+
+2) Add menu option in top header part
+		1. Company
+		2. Employee
+		
+3) Insert,Edit, Update and delete operation for company same as employee
+
+4) Assign company id as foreign key in employee table
+
+5) Add company dropdown in employee form(Create, Edit and List) 
+
+6) Add Company Name column in employee list
+
+
+Today I have worked on below points
+
+1) Create new database table "Company"
+        - Add Company Name column in employee list
+		- Assign company id as foreign key in employee table
+
+2) Insert,Edit, Details and delete operation for company same as employee
+
+3) Add menu option in top header part
+		1. Company
+		2. Employee
+4) Add company dropdown in employee form(Create)
+
+
+							16th-Aug-2024 - Report
+========================================================================================
+To do list 
+
+
+1) Add company dropdown in employee form( Edit) 
+
+2) Do all task in database first approach(12- Aug To 16-Aug)
+
+Today I have worked on below points
+
+1) Impliment Dropdown for Edit
+        - Impliment code in Controller (Edit Method)
+        - Add a dropdown list of Company in Edit view
+		
+2) Do all task in database first approach(12- Aug To 16-Aug) =>Done
+        - Create database
+		- Create tables (company and employee)
+		- Add a .net core framework (FirstDemoInDataFirst)
+		- Add Two model class (Company and Employee)
+		- Add Context class
+		- Add two controller
+		- create Methods in both controller and then impliment View
+		- Maintain Duplicate email, Validationes, Image upload (Create and Edit)
+		
+	                      21th-Aug-2024 - Report
+========================================================================================
+To do list 
+
+1) Create a Login page.
+
+2) Change Password Action Method.
+
+3) Show change password and logout link when only user login.
+
+4) Place Logout and Change password on top right of Layout (nav bar).
+
+Today I have worked on below points
+
+1) When we use primary and foreign key in two table then we can't delete a data from base table 
+        - I solve this condition with '_db.employee.RemoveRange(employees);'
+
+2) 'services.AddRazorPages().AddRazorRuntimeCompilation();' use to edit scc, html runtime.
+
+3) Created Home controller for About Action method 
+        - I write all 'To do List' in about action method.
+
+4) Create a Login page.
+
+5) Change Password Action Method.
+        - I use session in this method 
+		- @using Microsoft.AspNetCore.Http
+          @inject IHttpContextAccessor HttpContextAccessor
+		  used in ViewImport class to use session in Layout
+        - uilder.Services.AddHttpContextAccessor();
+		  used in program.cs class
+		  
+6) Show change password and logout link when only user login.
+
+7) Place Logout and Change password on top right of Layout (nav bar).
+
+
+	                      22th-Aug-2024 - Report
+========================================================================================
+To do list 
+
+1) Read about 'Form Authentication'.
+
+2) Impliment Form Authentication and authorization in our application.
+
+Today I have worked on below points
+
+
+1) Create admin table in database.
+
+2) Add Role column in employee and admin table to authorizeation.
+
+3) Create a create mathod in Account controller 
+
+4) Implement authorization and authorization
+      - Role based authorization
+	  - Use claims for Role
+	  - use ClaimsIdentity to represent a user’s identity based on a set of claims
+	  - use ClaimsPrincipal to Represents a user’s identity and its associated claims.
+	  - use session for name and role
+	  
+	  	                      23th-Aug-2024 - Report
+========================================================================================
+To do list 
+
+1) Store multiple files
+    - File can have different type like .txt, .jpg, .jpeg, .pdf etc.
+	
+2) Star pattern with js
+
+3) Star pattern without js
+
+Today I have worked on below points
+
+1) Stored multiple file in database
+      - use multiple accept in input tag
+	  - store using foreach loop
+	  - use TrimEnd(',') for trim last ','
+	  - create a getFileExtension method to get extension of file.
+	  - use Split(',') to do separate the file path and again use foreach for retrive file from database
+	  - use 'if else if' condition for manage different-2 type of file
+
+2) Star pattern with js
+      - Right angle
+      - Left angle
+      - Acute angle
+	  
+
+3) Star pattern without js
+      - Right angle
+      - Left angle
+      - Acute angle
+      - Reverse Acute angle
+	  - Dymond
+	  - Empty Dymond
+	  
+	  
+	  	                      27th-Aug-2024 - Report
+========================================================================================
+To do list 
+
+1) Make more patterns.
+
+2) Use a html template.	
+
+Today I have worked on below points
+
+1) Star pattern without js
+	  - Dymond
+	  - Empty Dymond
+	  
+2) Search a 'Energy Gym' Template.
+
+3) Create a 'Energy Gym' project.
+
+4) Impliment Template in project
+      - Copy All css, Images and js in our project.
+      - Copy Html, css code from temlate (Index,Services,Contact and About action method)	.
+	  - Impliment Layout from View  .
+	  - Remove Header and footer from all views.
+	  - Some css properties are only used in 'Index' view section but section is used in every view 
+	    To impliment these properties i use ViewContext.RouteData.Values["Action"].ToString(); and ternary operator.
+
+5) Create Model class (Register, Courses)
+      - Implement validation.
+
+
+	  
+
+	  	                      28th-Aug-2024 - Report
+========================================================================================
+To do list 
+
+1) Read API 
+
+2) Create API (CRUD)
+
+3) Create a AspNetCore project
+
+4) Call API in AspNetCore project
+
+5) Implement Crud using api
+
+
+Today I have worked on below points
+ 
+1) create Actions (SignUp, login)
+      - Add a dropdown list for Courses.
+	  - Find booststrap SignUp and Login page and impliment them. 
+
+2) Create API 
+      - Use Repository pettern 
+	  - CRUD operation in API (Create,Read,Update,delete and get single data)
+
+3) Api testing with swagger
+
+4) Create a asp .net core project
+      - Create model class.
+	  - Create Controller 
+	  - Impliment Api calling code in all methods
+	  - create Action method
+
+5) Consume API in asp .net core project
+      - Start both projects in same time	  
+
+	  	                      29th-Aug-2024 - Report
+========================================================================================
+To do list 
+
+- Create new Database with "ZippyCRM" name.
+- Create new db table "Users"
+		- UserId - int primary key
+		- Username - string
+		- Email - string
+		- Password - string with incrypted(with key incryption)
+		- AccountSetup - bit
+		- IsActive - Bit(Default false)
+		- AccountStatus - int(Create enum in class e.g. Active =0,InActive=1, Deleted = 2,..etc..)
+		
+- Create new db table "UserInfo"
+		- Id - primary key
+		- UserId
+		- Firstname
+		- Middlename
+		- Lastname
+		- ContactNo
+		- Address
+		
+- Design login screen(new theame) and implement login functionality with Form authentication
+
+
+Today I have worked on below points
+ 
+1) Create new Database with "ZippyCRM" name.
+
+2) Create new db table "Users"
+		- UserId - int primary key
+		- Username - string
+		- Email - string
+		- Password - string 
+		- AccountSetup - bit
+		- IsActive - Bit
+		- AccountStatus - int(Create enum in class e.g. Active =0,InActive=1, Deleted = 2,..etc..)
+		
+3) Create new db table "UserInfo"
+		- Id - primary key
+		- UserId
+		- Firstname
+		- Middlename
+		- Lastname
+		- ContactNo
+		- Address
+		
+4) Design login screen(new theame)
+
+
+
+	  	                      30th-Aug-2024 - Report
+========================================================================================
+To do list 
+
+1) Create Forgot password
+    - After click on forgot password check email is valid or not, Exist or not .
+
+2) If email is exist create a html body for email
+    - Create a one foegot password link append that link in email body.
+	- Once user click it will open our application tage "Resat password".
+
+3) After Password changed then again send a email to user "Password changed".
+
+Today I have worked on below points
+ 
+1) Impliment Register method 
+
+
+2) Create Forgot password Action method
+    - After click on forgot password check email is valid or not, Exist or not .
+
+3) When email is exist create a html body for email
+    - Create a one foegot password link append that link in email body.
+	- When user click on link then send email to user for password change.
+	- Once user click on link in email, it will open our application tage "Resat password".
+
+4) After Password changed then again send a email to user "Password success fully changed!!".
+
+
+
+	  	                      2nd-Sept-2024 - Report
+========================================================================================
+To do list 
+
+1) Create User profile (Rohit)
+     - User details
+	 - Edit user
+	 - Edit image image
+	 - Change password
+	 
+2) Create ZippyCRM project in 3tier architecture
+	 
+Today I have worked on below points
+
+1) Create User profile (I helped Rohit to create these pages)
+     - User details
+	 - Edit user
+	 - Edit image image
+	 
+2) Learn how to create a 3tier architecture
+	 
+
+
+	  	                      3rd-Sept-2024 - Report
+========================================================================================
+To do list 
+
+1) Create ZippyCRM project in 3tier architecture
+
+Today I have worked on below points
+
+1) create ZippyCRM project in 3tier architecture
+    - Add Class Library in ZippyCRM Solution(ZippyCRM_DAL and ZippyCRM_BLL).
+	- ZippyCRM_DAL and ZippyCRM_BLL references added to ZippyCRM(presentation layer).
+	- ZippyCRM_DAL references added to ZippyCRM_BLL.
+	- Add model in ZippyCRM_DAL(Models and dbContext).
+	- Add Services and Content folder in ZippyCRM_BLL.
+	- Create all interfac in Services and call interfaces in context class.
+	- Add interfac in controllerd.
+	
+
+ 
+
+	  	                      4th-Sept-2024 - Report
+========================================================================================
+To do list 
+
+1) Create a productDemo crud operation.
+
+Today I have worked on below points
+
+1) Add some script file and @await Html.PartialAsync("_ValidationScriptsPartial"); to client side validation.
+
+2) Add comments to all.
+
+3) Remove all extra space from code. 
+
+
+	  	                      5th-Sept-2024 - Report
+========================================================================================
+To do list 
+
+1) Create productDemo crud operation.
+    - Id, Title, Description, Complexity, Status, TargetDate and ActualDate.
+
+	
+Today I have worked on below points
+
+1) Create productDemo crud operation.
+    - Id, Title, Description, Complexity, Status, TargetDate and ActualDate.
+
+2) List of product.
+    - in list have some spacial features (Pagination, sorting, searching ).
+	
+3) Create, Edit and Delete a product
+   - Use validation.
+   - Complexity, Status Enum for Dropdown list.
+   - When status is Active then TargetDate is required and  status is Closed then ActualDate is required.
+   - Model popup on Create and Edit 
+   - When Client click on delete, conformation box show.
+	
+
+	  	                      6th-Sept-2024 - Report
+========================================================================================
+To do list 
+
+1) Create a customer list in ZippyCRM 
+
+	
+Today I have worked on below points
+
+1) Create customer list 
+    - use 3tier architecture for retrive list from database.
+	
+2) Create enum for add customer 
+    - Create a conent class for enum.
+	- We pass any enum for list all enum list created in one class.
+	- We need to write only method name and Enum in method. 
+	- Design the create view.
+	- When user click on Individual then GST field is disabled	 and when user click on business then PAN field is disabled.
+
+
+	  	                      9th-Sept-2024 - Report
+========================================================================================
+To do list 
+
+1) Create delete customer.
+
+
+Today I have worked on below points
+
+1) Email duplicate check in create.
+
+2) Default select the image if user don't select
+
+3) Validation for DOB 18 to 100.
+
+4) Create delete customer.
+
+5) Create edit customer(Rohit).
+
+
+
+	  	                      10th-Sept-2024 - Report
+========================================================================================
+To do list 
+
+1) Marge Create and Edit View, Action method and content.
+
+2) Convert design according to NiceAdmin template.
+
+3) Manage list of customers with take and skip.
+
+4) Use FontAwesome icon for Edit, Delete and Create.
+
+
+Today I have worked on below points
+
+1) Marge Create and Edit View, Action method and content.
+
+2) Convert design according to NiceAdmin template.
+
+3) Manage list of customers with take and skip.
+      - Add my own clint-side-library.
+	  - Create a js file for Customer List.
+	  - Create a APIContoller.
+	  - Create a getCustomer method in APIContoller.
+
+4) Use FontAwesome icon for Edit, Delete and Create.
+      - Use CDN link of fontawesome in layout.cshtml.
+	  
+	  
+
+	  	                      11th-Sept-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Create a Details Action method and view.
+
+2) Read Ajax how to use it in project.
+
+3) Implement a CRUD project using 'Ajax'
+
+
+Today I have worked on below points
+
+1) Create a Details Action method and view.
+     - Add a fontawesome icon in cutomerList.
+	 
+2) Read Ajax how to use it in project.
+
+3) Implement a CRUD project using 'Ajax'.(AjaxUse)
+    - Use popup to Create and edit.
+	- Use only one action method and view for create and edit.
+	
+4) bind all methods in ZippyCRM project.
+
+	  	                      12th-Sept-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Update customer list, customer form and customer details view.
+
+2) Create customer profile.
+
+3) Create customer Addresses 
+ 
+
+Today I have worked on below points
+
+1) Update customer list, customer form and customer details view.
+
+2) Create customer profile.
+
+3) Create customer Addresses 
+    - create table in database.
+	- Create methods (crud).
+	
+	
+	
+
+	  	                      13th-Sept-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Create customer Addresses(crud)
+ 
+
+Today I have worked on below points
+
+
+
+1) Create customer Addresses 
+    - Update table in database.
+	- Update methods (crud).
+	- Create model popup.
+	- use ajax to call methods.
+
+2) Create N-tier architecture of contact Crud.
+    - Created N-tier architecture of contact Crud (Customer controller,ICustomerService,CustomerContent).
+	
+3) Create single view of Create and Edit.
+    .Created Single view of Create and Edit based on ContactId
+
+
+	  	                      16th-Sept-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Create Task for customer 
+  
+
+Today I have worked on below points
+
+1) Create Task for customer 
+    - taskId int primary key identity,
+    - activityType nvarchar(50),
+	- summary nvarchar(200),
+	- dueDate date,
+	- assignedTo nvarchar(100),
+	- comments nvarchar(max),
+	- customerId int foreign key references customer(cid),
+	- UserId int foreign key references Users(UserId),
+	- createDate date,
+	- updateDate date 
+	
+2) Create Model, crud action methods and partial view
+    - dropdown of users.
+	- User name show in customerTask list.
+
+3) 3tier architecture used.
+
+4) All details of customerTask in _getTasks partial view.
+
+5) Used table for list of customerTask.
+
+
+	  	                      17th-Sept-2024 - Report
+========================================================================================
+
+To do list 
+
+
+1) Create Notes for customer.
+
+
+Today I have worked on below points
+
+1) Create notes for customer.
+     - title
+	 - description
+	 - customerId
+	 - Username
+	 - CraeteDate
+	 - UpdateDate
+	 
+2) Create model for customerNotes
+
+3) Create Action methods 
+     - GetNotes
+	 - CreateEditNotes
+	 - NotesDetails
+	 - DeleteNotes
+	 
+4) Create partial view for all customerNotes.
+
+5) Create js function to call action method.
+
+6) Use 3tier architecture to perform all task.
+
+
+	  	                      18th-Sept-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Remove unnecessary session from project.
+
+2) Create different-2 js file for all methods.
+
+3) Remove duplicate links and script file references.
+
+
+Today I have worked on below points
+
+1) Remove unnecessary session from project.
+    - Use session only for authentication or when you need logged in user details.
+
+2) Create different-2 js file for all methods.
+    - Move all js code in js file.
+
+3) Remove duplicate links and script file references.
+
+4) Impliment Quill in Notes.
+    - Quill provide more options to create better notes.
+    - QuillBot is a writing tool that uses AI to help improve writing and research skills.
+	- I use Quill in description property.
+	- Add cdn links to use Quill properties.
+
+
+	  	                      19th-Sept-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Create quill update.
+
+2) Remove session from customerDocument.
+
+3) Move folder from customer documents.
+
+4) Validation in all Modeols.
+
+
+Today I have worked on below points
+
+
+1) Create quill update.
+    - Create function in js file for retrive hidden description input tag value in quill editor.
+
+2) Remove session from customerDocument.
+    - Remove unnecessary session from customerDocument all crud methods.
+
+3) Create Copy, paste customer documents.
+    - Create Copy method.
+	- Create copy function.(panding)
+	- Create paste method.
+	- Creatr paste function.(panding)
+
+4) Validation in all Modeols.
+    - Check all models (in all models properties validate).
+	- Validate all properties.
+	
+	
+
+	  	                      20th-Sept-2024 - Report
+========================================================================================
+
+1)  Create Move customer documents.
+
+2) Add date and file size in list of documents.
+
+3) Create folder dynamic work.
+
+
+Today I have worked on below points
+
+1) complete panding work
+    - Create Copy method.
+	- Create copy function.
+	- Create paste method.
+	- Creatr paste function.
+	
+2) Create Move customer documents.
+    - Update Copy method and copy function to perform Move documents operation.
+
+3) Add date and file size in list of documents.
+
+4) Create folder dynamic work.
+
+
+	  	                      23th-Sept-2024 - Report
+========================================================================================
+
+To do list 
+
+1) complete the customer documents work.
+
+
+Today I have worked on below points
+
+1) Update the paste method and fnction
+    - use condition for file and folder creation in foreach loop.
+	- System.IO.File.Create(); used for creating a file.
+	- Directory.CreateDirectory(); used for creating a folder.
+	- When user click on move button then copied content delete after pasting thw content.
+	
+2) Write comments for action methods.
+
+3) Update rename file and folder.
+
+
+
+	  	                      24th-Sept-2024 - Report
+========================================================================================
+
+To do list 
+
+1) complete the customer documents work.
+
+2) Create a new tab for Apointment for customer 
+
+3) Use FullCalendar for create apointment.
+
+
+Today I have worked on below points
+
+
+1) complete the customer documents work.
+     - Update all js functions.
+	 - Update all action methods.
+	 - Remove static root path and use item.path for retrive path of file and folder.
+
+2) A apointment for customer 
+     - Create a new tab for apointment for customer.
+	 - Create a action method and Model of apointments.
+	 - Create table in database.
+	 
+3) Use FullCalendar for create apointment.
+     - Use js, jQuery, css cdn to use fullcalendar all properties.
+	 - Create a js function for get apointment.
+	 - And use js function to call action method.
+	 
+	 
+	  	                      25th-Sept-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Use FullCalendar for create apointment.
+
+2) Create CRUD for appointment in full calendar.
+
+
+Today I have worked on below points
+
+
+1) Use FullCalendar for create apointment.
+     - Use js, jQuery, css cdn to use fullcalendar all properties.
+	 - Create a js function for get apointment.
+	 - And use js function to call action method.
+
+2) Create CRUD for appointment in full calendar.
+     - Create CRUD action method for appointment.
+	 - Create Function for Create, Edit, Details and Delete.
+	 - Use sweet alert for delete appointment.
+	 
+3) Use 3tier architecture.
+
+4) Create js file to perform all js operations.
+
+5) Read Angular.
+	 
+	  	                      26th-Sept-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Read Angular.
+
+2) Create all ZippyCRM project using Angular.
+
+
+Today I have worked on below points
+
+
+1) Read Angular.
+
+2) Create a Crud using angular(in vs code) and .net core api(in visual studio 2022).
+
+
+	  	                      27th-Sept-2024 - Report
+========================================================================================
+
+Today I have worked on below points
+
+1) Read Angular 18.
+	- Introduction to Angular
+	- Angular Versions and Versioning
+	- Angular Environment Setup
+	- Creating Angular Project
+	- Folder Structure of Angular Application
+	- Angular Environment Setup in Visual Studio
+	- Run Angular Application Using Visual Studio
+	- Creating Angular Project using Visual Studio Code
+	- Modules in Angular Application
+	- Angular Decorators
+	- Angular Components
+	- Angular Component Decorator
+	- Radio Buttons in Angular Template Driven Forms
+	- Checkbox in Angular Template Driven Forms
+	- DropDownList in Angular Template Driven Forms
+
+	  	                      30th-Sept-2024 - Report
+========================================================================================
+
+
+Today I have worked on below points
+
+1) Create a api in asp.net core.
+  - Create a model -Example
+  - Create dbcontext class.
+  - Create controller Examples.
+  - Create GetAllExample, GetExampleById, CreateExample, Edit Example and DeleteExample.
+  
+2) Read Angular 18.
+  - Binding dynamic text, properties and attributes
+  - Adding event listeners
+  - Two-way binding
+  - Control flow
+  - Pipes
+  - Slotting child content with ng-content
+  - Create template fragments with ng-template
+  - Grouping elements with ng-container
+  - Variables in templates
+  - Deferred loading with @defer
+  - Expression syntax
+  - Whitespace in templates
+  
+  	  	                      1st-Oct-2024 - Report
+========================================================================================
+
+Today I have worked on below points
+
+1) Took Angular 18 classes from YouTube
+  - Data Binding in Angular 
+  - Structural Directive | *ngIf *ngFor 
+  - Attribute Directive | ngClass, ngStyle 
+  - Routing in Angular | How to Implement Routing in Angular 
+  - Control Flow Statement in Angular 18 | @if, @if else, @else 
+  - Control Flow Statement in Angular 18 | @for, @switch case 
+  - What are pipe | how to create custom pipe 
+  - How to Create Template Form | Template Form Validation 
+  
+  
+  
+  	  	                      2nd-Oct-2024 - Report
+========================================================================================
+
+Today I have worked on below points
+
+  
+1) Took Angular 18 classes from YouTube
+  - How to Create Reactive Form | Reactive Form Validation 
+  - Get API using HttpClient 
+  - Post API using HttpClient 
+  - PUT & Delete API I using HttpClient 
+  - What is Service in Angular 
+  - @Input @Output in angular | Reusable Component in Angular   
+  
+  
+  	  	                      3rd-Oct-2024 - Report
+========================================================================================
+
+Today I have worked on below points
+
+  
+1) Took Angular 18 classes from YouTube
+Component Life Cycle Events 
+  - What is ng-template 
+  - What is ng-container 
+  - What is viewchild 
+  - What are Decorators in angular 
+  - Login in Angular | Hard Code Value  
+  
+  
+  	  	                      4th-Oct-2024 - Report
+========================================================================================
+
+Today I have worked on below points
+
+  
+1) Took Angular 18 classes from YouTube
+  - Login in Angular | with API 
+  - canActivate guard in angular 
+  - Constant File in angular 
+  - Class & Interface 
+  - What is signal 
+  - Rxjs Subject & BehaviorSubject 
+  - What is Change Detection | zone.js
+  - Angular Project Architecture Folder Setup 
+  
+  
+  	  	                      7th-Oct-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Create ZippyCRM project in Angular using api.
+
+Today I have worked on below points
+
+ 1) Create api project
+ 
+ 2) Create User, login and changePassword model
+    
+ 3) Create Account Api Controller methods
+   - GetAddressList
+   - Register
+   - Login
+   - ForgotPassword
+   - ResetPassword 
+   
+ 4) Create Home API Controller methods
+   - Index
+   - UsersProfile
+   - Edit
+   - DeleteImage
+   - ChangePassword
+   
+ 5) Make all methos async.
+ 
+ 6) Create Services folder to implement complicate logics
+   - Account Services(Async).
+   - Home Services(Async).  
+  
+  	  	                      8th-Oct-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Create ZippyCRM project in Angular using api.
+
+Today I have worked on below points
+
+1) Create Customer api controller
+
+2) Create Customer api methods
+   - GetCustomers
+   - CreateEditCustomer
+   - SaveImageAsync
+   - CustomerDetails
+   - CustomerProfile
+   - DeleteCustomerAsync
+   - ContactList
+   - CreateEditContact
+   - ContactDetails
+   - ContactDelete
+   - GetAddreses	
+   - CreateEditAddresses
+   - GetAddressDetails
+   - DeleteAddress
+   - GetTasks
+   - CreateEditTask
+   - TaskDetails
+   - DeleteTask
+   - GetNotes
+   - CreateEditNotes
+   - NotesDetails
+   - DeleteNotes
+   - GetAllFilesAsync
+   - GetAllFilesBySearching
+   - GetFolderContents
+   - CreateDirectory
+   - RenameFolder
+   - CopyFolder
+   - PasteFolder
+   - DeleteFolder
+   - GetAppointments
+   - CreateEditAppointment
+   - GetAppointmentDetails
+   - DeleteAppointment
+   
+3)  Create Services to implement complicate logics
+   - GetCustomerByIdAsync
+   - DeleteCustomerAsync
+   - DeleteUserImageAsync
+   - ContactListAsync
+   - CreateEditContactAsync
+   - ContactDetailsAsync
+   - ContactDeleteAsync
+   - getCustomerAddressesAsync
+   - GetAddressByIdAsync
+   - DeleteAddressByIdAsync
+   - getCustomerTasksAsync
+   - DeleteTaskByIdAsync
+   - getTaskById1Async
+   - getCustomerNotesAsync
+   - getNotesById1Async
+   - DeleteNotesByIdAsync
+   - GetDirectoryContentsAsync
+   - getAppointmentByIdAsync
+   - DeleteAppointmentByIdAsync
+
+
+ 
+  	  	                      9th-Oct-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Create ZippyCRM project in Angular using api.
+
+Today I have worked on below points
+
+1) Create a Angular 18 project to implement ZippyCRM.
+
+2) Create Component
+   - Login component.
+   - Layout comment.
+
+3) Create Login component 
+   - Create Html of login.
+   - use bootstrap for css.
+   - In angular we can use typescript.
+   - Login with Email and password.
+
+4) Create Layout component 
+   - Create Html of Layout.
+   - use bootstrap for css.
+   - In angular we can use typescript.
+   - In layout 
+     - header
+	 - navbar
+	 - footer
+	 
+  	  	                      10th-Oct-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Create ZippyCRM project in Angular using api.
+
+Today I have worked on below points
+
+1) Create a assets folder for NiceAdmin css,images,js,bootstrap,etc.
+
+2) Mention assets in angular.Json to use it in anywhere.
+
+3) Create index component for dashboard .
+    - use bootstrap for css.
+	- Install echart and apexchart.
+	- implement echart and apexchart in indext.
+	- Create mathod for echart and apexchart.
+	
+4) Create User component 
+   - userLogin and userRegister
+   - user profile
+   - forgot password
+   - Reset password
+   - profile-need-help.
+	
+
+
+  	  	                      11th-Oct-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Create ZippyCRM project in Angular using api.
+
+Today I have worked on below points
+
+1) Create model folder for customer models
+   - customer
+   - address
+   - appointment
+   - contact
+   - task
+   - notes
+   
+2) create service forder for services
+   - customer services
+   - toggle service
+   
+3) Manage route in app.route.ts 
+   - default path for login 
+   - after that layout 
+   - in layout multiple children like index,user-profile and so on.
+   
+4) set RouterOutlet,RouterLink in layout and other conponens
+   - RouterOutlet for main part of content.
+   - RouterLink for links.
+
+5) Create customer folder for customer components
+   - Create customer list and customer register component.
+   - Implement both .
+  	  	                      14th-Oct-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Create ZippyCRM project in Angular using api.
+
+Today I have worked on below points
+
+1) Create folder for customer profile 
+    - Create components
+	   - customer profile
+	   - add active tab in profile ts.
+	   - customer contact
+	   - subscribe getContactList().
+	   - customer addresses
+	   - subscribe getCustomerAddresses(). 	
+	   - customer tasks
+	   - subscribe getTaskList().
+	   - customer notes
+	   - subscribe getNotesList().
+	   - customer appointment.
+	   - use FullCalendar.
+	   
+2) Use @Input() for retrive id of customer from customer profile.
+	
+3) Create services for all customer components.
+
+4) Use api for all services.
+
+5) Impliment api for customer data.
+
+  	  	                      15th-Oct-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Create ZippyCRM project in Angular using api.
+
+Today I have worked on below points
+
+1) Add limit of customer list 
+   - Implement some html and ts for limit of customer list.
+   
+2) Add Icon for add new customer.
+
+3) Add search box for cusomer searching from customer list.
+   - We can search by name and id.
+   
+4) Add pagination  in customer list to manage customers.
+   - Add some html and ts for pagination.
+   
+5) When click on edit icon the customer edit page is open and customer details auto fill in form then we can edit it easily.
+   - Add enum list in form.
+   - when user click on cancel then it redirect on customer list page. 
+   
+
+  	  	                      16th-Oct-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Create ZippyCRM project in Angular using api.
+
+Today I have worked on below points
+
+1) Get Customer Details without api for edit.
+  - Retive customer data from customer list.
+  - Create a function and send data with navigate('',data);
+  
+2) Get customer data by 'const state = window.history.state;' from customer list
+ 
+3) Set data in input tag using [ngModel].
+
+4) Impliment EditCustomer
+   - create aray type variable to store enum in array.
+   - Implement onFileChange(event: any){} for customer image.
+   - Implement onSubmit(){} for store data in formData.
+   
+5) Implement customerDetails component for customer details
+  - Retrive data from customerList without api.
+  
+6) Implement deleteCustomer fuction for delete the customer 
+  - Use api to delete customer.
+  - Use sweet alert for better view.
+  
+      
+
+  	  	                      17th-Oct-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Create ZippyCRM project in Angular using api.
+
+Today I have worked on below points
+
+1) Update deleteCustomer 
+   -  When customer id used as foreign key then customer is not delete.
+   -  I update it when user click on delete customer then first check other related data and delete them, 
+      After that delete Customer data.
+	  
+2) NgxSpinner is used on app.component.html for use spinner when load the page or sent request to api for data.
+
+3) Create function on customer contact for Create a contact.
+   - Create model popup in customer contact list.
+   - User click on add contact then model popup is open.
+   - Now user can add contact.
+   
+4) Create function on customer contact for Edit a contact.
+   - Use same model popup of customer contact list.
+   - User click on Edit icon then model popup is open.
+   - Now user can edit contact.
+   
+5) I don't use api for retrive data for edit.
+   - I retrive data from customer contact list.   
+      
+
+  	  	                      18th-Oct-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Create ZippyCRM project in Angular using api.
+
+Today I have worked on below points
+
+1) Update customer profile link customer name into customer image.
+
+2) Add customer contact details 
+   - Create a function and provide customer contact data.
+   - Use same modal popup used in contact creation and editing.
+   - If user click on contact details, Same modal popup open but in modal popup have diffrent data.
+   
+3) Add Address add,Edit,delete and details.
+   - For Add and Edit used same modal and input boxes,
+   - For details also used same modal popup but after user click on details
+     then in modal popup used diffrent data using *ngIf condition.
+   - For delete i used sweet alert when user confirm with 'Yes,Delete it'
+     then exicute the delete api and delete the data.
+	 
+4) For customer tasks i retrive user list and convert it in Array.
+
+
+
+
+  	  	                      19th-Oct-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Create ZippyCRM project in Angular using api.
+
+Today I have worked on below points
+
+   
+1) Create Address add,Edit,delete and details.
+   - For Add and Edit used same modal and input boxes,
+   - For details also used same modal popup but after user click on details
+     then in modal popup used diffrent data using *ngIf condition.
+   - For delete i used sweet alert when user confirm with 'Yes,Delete it'
+     then exicute the delete api and delete the data.
+	 
+	 
+2) Add customer address details 
+   - Create a function and provide customer address data.
+   - Use same modal popup used in address creation and editing.
+   - If user click on address details, Same modal popup open but in modal popup have diffrent data.
+   
+3) Add Task add,Edit,delete and details.
+   - For Add and Edit used same modal and input boxes,
+   - For details also used same modal popup but after user click on details
+     then in modal popup used diffrent data using *ngIf condition.
+   - For delete i used sweet alert when user confirm with 'Yes,Delete it'
+     then exicute the delete api and delete the data.
+	 
+
+  	  	                      21th-Oct-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Create ZippyCRM project in Angular using api.
+
+Today I have worked on below points
+
+1) Create Notes add,Edit,delete and details.
+   - For Add and Edit used same modal and input boxes,
+   - For details also used same modal popup but after user click on details
+     then in modal popup used diffrent data using *ngIf condition.
+   - For delete i used sweet alert when user confirm with 'Yes,Delete it'
+     then exicute the delete api and delete the data.
+	 
+2) In customer Notes details 
+   - Create a function and provide customer Notes data.
+   - Use same modal popup used in Notes creation and editing.
+   - If user click on Notes details, Same modal popup open but in modal popup have diffrent data.
+   
+3) For Crteate and Edit i used Quill 
+   - Quill provide us some more features for write discription like bold, Italic, Underline, Create as link etc.
+
+4) Create Appointment Add in fullCalendar 
+   - In Appointment i use some more events like fetchEvents, handleEventDrop, handleEventResize, handleEventClick.
+   - fetchEvents for retrive data from api.
+   - handleEventDrop for update event with drag and drop.
+   - handleEventClick for Show event details when user click on event.
+   
+  	  	                      22th-Oct-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Create ZippyCRM project in Angular using api.
+
+Today I have worked on below points
+
+1) In customer appointment details 
+   - Create a event 'handleEventClick' and provide customer Notes data.
+   - Use same modal popup used in appointment creation and editing.
+   - If user click on event, The same modal popup open, But in modal popup have diffrent data.
+   
+2) Solved this problem 
+   - All function and event accure properly but the fullcalendar not showing properly ,
+     When i click on f12 or reaload the Appointment Tab then fullCalendar show  properly.
+   - Create a refreshCalendar() fuction.
+   - Use @Input and @Output for perform this function.
+   
+3) Get Customer Documents
+   - Create function and using api get documents.
+   - Get file extention and use file and folder icon.
+
+4) Get inner files and folders.
+   - Create function and using api get files and folders.
+      
+  	  	                      23th-Oct-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Create ZippyCRM project in Angular using api.
+
+Today I have worked on below points
+
+1) I create a fuction to copy the folder or file .
+    - Create a function on click copy dropdown item.
+	- then send data to api using service.
+	- We can copy file also.
+	- It copy all inner files and folders using foreach loop.
+	
+2) I create a fuction to paste the folder or file .
+    - Create a function on click paste dropdown item.
+	- then send data to api using service.
+	- We can can't paste anything in file.
+	- But we can copy and paste a file anywhere.
+	- It paste all inner files and folders using foreach loop.
+	
+3) I create a fuction to Move the folder or file .
+    - Create a function on click move dropdown item.
+	- then send data to api using service.
+	- We can move file also.
+	- It move all inner files and folders using foreach loop.
+	- I used all the copy function and api to move the files and folders, 
+	  only type is 'Move'.
+	  
+	  
+      
+  	  	                      24th-Oct-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Create ZippyCRM project in Angular using api.
+
+Today I have worked on below points
+
+1) I create a fuction to Create the folder or file .
+    - Create a function on click Create button.
+	- then send data to api using service.
+	- We can't create file.
+	
+2) Create a api to get user job options
+	
+3) Create a function to user registeration.
+    - create a object of FormData().
+	- put all data in formdata.
+	- send formdata in api using service.
+	- if user added succesfully then show a sweet alert and hide it after 2 seconds.
+	- If you can't get refesed contant after creating a folder then you can setTimeOut().
+	
+	
+      
+  	  	                      25th-Oct-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Create ZippyCRM project in Angular using api.
+
+Today I have worked on below points
+
+1) Create a input tag for search the folder.
+    -  Create a function for search the folder from folders list.
+    -  When user enter folder name then it called automatically.
+	-  It retrieve folders on searching time.
+	
+2) Add folder and file icon on list.
+
+3) Convert folder list contant more attractive.
+
+4) When user right click on folder or file then a modal popup is opened.
+   - I use model popup for Copy, Move, Paste, Rename and Delete.	
+      
+	  
+  	  	                      28th-Oct-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Create ZippyCRM project in Angular using api.
+
+Today I have worked on below points
+
+1) When user right click on folder or file then a modal popup is opened.
+   - In model popup Show the folder or file name on top.
+
+2) I craete a rename section for rename the folder or file.
+
+3) When user click on rename.
+   - Then a input tag open on file location and file name is hide.
+   - Input tag and some buttons show on file location.
+   - 'Save' button used to save the folder name.
+   - 'Cancel' button used to cancel the rename.
+   - When rename is done then list of folders and file is reaload itself.
+
+4) I remove the dropdown for copy, move, paste, rename and delete.
+
+	  
+  	  	                      29th-Oct-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Create ZippyCRM project in Angular using api.
+
+Today I have worked on below points
+
+1) Test all customer contant.
+    - Customer Crud.
+	- Customer contact, Address, Task, Document, Notes and Appointment.
+	
+2) Retrieve user image and user name on layout header section.
+
+3) Retrieve User data in Profile page 'Overview tab'.
+
+4) Fill all input tag with user date for edit user, In 'Edit User' tab.
+
+5) I used Overview, Profile,Settings and Change Password in one page .
+    -  use tabs for all contant.
+	
+	
+	  
+  	  	                      30th-Oct-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Create ZippyCRM project in Angular using api.
+
+Today I have worked on below points
+
+1) Update the User-Profile edit.
+   - Fill all data on click of user-profile.
+   - then user can update data.
+   - User can update image also.
+   - When user update the image then previous image is deleted and selected image is uploaded in image folder.
+   - When user update then show a sweet alert and then redirect into login page.
+   
+2) Update the Change password.
+   - User can fill the current password and new password with confirmation password.
+   - when user changed the password then show a sweet alert and do empty the input fields.
+   
+   
+   	
+	  
+  	  	                      07th-Nov-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Create ZippyCRM project in Angular using api.
+
+Today I have worked on below points
+
+1) Impliment Validation for resete password.
+   - Validators.required for required feilds.
+   - Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/) for password validation.
+   
+2) I Create a validator 'passwordMatchValidator();'
+   - { validator: passwordMatchValidator() } // Apply the custom validator here  
+   - To call the created custom validator.
+
+
+3) Impliment validations.
+   - Validators.pattern(/^[A-Za-z\s]+(?: [A-Za-z0-9\s]+)*$/)  for name validation.
+   - Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z.-]+\.[a-zA-Z]{2,}$/) for email validation.
+   - These all validation are reguler expretion in Angular.
+   - Validators.required for required feilds.
+   
+4) Complete User edit using ReactiveFormsModule.
+
+5) Add validation in user register form.
+   - Reactive form validation.
+   
+   
+	  
+  	  	                      08th-Nov-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Create ZippyCRM project in Angular using api.
+
+Today I have worked on below points
+
+1) Description (Quill Editor) value is not shown correctly in customer notes. I solved the problem.
+   - With thw help of private sanitizer: DomSanitizer,  this.sanitizer.bypassSecurityTrustHtml()
+   
+2) Title, Gender and Language dropdown not shown correctly in customer register form. I solved the problem.
+
+3) In customer register form i implement validations.
+   - Required validation.
+   - Name validation with numbers not allow.
+   - Dropdown null value validation.
+   - Phone number validation (10 to 12 numbers and + sign allowed).
+   
+4) Because customer from is not a model popup, Create customer and edit customer both task performed in single form,
+   Create and Edit customer colled from two diffrent components that's why we need to update edit customer also.
+   - Set all feilds value of window.history.state;(set value from customer list when user click on edit customer) in onSubmitForm;
+   - Set dropdown list value manually.
+   
+5) In customer contacts form i implement validations.
+   - Required validation.
+   - Name validation with numbers allow after first name then a white space or last name.
+   - Dropdown null value validation.
+   - Phone number validation (10 to 12 numbers and + sign allowed).
+   
+   
+  	  	                      11th-Nov-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Create ZippyCRM project in Angular using api.
+
+Today I have worked on below points
+
+1) Update user register onSave() function.
+   - I had added localstorage user-password to password in onSave function, but now the password the user fills will go to the API.
+   
+2) When user fill already existing email then show a error on sweet alert(Email is already exist.)
+
+3) When user fill wrong user credentials for login then show a sweet alert error.
+
+4) Use this.onSubmitForm.patchValue({}) for fill values in input feildes for edit customer contact.
+
+5) Add some more validation in customer contacts register form.
+   - Validators.pattern(/^\+?[0-9]*$/) for Mobile number 'Only numbers and an optional + at the start are allowed'.
+   - Validators.pattern('^[+]?[0-9 ]*$') for Phone number 'Phone number can contain only numbers, spaces, and an optional '+' sign at the start'.
+ 
+6)  In customer address form i implement validations.
+   - Required validation.
+   - Email validation 'First enter 5 charactors then you can use numbers after that '@', domain name then '.' and last two char'.
+   - mobile number validation (10 to 12 numbers and + sign allowed).
+   - phone number validation (10 to 12 numbers, spaces and + sign (optional) allowed).
+   
+7) When user click on edit address icon then same model popup is open and value of selected address are shown in model feilds.
+
+8) Add some validation in customer Task Create and edit form.
+   - required validation.
+   - When user click on edit task icon then same model popup is open 
+     and value of selected address are shown in model feilds
+	 with dropdown value.
+ 
+9) Add validation in customer documents create folder input box.
+   - Minimum(1) and maximum(50) 
+   - (.) dot not allowed.
+      
+   
+  	  	                      12th-Nov-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Create ZippyCRM project in Angular using api.
+
+Today I have worked on below points
+
+1)  Add some validation in customer Notes Create and Edit form.
+   - required validation.
+   - When user click on edit Notes icon then a model popup is open 
+     and user can edit customer notes using quill editor.
+   - Quill editor used for notes description.
+
+2)  Create a function for delete notes.
+   - when user click on delete icon then show a confirmation sweet alert.
+   - If user click on 'Yes, delete it!' then the data is delete.
+   - Otherwise user can click on 'No, keeo it'.
+
+3)  Add some validation in customer Appointment Create and Edit form.
+   - required validation.
+   - When user click on event then a model popup is open for appointment details.
+   - In details model popup have two buttons 'Edit' and 'Delete' 
+   - User can edit customer Appointment (events).
+   - For user appointment we use FullCalendar.
+
+4) Impliment authorization in ZippyCRM project.
+   - Use Jwt authorization.
+   - Also use CanActive guard.
+   - Create a AuthService in api and create a token.
+   - Return it from api to angular.
+   - In angular i store it in localstorage and get localstorage data in Interceptor to send token in header.
+   - Also get localstorage data in Auth guard to authorize the user.
+   
+5) Use different popup model becouse Quill editor not working perfectly.
+
+6) Remove required from customer middle Name.
+      
+   
+  	  	                      13th-Nov-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Create ZippyCRM project in Angular using api.
+
+Today I have worked on below points
+
+1) Create a forgot password page for forgot password of user.
+   - Create a form to send email to api.
+   - User will enter his/her email to forget the password.
+
+2) Used validation.
+   - Required validation.
+   - Pattern  for email 'First enter 5 characters  then you can use numbers after
+     that '@', domain name then '.' and last two char.'
+	 
+3) When user submit the form then a email recive user for reset password.
+   - User click on that link then open a reset form.
+   - Now user enter new password and confirm password to reset.
+
+4) Validation used.
+   - required.
+   - Pattern  for password ' Password must be at least 8 characters long, with an
+     uppercase, lowercase, number, and special character.'
+   - export const passwordMatchValidator: ValidatorFn = (formGroup: AbstractControl) function for confirm password.
+   
+5) Update customer documents.
+   - Problem => When user enter inner folder and then come back to base folder then if user create any folder then it create in inner folder.
+     I solved the problem.
+   - Update some style of rename input and buttons.
+   - Problem => If user rename a folder and type 'foldername.txt' etc then the folder icon is convert into file icon.
+     And if user rename a file and remove '.txt' (file extension) then the file icon is convert into folder icon and also change file type in 'this pc'.
+	 I solved the problem.
+   - Add validation now user can't type (.) and can't remove file extension.
+   - Max 50 and min 1 character for folder or file.
+   - Implement file and folder icon, name and rename form in row and col class.
+   
+         
+   
+  	  	                      14th-Nov-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Create ZippyCRM project in Angular using api.
+
+Today I have worked on below points
+
+1) The problem here is, when the user clicks on 'Create and Edit' customer contacts, address, task, notes and appointment or if he enters a value in an input box and 
+   clicks on the submit button then he is not able to click on the submit button because it is disabled. 
+   The main problem is that the user will not see the invalid fields after submit.
+   - I remove the disabled attribute from button.
+   - 'submitted = false;' it's a flag, it convert in true when user click on Submit botton and show error 'Please enter input value.'.
+
+2) Remove .Invalid, .touched and .durty.
+   - Created shouldShowError() function for invalid, touched and submitted.
+   - Called this function in all required input fields.
+
+3) Both the above mentioned things are also applied in 'Customer and User Register'.
+
+4) - Rearranged the user register form.
+   - Description input box into textarea tag.
+   
+5) Add placeholder in all input and textarea tags.
+
+6) Update Customer documents paste api.
+   - Problem = For example i copy a folder 'deepak' from 'C:\Files\DocumentManager\Customer\1\a\deepak'
+     and paste it in 'C:\Files\DocumentManager\Customer\2' then it create like 'C:\Files\DocumentManager\Customer\2\1\a\deepak'.
+   - I created a variable count=0; and cout the path parts by split("\\").
+   - Retrieve Last part of path.
+   - Then combine base path and last part, Now this is the base path.
+   - Paste (Create) here all files and folders after last part.
+      - For example last part is deepak and in deepak folder have two more folder and one file, then create these folders and file in deepak folder.	 
+   
+      
+  	  	                      15th-Nov-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Create ZippyCRM project in Angular using api.
+
+Today I have worked on below points
+
+1) When i rename a folder or file then the list is not apdate that time.
+   - To update list we need to reaload the page.I solved this problem.
+   
+2) Start implimenting the Server-Side-Validations in Create and Edit users.
+
+3) Implimented model property validations in users model.
+   - Required.
+   - RegularExpression for User name, Email and Password.
+   - Compare to compare 'password' and 'confirm password'.
+   - DataType for password data type.
+   
+4) Handle the validation error massage in onSubmit function and display it in <small></small> tag.
+   - const validationErrors = err.error.errors; in this variable hold the error and assigned To FormControl.
+   - *ngIf="onSubmitForm.get('password')?.hasError('serverError')"   to check error.
+   - {{ onSubmitForm.get('password')?.errors?.['serverError'] }} to display error.   
+   
+5) Implimented model property validations in customer model.
+   - Required.
+   - RegularExpression for Customer First Name and Email.
+   - DataType for password data type.
+   
+6) The same process I have followed to handle customer validation error massage is mentioned in the fourth point.
+   - Used 'field.charAt(0).toLowerCase() + field.slice(1)' to lowercase the first character of the field.
+
+7) Add Server-Side-Validations in customer contacts.
+
+8) Add Server-Side-Validations in customer Addresses.
+
+      
+  	  	                      18th-Nov-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Create ZippyCRM project in Angular using api.
+
+Today I have worked on below points
+
+1) Start implimenting the Server-Side-Validations in Customer Task Create and Edit Form.
+
+2) Implimented model property validations in model.
+   - Required.
+   
+3) Handle the validation error massage in onSubmit function and display it in <small></small> tag.
+   - const validationErrors = err.error.errors; in this variable hold the error and assigned To FormControl.
+   - *ngIf="onSubmitForm.get('summary')?.hasError('serverError')"   to check error.
+   - {{ onSubmitForm.get(summary)?.errors?.['serverError'] }} to display error.   
+   
+4) Added Server-Side-Validations in customer Notes.
+
+5) Added Server-Side-Validations in customer Appointment.
+
+6) Added Comments in 'ZippyCRM' API project where need.
+
+7) Added Comments in 'ZippyCRM' Angular project where need.
+
+8) Added Ngx loading.
+  - Install Ngxspinner using cmd.
+  - mentione spinner css in angular.json.
+  - Created a intercepter.
+  - Create a service to handel the spinner;
+  - Used the '<ngx-spinner><p style="color: white">Loading...</p></ngx-spinner>' in app.component.html
+    and import NgxSpinnerModule in app.component.ts
+	
+      
+  	  	                      19th-Nov-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Create ZippyCRM project in Angular using api.
+
+Today I have worked on below points
+
+1) Converted the project from an admin web site to a web site.
+  - Earlier, when running the project, the login page used to open, but now the index page opens.
+  - Remove authorization from index page.
+  - When the project is run for the first time, the tab index page is opened, 
+    but without login the user can open the profile or see the customer list or add a customer.
+  - When the user logs in, the user login button disappears from the nav bar.
+  
+2) Create a ContactUs model in api for contact us field.
+
+3) Create ContactUs component in angular.
+  
+4) Made the edit user form in the user profile even more attractive.
+
+5) Remove unnecessary nav items from navigation bar.
+
+
+
+      
+  	  	                      20th-Nov-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Create ZippyCRM project in Angular using api.
+
+Today I have worked on below points
+
+1) To provide secure access to the window, we used Angular's dependency injection
+   to check for its existence before adding a cover to the window.
+   
+2) Create a clearLocalStorage() service to cleare the local storage.
+  - On Browser Close: The beforeunload event ensures localStorage is cleared when the browser or tab is closed.
+  - On Project Stop: If you stop the project using ng serve or similar tools, 
+    the browser will close or refresh the app, triggering the beforeunload event.
+  - On Inactivity: The timeout mechanism ensures localStorage is cleared after 1 hour of no user interaction.
+  
+3) Remove some function from clearLocalStorage() service.
+  - On Browser Close:
+  - On Project Stop:
+  
+4) Remove delete user image button from Edit user form.
+
+5) Update upload user image field.
+  - Hide upload image button from Edit user form.
+  - Now input box trigger when user click on user image.
+  - When the user selects an image for the profile, the user image appears in edited form at that time and is updated after submission.
+  
+6) Implimented code to Create and get contactUs list.
+   - Add action method and service in api and also create function in angular to create contactUs and get contactUs list. 
+
+
+      
+  	  	                      21th-Nov-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Create ZippyCRM project in Angular using api.
+
+Today I have worked on below points
+
+1) Update local-storage.service.ts.
+   - On Inactivity not working well, when i close the browser then it don't clear localstorage.
+   - Key for tracking last activity timestamp.
+   - Key to track session activity.
+   - Set to 5 seconds for testing purposes (adjust as needed).
+   - Check if browser close or reload on startup then Set the session active.
+   - Track browser/tab close if session is active then Save the last activity timestamp only on browser close.
+   
+2) Update user profile.
+   - Create a service ts for handle the user localstorage like set, get and clear .
+   - Now we can call user localstorage data using service object.
+   - Now when user update the user details and click on submit button then don't need to re-login to see updated data,
+     When user click on submit then user details update automatically.
+	
+3) Add validations in ContactUs form.
+   - Required.
+   - Pattern for name.
+   - pattern for email.
+
+4) When customer submit contactUse then it show in layout navbar notification penal.
+   - Only unread(unmarked) notifications show in notification penal.
+   - When user customer click on ViewAll then show the all notification (marked and unmarked).
+
+5) Customer click on 'Show all notifications' then show all unmarked notifications in notification penal list.
+   
+   
+      
+  	  	                      22th-Nov-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Create ZippyCRM project in Angular using api.
+
+Today I have worked on below points
+
+1) Add scroll bar in notification list if in list have more then 4 rows.
+
+2) Update notification list style.
+   - Before i update when i click 'Show all notifications' then notification list hide.
+   - Now when i click 'Show all notifications' then the notification list not hide and 
+     if in list have more then 4 rows then scroll bar is active and user can see the data.
+   
+   
+3) Read about how to manage when we need to communicate with two components.
+
+4) When anyone submit the contact us form then in layout component contact-us-list update automatically and 
+   Show count of all unread notifications.
+   
+5) Created a layout service to load  GetContactUsData() after login.
+   
+6) Model popup for notification details.
+   - Create a model popup in layout.
+   - That popup is open when user click on any notification.
+   - After that message is hide from notifications list.
+      
+   
+      
+  	  	                      25th-Nov-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Create ZippyCRM project in Angular using api.
+
+Today I have worked on below points
+
+1) sendTime(date type) column added in contactus table.
+   - Update the updateContactUs function.
+   - Update angular model.
+   - Send current date and time to api.
+  
+2) ContactUs Details(notification details) component created.
+   - When user visit in notification list then user can see details icon and also when any 
+     clien submit the contactUs form then in notification list of layout navbar notification count increased by 1.
+     If user click on that message then it open notification details component.
+  
+3) Delete ContactUs (notification) api created.
+   - In notification list user can see delete icon, 
+     when user click on delete icon then the notification delete from list.
+   
+4) Created getTimeDifference(inputTime: Date | undefined) function to count diffrence between given time and current time.
+   - Used this function in layout navbar notifications details 
+     for example a form submitted 3:25 pm and current time is 4:20 pm then show '55 minat(s) ago.'.
+   
+5) this.layoutService.GetContactUsData(); reload every 1 minute to show notification time. 
+   
+6) Update User Register.
+   - Check user mobile number is duplicate or not.
+   - If duplicate then show an sweet alert 'Mobile number is already exist'.
+   
+   
+      
+  	  	                      26th-Nov-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Create ZippyCRM project in Angular using api.
+
+Today I have worked on below points
+
+1) Created a CreateMessage() api to send messages to another users.
+   - Created a service to save message in database.
+
+2) GetAllMessages(id) created to get messages list according to user Id.
+
+3) DeleteMessage(id) created to delete message using message id.
+   
+4) Watch tutorials on how to implement chat in your project.
+
+5) Created Chat model ,chat component and chat service.
+   - In chat service Created two service getChat() and AddMessage().
+
+6) In chat component.
+   - Get user data from local storage.
+   - Create a function onSubmit(event: Event) to add chat.
+   - getTimeDifference(inputTime: Date | undefined) to get time difference.
+   - User can communicate with each other with the help of chat feature.
+   
+      
+      
+  	  	                      27th-Nov-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Create ZippyCRM project in Angular using api.
+
+Today I have worked on below points
+
+1) Read tutorials about signalr.
+   - Introduction to SignalR.
+   - Supported Platforms.
+   - Real-time chat with SignalR.
+   - Real-time chat in Angular 18 and MVC CORE 8 API with SignalR.
+   - High-frequency real-time with SignalR 2.
+  
+Note :-  I want to create a chat application here users can chat with each other, with the help of creating a 'room'.
+       - Here only registered user can chat. 
+   
+2) Created a folder 'Hub' in api project For implement the class.
+
+3) Created a 'ChatHub' class in Hub folder. 
+   - JoinRoom() to join the room.
+     Here bot send a message 'username has joined the group' when user join group.
+   - SendMessage() to send message in joined room.
+   - OnDisconnectedAsync() When user leave the room then send a message in room.
+   - SendConnectedUser() Send the list of connected users in that room.
+   
+4) Created Join-Chat component.
+   - When user click join then a page open and then user can enter user name and room name.
+   - Also implement validation.
+ 
+5) Created a chat component.
+   - When user click on join then user see a another page.
+   
+6) Created services to implement chat services.
+     
+      
+      
+  	  	                      28th-Nov-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Create ZippyCRM project in Angular using api.
+
+Today I have worked on below points
+
+1) Update the chat service.
+  -  public connection: signalR.HubConnection = new signalR.HubConnectionBuilder()
+     .withUrl('https://localhost:7269/ChatHub', {
+      withCredentials: true,  
+	- To allow credentials means to communicate client-side and server-side.
+
+2) Update join room component.
+  - Remove the username input feild, Now the logged username is the user.
+  - When user click on join then it redirect to chat-with-user component.
+  
+3) Update the chat component.
+  - When user reload the page then show a confirm box becouse if user reload then all users and chat is become empty.
+  - When user click on Leave chat then it redirect to join-chat component.
+   
+4) Create another Hub 'DirectMessageHub'.
+  - Created some methods to direct chat.
+  
+5) Created DirectMessage component.
+  - sendMessage() to send message.
+  - loadChatHistory() To load the chat history from database.
+  
+6) Created Service to communicate with server-side.
+   
+        
+      
+      
+  	  	                      29th-Nov-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Create ZippyCRM project in Angular using api.
+
+Today I have worked on below points
+
+Note:- My 28th-Nov-2024 not working thet is whay i repeat it with diffrent code.
+
+1) Create the DirectMessageService service.
+  -  public connection: signalR.HubConnection = new signalR.HubConnectionBuilder()
+      .withUrl('https://localhost:7269/DirectMessageHub', {
+        accessTokenFactory: () => token, // Pass the token to SignalR
+      })
+      .withAutomaticReconnect()
+      .build(); 
+	- To send token to server-side.
+  
+2) Created the DirectMessage component.
+  - When user reload the page then show a confirm box becouse if user reload then all users and DirectMessage is become empty.
+  - When user click on Leave DirectMessageService then it redirect to join-chat component.
+   
+3) Created Hub 'DirectMessageHub'.
+  - Created some methods to direct DirectMessageService.
+  
+4) Created DirectMessage component.
+  - sendMessage() to send message.
+  - loadChatHistory() To load the DirectMessage history from database.
+  
+5) Created Service to communicate with server-side.
+   
+      
+      
+  	  	                      02nd-Dec-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Create ZippyCRM project in Angular using api.
+
+Today I have worked on below points
+
+1) Update the DirectMessageHub.SendMessage().
+   - Track the receiver connection Id and if connection found then show the message and save in database 
+     or connection not found then save in database.
+	 
+2) Update OnConnectedAsync().
+   - when a user login and click on chat then add in new connection.
+   
+3) Update all directMessage service's function.
+   - Add recieverId in parameter.
+   
+4) Update directMessage component.ts ngOnInit().
+   - When user enter in chat page then show a empty page.
+   - In onReceiveMessage() check userid and senderid is equeal or not.
+   - If equeal then puch data(message) and show in receiver chat.
+
+5) Update getUserChatHistory().
+   - When user click on any other user to chat then set history data in messages.
+   - Also call the onReceiveMessage() service to update the history.
+   
+6) Update the sendMessage().
+   - When user click on send button then send message info to 'Hub'.
+   - After 'Hub' send data then set the dada in this.messages.
+   - Then clear the current message input box.
+   
+7) Add recieverId in all functions parameter.
+   - With the help of this parameter we differentiate the sender message and receiver message.
+   
+8) Created scrollToBottom() finction.
+   - To scroll the chat if chat overflow.
+   - call this function in ngAfterViewInit() and  setTimeout(() => this.scrollToBottom(), 0);  
+     after send a message , getUserChatHistory() and ngOninit().
+   
+         
+  	  	                      03rd-Dec-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Create ZippyCRM project in Angular using api.
+
+Today I have worked on below points
+
+1) Added a class in chat (chat in room) and DirectMessage.
+   - Now when user type message longer then 400px then change the line.
+   - message-content class name
+   - 'max-width: 400px;' Maximum with is 400px. 
+   - 'word-wrap: break-word;' To Break lines within words.
+   - 'word-break: break-word;' To Ensures long words also wrap.
+   - 'white-space: pre-wrap;' To Preserve spaces and line breaks.
+   - 'width: fit-content;' Box width is message width.
+   
+2) Some css and booststrap added in chat (chat in room) and DirectMessage.
+
+3) Added some more classes in chat (chat in room) and DirectMessage to make good look and feel.
+   - Shadow for box and text also.
+   - Inset shadow in DirectMessage html.
+
+NOTE:- I want to create a new project 'ZippySocial'.
+       - I want to create a social media application.
+	  
+4) Created a new gitHub repository 'Social-media-repository'.
+ 
+5) Created a new asp .net core 8 web api project in this repository.
+  
+6) Created a Angular 18 project with same repository.
+   - Install booststrap.
+   - Setup all project.
+   - Created a Component 'Login-register'.
+   - in this component implement css and html to login and register.
+   
+7) Added some usable cdn index.html.
+   - Implement fontawesome CDN to use fontawesome icons.
+   - Added favicon.
+   
+            
+  	  	                      04th-Dec-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Create ZippySocial project in 'Angular 18' and 'ASP .NET CORE 8 WEB API'.
+
+Today I have worked on below points
+
+1) Watch YouTube tutorial video on how WebSocket and WebSocket works.
+
+2) Create Login and Register in a single page.
+   - When user click on register then only register page you can see.
+   - Used two social media images in login and register page.
+
+3) Added Home api controller.
+   - Implement Register User IActionMethod.
+   - Implement Login User IActionMethod.
+   
+4) Added a Iservice Folder.
+   - Iservice folder for implement interfaces.
+
+5) Implemented Login and register method in IUser interfac.
+
+6) Added Content folder to implement the interfac.
+   - Inharit IUser interfac in UserContent class.
+   - Implement body of Login and register.
+  
+7) Added some css in register and login page.   
+   
+   
+            
+  	  	                      05th-Dec-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Create ZippySocial project in 'Angular 18' and 'ASP .NET CORE 8 WEB API'.
+
+Today I have worked on below points
+
+1) Added app.UseCors("AllowAll"); and some more middleware to communicate angular and api.
+   - Added AddScoped of interface and content.
+   
+2) Create a UploadUserPhoto() to upload the user image.
+   - Used interface and content to implement.
+   - Stored unique and sort name of user image in database.
+   - Store user image in project also.
+   
+3) Update user register api.
+   - Check user already exist or not by email.
+   - Used UploadUserPhoto() when user register then store image.
+   
+4) Implement login.ts.
+   - Used ReactiveFormsModule for validation.
+   - Also used server-side validation in login.
+   - Validation applied in password and email.
+   - shouldShowError() for touched, dirty and isLoginFormClicked.
+   
+5) Implement Register.ts.
+   - Used ReactiveFormsModule for validation.
+   - Also used server-side validation in register.
+   - Validation applied in all feildes except user image and gender.
+   - shouldShowError() used.
+   
+6) Implement layout.
+   - Header => logo, search input, create post and profile.
+   - aside => Created a new component for aside (side bar).
+   - In aside i want to use links like messages, notification, Home etc.
+   - Aside used in main for better look and feel.
+   
+8) Implemented Dashboard for other content.
+   
+      
+            
+  	  	                      06th-Dec-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Create ZippySocial project in 'Angular 18' and 'ASP .NET CORE 8 WEB API'.
+
+2) Create a API and use jwt.
+
+Today I have worked on below points
+
+1) Read about jwt.
+  - JWT Features
+  - When are the scenarios to use JWT?
+  - When not to use?
+  - Deciding where to keep JWT in HTTP Requests
+   
+2) Watch YouTube tutorial video on how to use jwt in api with angular.
+
+3) Added JwtSettings in appsettings.json.
+  - In JwtSettings i used SecretKey, Issuer, Audience, ExpirationInMinutes=60.
+  
+4) Added middleware in program.cs.
+   - AddAuthentication, AddJwtBearer, app.UseAuthentication();.
+
+5) Create a jwt service.
+  - AuthResponse GenerateToken()  to genrate the token by user name(email).
+  - It return token.
+  
+6) Call GenerateToken() when user try to login.
+  - Now in login return(boolean,token);
+   
+7) Create a login component.
+  - Used reactive form validation.
+  - implement html and ts.
+
+8) Created intercepter to implement token authorization.
+   
+         
+            
+  	  	                      09th-Dec-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Create a API and use jwt.
+
+Today I have worked on below points
+
+1) Watch YouTube tutorial video on how to use jwt and How to test it the authorizeation.
+   - How jwt is work and how to test it working well or not.
+
+2) Created a action method (GetUsers).
+   - This method is return the list of users.
+   
+3) Implement Get users to check jwt how works.
+   - Added [Authorize] befor actionMethod.
+   - Run api and when I try to get users without login then it return Unauthorized().
+   
+4) Implement a component userList.
+   - Create a service method 'GetUsers()' to get users.
+   - Create another method in component to call GetUsers().
+   - Implement html to show user name in list.
+   
+5) Implement Login and Register page from google.
+   - Implement a simple login template from google.
+   - Created a another component 'Register' and implement html and ts.
+   
+6) Implement ReactiveFormsModule for validation in login page.
+   
+7) Implemented Register.ts.
+  - Used ReactiveFormsModule for validation.
+  - Show error if user fill invalid feild.
+  - Also used server side validation.
+
+      
+         
+            
+  	  	                      10th-Dec-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Create a API and use jwt.
+
+2) Add bootstrap in EMR project.
+
+Today I have worked on below points
+
+1) Update Register form.
+
+2) Extract EMR project.
+
+3) Add css in ClinicalData.
+  - In Create.cshtml and CreateEdit.cshtml.
+   
+   
+   
+               
+  	  	                      11th-Dec-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Add bootstrap in EMR project.
+
+Today I have worked on below points
+
+1)  Add bootstrap in ClinicalData.
+  - In CreateEdit.cshtml.
+  - Implement 4 Modal popup.
+  
+2) Add bootstrap in mail details and mail delete.
+
+3) Add bootstrap in mail Edit.
+
+3) Add bootstrap in ClinicalData Edit and CreateEdit.
+   
+4) Add bootstrap in Remening page Edit model remening in PatientList.
+  
+   done --
+   
+   mail- Edit
+   
+   ClinicalData  -- CreateEdit, Edit
+   
+   Person -- Remening page Edit model remening in PatientList
+
+
+   
+               
+  	  	                      12th-Dec-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Add bootstrap in EMR project.
+
+Today I have worked on below points
+
+1) Add bootstrap in 
+  - ClinicalData  -- CreateEdit, Edit                             done
+  - mail- Edit                                                    done
+  - mail -- Remaning pages Delete and details                     done
+  - Person -- Remening page Edit model remening in PatientList    done
+  - new = Appointment/Schedule, /Appointment/DailyIndex           done
+  - new - user/ AssociateUserToclinic                             done
+   
+2) Create layout component.
+   
+3) Create Messages component.
+   - For messages list only.
+   
+4) Create sidebar component.
+
+5) Create small-profile component.
+
+6) Create Dashboard component.
+   - For story and post's.
+   
+   
+   
+               
+  	  	                      13th-Dec-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Add bootstrap in EMR project.
+
+Today I have worked on below points
+
+ 
+1) Add bootstrap in ZippySocial.
+
+1) Check errors in EMR project and solve that.
+
+2) http://emr.ysoftsolution.com/Person/PatientList  bottom
+   - hidden feild and Sreach button design and button not working   --done
+   - In live project When click search then it go to index (list)   not working
+   
+3) Layout popup button ---done
+   
+4) Remove back to list from /ClinicalData/Index/7166?Length=6  
+   
+5) When we click Add on clinicalData create,in popup model 3dot open a new popup model
+   - When we update that then we can update                     --done 
+   - Add  text-danger class Height (in.): and Weight (lbs): label in createEdit  --done
+   - Add  class="bg-danger" in Patient Encounters  if condition in ClinicalData/Index/   --done
+   
+6) A error in /Appointment/Schedule 
+   
+
+
+               
+  	  	                      16th-Dec-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Add bootstrap in EMR project.
+
+Today I have worked on below points
+
+1) Add this line for back to list in /ClinicalData/Index
+       <a href="/Person/Index" class="btn btn-primary btn-sm">Back to List</a> 
+   
+   
+2) On click logo..
+
+3) Solved some more problems from EMR project.
+
+4) Create Upload api in ZippySocial.
+
+5) Create GetStore api in ZippySocial.
+
+6) Create DeleteStory api in ZippySocial.
+
+7) Used 3tier architecture.
+
+8) Implement code for delete story after 24 hour.
+
+               
+  	  	                      17th-Dec-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Add bootstrap in EMR project.
+
+Today I have worked on below points
+
+1) Update Clinical Data Index.
+
+2) Add bootstrap in Site CreateEdit.
+
+3) Update person patientList.
+
+4) Update assessment create edit.
+   - Show validation when form invalid.
+   
+5) Update person create edit.
+
+6) Update Clinical Data create edit
+
+7) Update AddValues.js.
+
+
+               
+  	  	                      18th-Dec-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Add bootstrap in EMR project.
+
+Today I have worked on below points
+
+1) Update in EMR project.
+  - clinical data createEdit.
+  - Person AddressInfo.
+  - Add value js.
+  - FloatingDiv.js.
+  - person patient List.
+  - Layout.
+  
+2) Update ZippySocial story model.
+
+3) Add in angular.
+  - Create Methods for Create and get storeis.
+  - Create service for both.
+  
+           
+            
+  	  	                      19th-Dec-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Read about ADO API.
+
+Today I have worked on below points
+
+1) Read and Watch YouTube tutorial video on CRUD in ADO API.  
+         
+		 
+            
+  	  	                      20th-Dec-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Read about ADO API.
+
+Today I have worked on below points
+
+1) Watch YouTube tutorial video on CRUD in ADO API. 
+
+2) Read signalR.
+
+3) Watch YouTube tutorial video on Jwt with Roles. 
+
+
+		 
+            
+  	  	                      23th-Dec-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Read about ADO API.
+
+Today I have worked on below points
+
+1) Watch YouTube tutorial video on Jwt with Roles (second part video). 
+
+2) Update ZippySocial.
+   - Remove sidebar, message and profile component.
+   - Implement all code in layout component.
+   
+3) Get user data from local-storage and display user image and user name in layout.
+
+4) Set user data in local-storage when user login.
+
+5) Update GetStoryes() function from api side.
+   - Here return storeis according to user id.		 
+            
+			
+			
+			
+  	  	                      24th-Dec-2024 - Report
+========================================================================================
+
+To do list 
+
+1) Create ZippySocial.
+
+Today I have worked on below points
+
+
+1) Create ZippySocial.
+
+2) Update story feilds.
+   - Add a feild AboutStory.
+   - Add a feild AboutStory in api model also.
+   - now user can add story.
+   - show story still not working.
+   
+3) update profile section.
+   - Add user image.
+   - Add user name.
+   - Add user age.
+   - Add Aboutuser.
+   - Also add about user in api model and database.
+   - Create a function for count the user age.
+   
+4) Create a add post button for upload the post.
+   - next day work on it...   

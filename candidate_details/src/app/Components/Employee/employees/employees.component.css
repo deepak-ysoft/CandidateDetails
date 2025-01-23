@@ -1,0 +1,82 @@
+.modal-header {
+   background-color: rgb(217, 246, 246);
+}
+
+table::-webkit-scrollbar {
+   display: none; /* Hide scrollbar for WebKit browsers */
+}
+
+thead th {
+   position: sticky;
+   top: 0;
+   z-index: 1; /* Ensure headers appear above the scrollable content */
+}
+
+tbody {
+   display: block;
+   max-height: 700px; /* Set the height of the scrollable area */
+   overflow-y: auto; /* Add vertical scrolling */
+   overflow-x: hidden;
+}
+
+tbody {
+   -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
+   scrollbar-width: none; /* Hide scrollbar for Firefox */
+}
+
+tbody {
+   width: 100%;
+   border-collapse: collapse;
+}
+
+/* Style for table header cells, excluding the first child */
+table thead tr th:not(:first-child) {
+   max-width: 10%;
+}
+
+/* Style for table body cells, excluding the first child */
+table tbody tr td:not(:first-child) {
+   max-width: 10%;
+   max-width: 204px;
+   overflow: hidden; /* Hides content that overflows */
+   text-overflow: ellipsis; /* Adds ellipsis for overflow */
+   white-space: nowrap; /* Prevents wrapping to the next line */
+}
+
+/* Style for table header cells,  first child */
+table thead tr th:first-child {
+   max-width: 5%;
+}
+
+/* Style for table body cells,  first child */
+table tbody tr td:first-child {
+   max-width: 4%;
+   max-width: 100px;
+}
+
+table tbody tr td img {
+   max-width: 30px;
+   max-height: 30px;
+}
+
+.image-container {
+   display: inline-block;
+   position: relative;
+   cursor: pointer;
+}
+
+.profile-photo {
+   width: 150px;
+   height: 150px;
+   border-radius: 50%;
+   object-fit: cover;
+   border: 2px solid #ccc;
+}
+
+.d-none {
+   display: none;
+}
+
+td i {
+   font-size: larger;
+}

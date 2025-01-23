@@ -1,0 +1,534 @@
+<div class="container">
+  <form [formGroup]="candidateForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+      <div class="col-3">
+        <label for="cv" class="form-label pt-3 float-end">Candidate CV</label>
+      </div>
+      <div class="col-6 mb-3">
+        <input
+          type="file"
+          class="form-control magic-input magic-inputFile"
+          (change)="onFileChange($event)"
+          formControlName="cv"
+          name="cv"
+          accept="application/pdf"
+        />
+      </div>
+    </div>
+    <div class="row">
+      <!-- Date -->
+      <div class="col-md-6 mb-3">
+        <label for="date" class="form-label">Date</label>
+        <input type="hidden" formControlName="id" />
+        <input
+          type="date"
+          id="date"
+          formControlName="date"
+          class="form-control magic-input"
+        />
+        <small
+          class="text-danger"
+          *ngIf="
+            !candidateForm.get('date')?.hasError('serverError') &&
+            shouldShowError('date')
+          "
+        >
+          Date is required.
+        </small>
+        <small
+          class="text-danger"
+          *ngIf="candidateForm.get('date')?.hasError('serverError')"
+          >{{ candidateForm.get('date')?.errors?.['serverError'] }}</small
+        >
+      </div>
+
+      <!-- Name -->
+      <div class="col-md-6 mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input
+          type="text"
+          id="name"
+          formControlName="name"
+          class="form-control magic-input"
+        />
+        <small
+          class="text-danger"
+          *ngIf="
+            !candidateForm.get('name')?.hasError('serverError') &&
+            shouldShowError('name')
+          "
+        >
+          Name is required.
+        </small>
+        <small
+          class="text-danger"
+          *ngIf="candidateForm.get('name')?.hasError('serverError')"
+          >{{ candidateForm.get('name')?.errors?.['serverError'] }}</small
+        >
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- Contact No -->
+      <div class="col-md-6 mb-3">
+        <label for="contactNo" class="form-label">Contact Number</label>
+        <input
+          type="text"
+          id="contactNo"
+          formControlName="contact_No"
+          class="form-control magic-input"
+        /><small
+          class="text-danger"
+          class="text-danger"
+          *ngIf="candidateForm.controls['contact_No'].hasError('pattern')"
+        >
+          Please enter phone number!
+        </small>
+        <small
+          class="text-danger"
+          *ngIf="candidateForm.get('contact_No')?.hasError('serverError')"
+          >{{ candidateForm.get('contact_No')?.errors?.['serverError'] }}</small
+        ><small
+          *ngIf="
+            !candidateForm.get('contact_No')?.hasError('serverError') &&
+            shouldShowError('contact_No') &&
+            !candidateForm.get('contact_No')?.hasError('minPhoneValue') &&
+            !candidateForm.get('contact_No')?.hasError('maxPhoneValue') &&
+            !candidateForm.get('contact_No')?.hasError('serverError')
+          "
+          class="text-danger"
+        >
+          Please enter phone number!</small
+        >
+        <small
+          class="text-danger"
+          *ngIf="candidateForm.get('contact_No')?.hasError('minPhoneValue')"
+          class="text-danger"
+        >
+          Phone number must have at least 10 digits.
+        </small>
+        <small
+          class="text-danger"
+          *ngIf="candidateForm.get('contact_No')?.hasError('maxPhoneValue')"
+          class="text-danger"
+        >
+          Phone number cannot exceed 12.
+        </small>
+      </div>
+
+      <!-- LinkedIn Profile -->
+      <div class="col-md-6 mb-3">
+        <label for="linkedinProfile" class="form-label">LinkedIn Profile</label>
+        <input
+          type="text"
+          id="linkedinProfile"
+          formControlName="linkedin_Profile"
+          class="form-control magic-input"
+        />
+        <small
+          class="text-danger"
+          *ngIf="
+            !candidateForm.get('linkedin_Profile')?.hasError('serverError') &&
+            shouldShowError('linkedin_Profile')
+          "
+        >
+          linkedin Profile is required.
+        </small>
+        <small
+          class="text-danger"
+          *ngIf="candidateForm.get('linkedin_Profile')?.hasError('serverError')"
+          >{{ candidateForm.get('linkedin_Profile')?.errors?.['serverError'] }}</small
+        >
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- Email -->
+      <div class="col-md-6 mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input
+          type="email"
+          id="email"
+          formControlName="email_ID"
+          class="form-control magic-input"
+        />
+        <small
+          class="text-danger"
+          *ngIf="
+            !candidateForm.get('email_ID')?.hasError('serverError') &&
+            shouldShowError('email_ID')
+          "
+        >
+          Valid email is required.
+        </small>
+
+        <small
+          class="text-danger"
+          *ngIf="candidateForm.get('email_ID')?.hasError('serverError')"
+          >{{ candidateForm.get('email_ID')?.errors?.['serverError'] }}</small
+        ><small
+          class="text-danger"
+          *ngIf="candidateForm.controls['email_ID'].hasError('pattern')"
+        >
+          Email address not valid.
+        </small>
+      </div>
+
+      <!-- Roles -->
+      <div class="col-md-6 mb-3">
+        <label for="roles" class="form-label">Roles</label>
+        <select
+          id="roles"
+          class="magic-input form-select"
+          formControlName="roles"
+          (change)="onRoleChange($event)"
+        >
+          <option *ngFor="let role of RolesList" [value]="role.rid">
+            {{ role.role }}
+          </option>
+        </select>
+
+        <small
+          class="text-danger"
+          *ngIf="
+            !candidateForm.get('roles')?.hasError('serverError') &&
+            shouldShowError('roles')
+          "
+        >
+          Roles is required.
+        </small>
+        <small
+          class="text-danger"
+          *ngIf="candidateForm.get('roles')?.hasError('serverError')"
+          >{{ candidateForm.get('roles')?.errors?.['serverError'] }}</small
+        >
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- Experience -->
+      <div class="col-md-6 mb-3">
+        <label for="experience" class="form-label">Experience</label>
+        <input
+          type="text"
+          id="experience"
+          formControlName="experience"
+          class="form-control magic-input"
+        />
+        <small
+          class="text-danger"
+          *ngIf="
+            !candidateForm.get('experience')?.hasError('serverError') &&
+            shouldShowError('experience')
+          "
+        >
+          Experience is required.
+        </small>
+        <small
+          class="text-danger"
+          *ngIf="candidateForm.get('experience')?.hasError('serverError')"
+          >{{ candidateForm.get('experience')?.errors?.['serverError'] }}</small
+        >
+      </div>
+
+      <!-- Skills -->
+      <div class="col-md-6 mb-3">
+        <label for="skills" class="form-label">Skills</label>
+        <input
+          type="text"
+          id="skills"
+          formControlName="skills"
+          class="form-control magic-input"
+        />
+        <small
+          class="text-danger"
+          *ngIf="
+            !candidateForm.get('skills')?.hasError('serverError') &&
+            shouldShowError('skills')
+          "
+        >
+          Skills is required.
+        </small>
+
+        <small
+          class="text-danger"
+          *ngIf="candidateForm.get('skills')?.hasError('serverError')"
+          >{{ candidateForm.get('skills')?.errors?.['serverError'] }}</small
+        >
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- CTC -->
+      <div class="col-md-6 mb-3">
+        <label for="ctc" class="form-label">CTC</label>
+        <input
+          type="number"
+          id="ctc"
+          formControlName="ctc"
+          class="form-control magic-input"
+        />
+        <small
+          class="text-danger"
+          *ngIf="
+            !candidateForm.get('ctc')?.hasError('serverError') &&
+            shouldShowError('ctc')
+          "
+        >
+          CTC is required.
+        </small>
+
+        <small
+          class="text-danger"
+          *ngIf="candidateForm.get('ctc')?.hasError('serverError')"
+          >{{ candidateForm.get('ctc')?.errors?.['serverError'] }}</small
+        >
+      </div>
+
+      <!-- ETC -->
+      <div class="col-md-6 mb-3">
+        <label for="etc" class="form-label">ETC</label>
+        <input
+          type="number"
+          id="etc"
+          formControlName="etc"
+          class="form-control magic-input"
+        />
+        <small
+          class="text-danger"
+          *ngIf="
+            !candidateForm.get('etc')?.hasError('serverError') &&
+            shouldShowError('etc')
+          "
+        >
+          ETC is required.
+        </small>
+
+        <small
+          class="text-danger"
+          *ngIf="candidateForm.get('etc')?.hasError('serverError')"
+          >{{ candidateForm.get('etc')?.errors?.['serverError'] }}</small
+        >
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- Notice Period -->
+      <div class="col-md-6 mb-3">
+        <label for="noticePeriod" class="form-label">Notice Period</label>
+        <input
+          type="text"
+          id="noticePeriod"
+          formControlName="notice_Period"
+          class="form-control magic-input"
+        />
+        <small
+          class="text-danger"
+          *ngIf="
+            !candidateForm.get('notice_Period')?.hasError('serverError') &&
+            shouldShowError('notice_Period')
+          "
+        >
+          Notice Period is required.
+        </small>
+
+        <small
+          class="text-danger"
+          *ngIf="candidateForm.get('notice_Period')?.hasError('serverError')"
+          >{{ candidateForm.get('notice_Period')?.errors?.['serverError'] }}</small
+        >
+      </div>
+
+      <!-- Current Location -->
+      <div class="col-md-6 mb-3">
+        <label for="currentLocation" class="form-label">Current Location</label>
+        <input
+          type="text"
+          id="currentLocation"
+          formControlName="current_Location"
+          class="form-control magic-input"
+        />
+        <small
+          class="text-danger"
+          *ngIf="
+            !candidateForm.get('current_Location')?.hasError('serverError') &&
+            shouldShowError('current_Location')
+          "
+        >
+          Current Location is required.
+        </small>
+
+        <small
+          class="text-danger"
+          *ngIf="candidateForm.get('current_Location')?.hasError('serverError')"
+          >{{ candidateForm.get('current_Location')?.errors?.['serverError'] }}</small
+        >
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- Prefer Location -->
+      <div class="col-md-6 mb-3">
+        <label for="preferLocation" class="form-label"
+          >Preferred Location</label
+        >
+        <input
+          type="text"
+          id="preferLocation"
+          formControlName="prefer_Location"
+          class="form-control magic-input"
+        />
+        <small
+          class="text-danger"
+          *ngIf="
+            !candidateForm.get('prefer_Location')?.hasError('serverError') &&
+            shouldShowError('prefer_Location')
+          "
+        >
+          Prefer Location is required.
+        </small>
+        <small
+          class="text-danger"
+          *ngIf="candidateForm.get('prefer_Location')?.hasError('serverError')"
+          >{{ candidateForm.get('prefer_Location')?.errors?.['serverError'] }}</small
+        >
+      </div>
+
+      <!-- Reason For Job Change -->
+      <div class="col-md-6 mb-3">
+        <label for="reasonForJobChange" class="form-label"
+          >Reason for Job Change</label
+        >
+        <input
+          type="text"
+          id="reasonForJobChange"
+          formControlName="reason_For_Job_Change"
+          class="form-control magic-input"
+        />
+        <small
+          class="text-danger"
+          *ngIf="
+            !candidateForm
+              .get('reason_For_Job_Change')
+              ?.hasError('serverError') &&
+            shouldShowError('reason_For_Job_Change')
+          "
+        >
+          Reason For Job Change is required.
+        </small>
+
+        <small
+          class="text-danger"
+          *ngIf="
+            candidateForm.get('reason_For_Job_Change')?.hasError('serverError')
+          "
+          >{{ candidateForm.get('reason_For_Job_Change')?.errors?.['serverError'] }}</small
+        >
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- Schedule Interview -->
+      <div class="col-md-6 mb-3">
+        <label for="scheduleInterview" class="form-label"
+          >Schedule Interview</label
+        >
+        <input
+          type="datetime-local"
+          id="scheduleInterview"
+          formControlName="schedule_Interview"
+          class="form-control magic-input"
+        />
+        <small
+          class="text-danger"
+          *ngIf="
+            !candidateForm.get('schedule_Interview')?.hasError('serverError') &&
+            shouldShowError('schedule_Interview')
+          "
+        >
+          Interview schedule is required.
+        </small>
+
+        <small
+          class="text-danger"
+          *ngIf="
+            candidateForm.get('schedule_Interview')?.hasError('serverError')
+          "
+          >{{ candidateForm.get('schedule_Interview')?.errors?.['serverError'] }}</small
+        >
+      </div>
+
+      <!-- Schedule Interview Status -->
+      <div class="col-md-6 mb-3">
+        <label for="scheduleInterviewStatus" class="form-label"
+          >Schedule Interview Status</label
+        >
+        <input
+          type="text"
+          id="scheduleInterviewStatus"
+          formControlName="schedule_Interview_status"
+          class="form-control magic-input"
+        />
+        <small
+          class="text-danger"
+          *ngIf="
+            !candidateForm
+              .get('schedule_Interview_status')
+              ?.hasError('serverError') &&
+            shouldShowError('schedule_Interview_status')
+          "
+        >
+          Schedule Interview status is required.
+        </small>
+
+        <small
+          class="text-danger"
+          *ngIf="
+            candidateForm
+              .get('schedule_Interview_status')
+              ?.hasError('serverError')
+          "
+          >{{ candidateForm.get('schedule_Interview_status')?.errors?.['serverError'] }}</small
+        >
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- Comments -->
+      <div class="col-12 mb-3">
+        <label for="comments" class="form-label">Comments</label>
+        <textarea
+          id="comments"
+          formControlName="comments"
+          rows="3"
+          class="form-control magic-input"
+        ></textarea>
+        <small
+          class="text-danger"
+          *ngIf="
+            !candidateForm.get('comments')?.hasError('serverError') &&
+            shouldShowError('comments')
+          "
+        >
+          Comments is required.
+        </small>
+        <small
+          class="text-danger"
+          *ngIf="candidateForm.get('comments')?.hasError('serverError')"
+          >{{ candidateForm.get('comments')?.errors?.['serverError'] }}</small
+        >
+      </div>
+    </div>
+    <hr class="hr" />
+    <div class="row">
+      <div class="col-12 d-flex justify-content-center">
+        <button type="submit" class="btn btn-primary">
+          <i class="fa-regular fa-thumbs-up me-1"></i>Submit
+        </button>
+        <button type="reset" class="btn btn-danger ms-3 shadow-sm">
+          <i class="fa-solid fa-arrows-rotate me-2"></i> Reset
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
