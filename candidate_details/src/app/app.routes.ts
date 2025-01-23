@@ -6,17 +6,11 @@ import { CalendarComponent } from './Components/calendar/calendar.component';
 import { EmployeesComponent } from './Components/Employee/employees/employees.component';
 import { EmployeeDetailsComponent } from './Components/Employee/employee-details/employee-details.component';
 import { LoginComponent } from './Components/login/login.component';
-import { authGuard } from './Guard/auth.guard';
 
 export const routes: Routes = [
   {
     path: '',
-    component: LoginComponent,
-  },
-  {
-    path: '',
     component: LayoutComponent,
-    canActivate: [authGuard], // Protect all child routes
     children: [
       {
         path: '',
