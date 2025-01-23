@@ -25,6 +25,9 @@ namespace CandidateDetails_API.Controllers
         /// </summary>
         /// <param name="model">login model</param>
         /// <returns>if login success then return logged employee data,Employee job and login token.</returns>
+        /// 
+
+        [AllowAnonymous]
         [HttpPost("Login")] // Specify the route for the API method
         public async Task<IActionResult> Login([FromBody] Login model) // Expect the request body to contain the Employees object
         {
