@@ -85,7 +85,6 @@ namespace CandidateDetails_API.ServiceContent
                             break;
                         }
                     }
-
                     var candidate = new Candidate // Create a new candidate object
                     {
                         //id = int.Parse(worksheet.Cells[row, 1].Text),
@@ -103,7 +102,7 @@ namespace CandidateDetails_API.ServiceContent
                         current_Location = worksheet.Cells[row, 13].Text,
                         prefer_Location = worksheet.Cells[row, 14].Text,
                         reason_For_Job_Change = worksheet.Cells[row, 15].Text,
-                        schedule_Interview = DateTime.Parse(worksheet.Cells[row, 16].Text),
+                        schedule_Interview = ConvertExcelDate((double)worksheet.Cells[row, 16].Value),
                         schedule_Interview_status = worksheet.Cells[row, 17].Text,
                         comments = worksheet.Cells[row, 18].Text,
                         cvPath = worksheet.Cells[row, 19].Text,
@@ -123,6 +122,20 @@ namespace CandidateDetails_API.ServiceContent
             if (n == 0)   // If no record is updated
                 return false;
             return true;
+        }
+        public static DateTime ConvertExcelDate(double excelDate)
+        {
+            // Excel uses January 1, 1900, as the base date
+            DateTime baseDate = new DateTime(1900, 1, 1);
+
+            // Excel incorrectly considers 1900 as a leap year, so adjust dates >= March 1, 1900
+            if (excelDate >= 60)
+            {
+                excelDate -= 1; // Adjust for the Excel leap year bug
+            }
+
+            // Add the number of days (including fractional time) to the base date
+            return baseDate.AddDays(excelDate - 1);
         }
 
         public async Task<List<Candidate>> GetCandidates()  // GetCandidates method to get all candidates

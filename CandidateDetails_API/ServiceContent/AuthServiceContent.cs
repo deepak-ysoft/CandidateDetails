@@ -13,8 +13,8 @@ namespace CandidateDetails_API.ServiceContent
 
         public AuthServiceContent(IConfiguration configuration)
         {
-            _jwtKey = configuration["Jwt:Key"];
-            _jwtIssuer = configuration["Jwt:Issuer"];
+            _jwtKey = configuration["JwtSettings:SecretKey"];
+            _jwtIssuer = configuration["JwtSettings:Issuer"];
         }
 
         // Generate Jwt Token by emp id

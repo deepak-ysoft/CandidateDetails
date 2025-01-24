@@ -10,6 +10,7 @@ namespace CandidateDetails_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CalendarController : ControllerBase
     {
         private readonly ICalendarService _service;

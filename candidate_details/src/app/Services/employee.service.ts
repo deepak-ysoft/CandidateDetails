@@ -1,10 +1,8 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { Employee } from '../Models/employee.model';
 import { EmployeeLeave } from '../Models/employeeLeave.model';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { Login } from '../Models/login.model';
 
 @Injectable({
   providedIn: 'root',
@@ -20,10 +18,6 @@ export class EmployeeService {
   empLeaveList$ = this.empLeaveListSubject.asObservable();
   totalempLeave$ = this.totalEmpLeaveSubject.asObservable();
   totalPages$ = this.totalPagesSubject.asObservable();
-
-  login(login: Login) {
-    return this.http.post(`${this.baseUrl}Employee/Login`, login);
-  }
 
   getEmployee() {
     return this.http.get(`${this.baseUrl}Employee/GetEmployees`);

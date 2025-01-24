@@ -58,6 +58,12 @@ body {
    background-color: #f83434;
    border-color: #8e0404;
 }
+
+.btn-secondary{
+   background-color: #aebac5;
+   border-color: #5d5d5d;
+   color: darkblue;
+}
 .btn {
    border-radius: 25px !important;
    transition:

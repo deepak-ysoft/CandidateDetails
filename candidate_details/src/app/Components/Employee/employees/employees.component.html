@@ -191,11 +191,19 @@
       <div class="row mb-4" *ngIf="EmployeeModelHeader != 'Edit Employee'">
         <div class="col">
           <label class="form-label" for="empPassword">Password</label>
-          <input
-            type="password"
-            formControlName="empPassword"
-            class="form-control magic-input"
-          />
+          <div class="input-group">
+            <input
+              [type]="show ? 'text' : 'password'"
+              formControlName="empPassword"
+              class="form-control magic-input"
+            />
+            <span
+              class="input-group-text password-toggle magic-input"
+              (click)="Show()"
+            >
+              <i [class]="show ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+            </span>
+          </div>
           <small
             class="text-danger"
             *ngIf="employeeForm.get('empPassword')?.hasError('serverError')"
@@ -221,11 +229,21 @@
           <label class="form-label" for="empPasswordConfirm"
             >Confirm Password</label
           >
-          <input
-            type="password"
-            formControlName="empPasswordConfirm"
-            class="form-control magic-input"
-          />
+          <div class="input-group">
+            <input
+              [type]="showConPassword ? 'text' : 'password'"
+              formControlName="empPasswordConfirm"
+              class="form-control magic-input"
+            />
+            <span
+              class="input-group-text password-toggle magic-input"
+              (click)="ShowConPassword()"
+            >
+              <i
+                [class]="showConPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"
+              ></i>
+            </span>
+          </div>
           <small
             *ngIf="
               employeeForm.get('empPasswordConfirm')?.hasError('serverError')

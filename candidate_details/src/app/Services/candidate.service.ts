@@ -5,6 +5,7 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import { environment } from '../../environments/environment';
 import Swal from 'sweetalert2';
 import { Roles } from '../Models/Roles.model';
+import { h } from '@fullcalendar/core/preact.js';
 
 @Injectable({
   providedIn: 'root',
@@ -117,5 +118,9 @@ export class CandidateService {
     return this.http.get(
       `${this.baseUrl}Candidate/GetCandidate/${candidateId}`
     );
+  }
+
+  getLastWeekData(){
+    return this.http.get(`${this.baseUrl}Candidate/getLastWeekData`);
   }
 }

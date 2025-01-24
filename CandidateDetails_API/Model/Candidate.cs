@@ -13,8 +13,7 @@ namespace CandidateDetails_API.Model
         public string name { get; set; }
         [Required]
         public string contact_No { get; set; }
-        [Required]
-        public string linkedin_Profile { get; set; }
+        public string? linkedin_Profile { get; set; }
         [Required]
         [RegularExpression("^[a-zA-Z0-9._%+-]+@[a-zA-Z.-]+\\.[a-zA-Z]{2,}$", ErrorMessage = "Please enter a valid email address.")] // Email validation
         public string email_ID { get; set; }
@@ -39,10 +38,8 @@ namespace CandidateDetails_API.Model
         public string prefer_Location { get; set; }
         [Required]
         public string reason_For_Job_Change { get; set; }
-        [Required]
-        public DateTime schedule_Interview { get; set; }
-        [Required]
-        public string schedule_Interview_status { get; set; }
+        public DateTime? schedule_Interview { get; set; }
+        public string ?schedule_Interview_status { get; set; }
         [Required]
         public string comments { get; set; }
         [NotMapped]

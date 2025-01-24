@@ -41,7 +41,7 @@ namespace CandidateDetails_API.ServiceContent
         public async Task<bool> Login(Login model)
         {
             var hasher = new PasswordHasher<Employee>();
-            var emp = await _context.Employees.SingleOrDefaultAsync(u => u.empEmail == model.email);
+            var emp = await _context.Employees.FirstOrDefaultAsync(u => u.empEmail == model.email);
             if (emp != null)
             {
                 var passwordVerificationResult = hasher.VerifyHashedPassword(emp, emp.empPassword, model.password); // To verify password

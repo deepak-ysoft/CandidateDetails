@@ -125,20 +125,6 @@
           formControlName="linkedin_Profile"
           class="form-control magic-input"
         />
-        <small
-          class="text-danger"
-          *ngIf="
-            !candidateForm.get('linkedin_Profile')?.hasError('serverError') &&
-            shouldShowError('linkedin_Profile')
-          "
-        >
-          linkedin Profile is required.
-        </small>
-        <small
-          class="text-danger"
-          *ngIf="candidateForm.get('linkedin_Profile')?.hasError('serverError')"
-          >{{ candidateForm.get('linkedin_Profile')?.errors?.['serverError'] }}</small
-        >
       </div>
     </div>
 
@@ -439,23 +425,6 @@
           formControlName="schedule_Interview"
           class="form-control magic-input"
         />
-        <small
-          class="text-danger"
-          *ngIf="
-            !candidateForm.get('schedule_Interview')?.hasError('serverError') &&
-            shouldShowError('schedule_Interview')
-          "
-        >
-          Interview schedule is required.
-        </small>
-
-        <small
-          class="text-danger"
-          *ngIf="
-            candidateForm.get('schedule_Interview')?.hasError('serverError')
-          "
-          >{{ candidateForm.get('schedule_Interview')?.errors?.['serverError'] }}</small
-        >
       </div>
 
       <!-- Schedule Interview Status -->
@@ -469,27 +438,6 @@
           formControlName="schedule_Interview_status"
           class="form-control magic-input"
         />
-        <small
-          class="text-danger"
-          *ngIf="
-            !candidateForm
-              .get('schedule_Interview_status')
-              ?.hasError('serverError') &&
-            shouldShowError('schedule_Interview_status')
-          "
-        >
-          Schedule Interview status is required.
-        </small>
-
-        <small
-          class="text-danger"
-          *ngIf="
-            candidateForm
-              .get('schedule_Interview_status')
-              ?.hasError('serverError')
-          "
-          >{{ candidateForm.get('schedule_Interview_status')?.errors?.['serverError'] }}</small
-        >
       </div>
     </div>
 

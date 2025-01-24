@@ -39,7 +39,7 @@
       box-shadow 0.3s;
 }
 .scroll-list {
-   max-height: 500px;
+   max-height: 670px;
    overflow-y: auto;
    overflow-x: hidden;
 }

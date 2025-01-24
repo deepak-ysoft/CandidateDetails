@@ -11,6 +11,7 @@ namespace CandidateDetails_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CandidateController : ControllerBase
     {
         private readonly ICandidateService _service;
@@ -42,6 +43,26 @@ namespace CandidateDetails_API.Controllers
             catch (Exception ex)
             {
                 throw ex;
+            }
+        }
+        /// <summary>
+        /// Get the last week data
+        /// </summary>
+        /// <returns>Last week data and data count</returns>
+        [HttpGet("getLastWeekData")]
+        public async Task<IActionResult> getLastWeekData() 
+        {
+            try
+            {
+                var lastWeekData = await _context.candidateDetails.OrderBy(x=>x.schedule_Interview)
+                    .Where(x => x.schedule_Interview <= DateTime.Now.AddDays(+7) &&  x.schedule_Interview >= DateTime.Now)
+                    .ToListAsync(); // Get the last week data
+                int lastWeekDataCount = lastWeekData.Count(); // Get the count of the last week data
+                return Ok(new {res = true,count = lastWeekDataCount, data = lastWeekData }); // Return the data
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { error = ex.Message });
             }
         }
 
@@ -160,7 +181,7 @@ namespace CandidateDetails_API.Controllers
                     var can = await _context.candidateDetails.FirstOrDefaultAsync(x => x.id == candidate.id); // Get the candidate details
                     if (candidate.cv != null)
                     {
-                       if(can.cvPath != null)
+                        if (can.cvPath != null)
                         {
                             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "CandidateCV", Path.GetFileName(can.cvPath)); // Combine the file path
                             if (System.IO.File.Exists(filePath)) // Check if the file exists
@@ -319,25 +340,25 @@ namespace CandidateDetails_API.Controllers
                 int row = 2; // Start from the second row
                 foreach (var candidate in candidates)
                 {
-                    worksheet.Cell(row, 1).Value = candidate.id;
-                    worksheet.Cell(row, 2).Value = candidate.date.ToString("yyyy-MM-dd");
-                    worksheet.Cell(row, 3).Value = candidate.name;
-                    worksheet.Cell(row, 4).Value = candidate.contact_No;
-                    worksheet.Cell(row, 5).Value = candidate.linkedin_Profile;
-                    worksheet.Cell(row, 6).Value = candidate.email_ID;
-                    worksheet.Cell(row, 7).Value = candidate.Role;
-                    worksheet.Cell(row, 8).Value = candidate.experience;
-                    worksheet.Cell(row, 9).Value = candidate.skills;
-                    worksheet.Cell(row, 10).Value = candidate.ctc;
-                    worksheet.Cell(row, 11).Value = candidate.etc;
-                    worksheet.Cell(row, 12).Value = candidate.notice_Period;
-                    worksheet.Cell(row, 13).Value = candidate.current_Location;
-                    worksheet.Cell(row, 14).Value = candidate.prefer_Location;
-                    worksheet.Cell(row, 15).Value = candidate.reason_For_Job_Change;
-                    worksheet.Cell(row, 16).Value = candidate.schedule_Interview.ToString("yyyy-MM-dd HH:mm");
-                    worksheet.Cell(row, 17).Value = candidate.schedule_Interview_status;
-                    worksheet.Cell(row, 18).Value = candidate.comments;
-                    worksheet.Cell(row, 19).Value = candidate.cvPath;
+                    worksheet.Cell(row, 1).Value = candidate?.id;
+                    worksheet.Cell(row, 2).Value = candidate?.date.ToString("yyyy-MM-dd");
+                    worksheet.Cell(row, 3).Value = candidate?.name;
+                    worksheet.Cell(row, 4).Value = candidate?.contact_No;
+                    worksheet.Cell(row, 5).Value = candidate?.linkedin_Profile;
+                    worksheet.Cell(row, 6).Value = candidate?.email_ID;
+                    worksheet.Cell(row, 7).Value = candidate?.Role;
+                    worksheet.Cell(row, 8).Value = candidate?.experience;
+                    worksheet.Cell(row, 9).Value = candidate?.skills;
+                    worksheet.Cell(row, 10).Value = candidate?.ctc;
+                    worksheet.Cell(row, 11).Value = candidate?.etc;
+                    worksheet.Cell(row, 12).Value = candidate?.notice_Period;
+                    worksheet.Cell(row, 13).Value = candidate?.current_Location;
+                    worksheet.Cell(row, 14).Value = candidate?.prefer_Location;
+                    worksheet.Cell(row, 15).Value = candidate?.reason_For_Job_Change;
+                    worksheet.Cell(row, 16).Value = candidate?.schedule_Interview?.ToString("yyyy-MM-dd HH:mm");
+                    worksheet.Cell(row, 17).Value = candidate?.schedule_Interview_status;
+                    worksheet.Cell(row, 18).Value = candidate?.comments;
+                    worksheet.Cell(row, 19).Value = candidate?.cvPath;
                     row++;
                 }
 
@@ -388,7 +409,7 @@ namespace CandidateDetails_API.Controllers
         /// <param name="role">Role model object</param>
         /// <returns>boolean</returns>
         [HttpPost("CreateEditRole")]
-        public async Task<IActionResult> CreateEditRole([FromBody]Roles role)
+        public async Task<IActionResult> CreateEditRole([FromBody] Roles role)
         {
             try
             {

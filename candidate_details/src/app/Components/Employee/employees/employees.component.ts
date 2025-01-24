@@ -45,6 +45,8 @@ export class EmployeesComponent implements OnInit {
   private modalRef: NgbModalRef | null = null; // Store the modal reference
   defaultImage: string = 'assets/Image/Default.jpg'; // Path to default image
   selectedImage: string | null = null; // For showing the selected image
+  show = false;
+  showConPassword = false;
 
   constructor(private fb: FormBuilder, private modalService: NgbModal) {
     this.submitted = false;
@@ -90,6 +92,8 @@ export class EmployeesComponent implements OnInit {
 
   ngOnInit(): void {
     this.getEmployees();
+    this.show = false;
+    this.showConPassword = false;
   }
 
   getEmployees() {
@@ -318,6 +322,15 @@ export class EmployeesComponent implements OnInit {
   shouldShowError(controlName: string): boolean {
     const control = this.employeeForm.get(controlName);
     return (control?.invalid && (control.touched || this.submitted)) ?? false;
+  }
+
+  Show() {
+    debugger;
+    this.show = !this.show;
+  }
+  ShowConPassword() {
+    debugger;
+    this.showConPassword = !this.showConPassword;
   }
 }
 

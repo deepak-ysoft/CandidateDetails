@@ -6,6 +6,7 @@ import { CalendarComponent } from './Components/calendar/calendar.component';
 import { EmployeesComponent } from './Components/Employee/employees/employees.component';
 import { EmployeeDetailsComponent } from './Components/Employee/employee-details/employee-details.component';
 import { LoginComponent } from './Components/login/login.component';
+import { authGuard } from './Services/auth.guard';
 
 export const routes: Routes = [
   {
@@ -19,6 +20,10 @@ export const routes: Routes = [
       },
       {
         path: '',
+        component: CandidateListComponent,
+      },
+      {
+        path: 'CandidateList',
         component: CandidateListComponent,
       },
       {
@@ -38,6 +43,14 @@ export const routes: Routes = [
         component: EmployeeDetailsComponent,
       },
     ],
+  },
+  {
+    path: '',
+    component: LoginComponent, // Login route (no guard needed here)
+  },
+  {
+    path: 'login',
+    component: LoginComponent, // Login route (no guard needed here)
   },
   { path: '**', redirectTo: '' },
 ];

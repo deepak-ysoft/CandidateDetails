@@ -3,6 +3,10 @@ li {
    font-size: larger;
 }
 
+.li {
+   font-weight: 400;
+}
+
 /* navbar-style.css */
 
 .navbar {
@@ -29,4 +33,21 @@ li {
 .navbar-nav .nav-item .nav-link.active {
    color: #007bff;
    font-weight: bold;
+}
+
+.text-primary:hover {
+   cursor: pointer;
+   box-shadow:
+      0 0 6px rgba(0, 255, 255, 0.5),
+      0 0 12px rgba(0, 255, 255, 0.3);
+}
+
+.notifications {
+   max-height: 500px;
+   overflow-y: auto;
+   overflow-x: auto;
+}
+
+.list-bg {
+   background-color: #7ea2c5;
 }

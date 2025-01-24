@@ -5,7 +5,7 @@ export class Candidate {
   date: Date = new Date();
   name: string = '';
   contact_No: string = '';
-  linkedin_Profile: string = '';
+  linkedin_Profile?: string;
   email_ID: string = '';
   roles: Roles = new Roles();
   roleName?: string;
@@ -17,8 +17,8 @@ export class Candidate {
   current_Location: string = '';
   prefer_Location: string = '';
   reason_For_Job_Change: string = '';
-  schedule_Interview: Date = new Date();
-  schedule_Interview_status: string = '';
+  schedule_Interview?: Date;
+  schedule_Interview_status?: string;
   comments: string = '';
   cvPath: string = '';
   cv?: File;

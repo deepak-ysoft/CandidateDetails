@@ -74,7 +74,7 @@ export class AddCandidateComponent implements OnInit {
           phoneValueRangeValidator(1000000000, 999999999999),
         ],
       ],
-      linkedin_Profile: ['', Validators.required],
+      linkedin_Profile: [''],
       email_ID: [
         '',
         [
@@ -91,8 +91,8 @@ export class AddCandidateComponent implements OnInit {
       current_Location: ['', Validators.required],
       prefer_Location: ['', Validators.required],
       reason_For_Job_Change: ['', Validators.required],
-      schedule_Interview: ['', Validators.required],
-      schedule_Interview_status: ['', Validators.required],
+      schedule_Interview: [''],
+      schedule_Interview_status: [''],
       comments: ['', Validators.required],
       cv: [],
     });

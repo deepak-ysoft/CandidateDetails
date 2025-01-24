@@ -2,6 +2,7 @@ using CandidateDetails_API.IServices;
 using CandidateDetails_API.Model;
 using CandidateDetails_API.ServiceContent;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
@@ -9,7 +10,16 @@ using Microsoft.OpenApi.Models;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+// Configure services
+builder.Services.Configure<FormOptions>(options =>
+{
+    options.MultipartBodyLengthLimit = 104857600; // 100 MB
+});
 
+builder.Services.Configure<IISServerOptions>(options =>
+{
+    options.MaxRequestBodySize = 104857600; // 100 MB
+});
 // Add services to the container.
 builder.Services.AddScoped<ICandidateService, CandidateServiceContent>(); // Register the service
 builder.Services.AddScoped<ICalendarService, CalendarServiceContent>(); // Register the service
