@@ -53,8 +53,8 @@
   <div class="magical-table-container">
     <table class="table magical-table border">
       <thead class="thead-dark bg-light">
-        <tr>
-          <th class="mb-2">
+        <tr class="row">
+          <th class="col mb-2">
             <span
               (click)="
                 clickToSortCandidate(
@@ -72,7 +72,7 @@
             </span>
           </th>
 
-          <th class="ellipsis-cell">
+          <th class="ellipsis-cell col">
             <span
               (click)="
                 clickToSortCandidate(
@@ -89,7 +89,7 @@
               Name
             </span>
           </th>
-          <th class="ellipsis-cell">
+          <th class="ellipsis-cell col">
             <span
               (click)="
                 clickToSortCandidate(
@@ -106,7 +106,7 @@
               Contact No
             </span>
           </th>
-          <th class="ellipsis-cell">
+          <th class="ellipsis-cell col">
             <span
               (click)="
                 clickToSortCandidate(
@@ -123,7 +123,7 @@
               LinkedIn Profile
             </span>
           </th>
-          <th class="ellipsis-cell">
+          <th class="ellipsis-cell col">
             <span
               (click)="
                 clickToSortCandidate(
@@ -140,7 +140,7 @@
               Email
             </span>
           </th>
-          <th class="ellipsis-cell">
+          <th class="ellipsis-cell col">
             <span
               (click)="
                 clickToSortCandidate(
@@ -157,7 +157,7 @@
               Role
             </span>
           </th>
-          <th class="ellipsis-cell">
+          <th class="ellipsis-cell col">
             <span
               (click)="
                 clickToSortCandidate(
@@ -174,7 +174,7 @@
               Experience
             </span>
           </th>
-          <th class="ellipsis-cell">
+          <th class="ellipsis-cell col">
             <span
               (click)="
                 clickToSortCandidate(
@@ -191,7 +191,7 @@
               Skills
             </span>
           </th>
-          <th class="ellipsis-cell">
+          <th class="ellipsis-cell col">
             <span
               (click)="
                 clickToSortCandidate(
@@ -208,7 +208,7 @@
               CTC
             </span>
           </th>
-          <th class="ellipsis-cell">
+          <th class="ellipsis-cell col">
             <span
               (click)="
                 clickToSortCandidate(
@@ -226,7 +226,7 @@
             </span>
           </th>
 
-          <th class="ellipsis-cell">
+          <th class="ellipsis-cell col">
             <span
               (click)="
                 clickToSortCandidate(
@@ -243,27 +243,28 @@
             </span>
           </th>
 
-          <th class="ellipsis-cell">cv</th>
-          <th class="llipsis-cell">Actions</th>
+          <th class="ellipsis-cell col">cv</th>
+          <th class="llipsis-cell col">Actions</th>
         </tr>
       </thead>
       <tbody>
         <tr
           *ngFor="let candidate of candidateList"
           (click)="ShowCandidateDetails(candidate)"
+          class="row"
         >
-          <td class="ellipsis-cell">
+          <td class="ellipsis-cell col">
             {{ candidate.date | date : "shortDate" }}
           </td>
 
-          <td class="ellipsis-cell">
+          <td class="ellipsis-cell col">
             {{ candidate.name }}
           </td>
-          <td class="ellipsis-cell">
+          <td class="ellipsis-cell col">
             {{ candidate.contact_No }}
           </td>
           <td
-            class="ellipsis-cell"
+            class="ellipsis-cell col"
             [matTooltip]="candidate.linkedin_Profile"
             matTooltipPosition="above"
             [matTooltipClass]="'custom-tooltip'"
@@ -271,36 +272,42 @@
             {{ candidate.linkedin_Profile }}
           </td>
           <td
-            class="ellipsis-cell"
+            class="ellipsis-cell col"
             [matTooltip]="candidate.email_ID"
             matTooltipPosition="above"
             [matTooltipClass]="'custom-tooltip'"
           >
             {{ candidate.email_ID }}
           </td>
-          <td class="ellipsis-cell">
+          <td class="ellipsis-cell col">
             {{ candidate.roleName }}
           </td>
-          <td class="ellipsis-cell">
+          <td class="ellipsis-cell col">
             {{ candidate.experience }}
           </td>
           <td
-            class="ellipsis-cell"
+            class="ellipsis-cell col"
             [matTooltip]="candidate.skills"
             matTooltipPosition="above"
             [matTooltipClass]="'custom-tooltip'"
           >
             {{ candidate.skills }}
           </td>
-          <td class="ellipsis-cell">
+          <td class="ellipsis-cell col">
             {{ candidate.ctc }}
           </td>
-          <td class="ellipsis-cell">
+          <td class="ellipsis-cell col">
             {{ candidate.etc }}
           </td>
 
           <td
-            class="ellipsis-cell"
+            class="ellipsis-cell col"
+            [ngClass]="{
+              'text-primary': candidate.schedule_Interview_status === 'Good',
+              'text-success':
+                candidate.schedule_Interview_status === 'Excellent',
+              'text-danger': candidate.schedule_Interview_status === 'Not Good'
+            }"
             [matTooltip]="candidate.schedule_Interview_status"
             matTooltipPosition="above"
             [matTooltipClass]="'custom-tooltip'"
@@ -308,7 +315,7 @@
             {{ candidate.schedule_Interview_status }}
           </td>
 
-          <td class="ellipsis-cell">
+          <td class="ellipsis-cell col">
             <button
               class="text-success rounded-pill border-primary"
               [disabled]="!candidate.cvPath"
@@ -323,7 +330,7 @@
               cv
             </button>
           </td>
-          <td class="ellipsis-cell ">
+          <td class="ellipsis-cell col">
             <i
               class="fas fa-edit text-primary fa-lg me-2 cursorPointer"
               (click)="EditCandidate(candidate)"
@@ -386,7 +393,7 @@
       (change)="onPageSizeChange($event)"
       class="form-select"
     >
-      <option value="10">10</option>
+      <option value="15">15</option>
       <option value="20">20</option>
       <option value="50">50</option>
       <option value="100">100</option>
@@ -504,7 +511,17 @@
         </div>
         <div class="col-md-6">
           <strong class="me-4">Interview Status:</strong>
-          <span>{{ candidateForDetails.schedule_Interview_status }}</span>
+          <span
+            [ngClass]="{
+              'text-primary':
+                candidateForDetails.schedule_Interview_status === 'Good',
+              'text-success':
+                candidateForDetails.schedule_Interview_status === 'Excellent',
+              'text-danger':
+                candidateForDetails.schedule_Interview_status === 'Not Good'
+            }"
+            >{{ candidateForDetails.schedule_Interview_status }}</span
+          >
         </div>
       </div>
       <div class="row mb-3">

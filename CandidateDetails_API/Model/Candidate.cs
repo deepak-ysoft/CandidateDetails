@@ -12,6 +12,10 @@ namespace CandidateDetails_API.Model
         [Required]
         public string name { get; set; }
         [Required]
+        [MinLength(10)]
+        [MaxLength(14)]
+        [RegularExpression(@"^\+?[0-9 ]{10,14}$",
+        ErrorMessage = "Only numbers, '+' sign, and one space are allowed.")]
         public string contact_No { get; set; }
         public string? linkedin_Profile { get; set; }
         [Required]

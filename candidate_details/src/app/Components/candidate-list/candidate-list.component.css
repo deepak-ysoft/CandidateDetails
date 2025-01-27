@@ -48,7 +48,7 @@ td {
 .ellipsis-cell {
   width: 5%;
   min-width: 5%;
-  max-width: 280px;
+  max-width: 260px;
   overflow: hidden; /* Hides content that overflows */
   text-overflow: ellipsis; /* Adds ellipsis for overflow */
   white-space: nowrap; /* Prevents wrapping to the next line */
@@ -69,4 +69,8 @@ td {
 .details-shadow {
   box-shadow: 0 5px 5px rgb(127, 127, 127);
   background-color: aliceblue;
+}
+
+tbody tr {
+  height: 40px;
 }

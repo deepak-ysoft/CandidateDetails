@@ -13,7 +13,7 @@ import { Candidate } from '../../../Models/candidate.model';
 
 @Component({
   selector: 'app-layout',
-  imports: [ RouterOutlet, RouterLink, RouterLinkActive, CommonModule],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, CommonModule],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.css',
 })
@@ -22,6 +22,8 @@ export class LayoutComponent {
   private currentRouteSubject = new BehaviorSubject<string>('');
   currentRoute$: Observable<string> = this.currentRouteSubject.asObservable();
   todayDataCount = 0;
+  showExcelDownload = false;
+  showRoleButton = false;
 
   constructor(
     private router: Router,
@@ -42,16 +44,39 @@ export class LayoutComponent {
       .subscribe((event: NavigationEnd) => {
         this.currentRouteSubject.next(event.url);
       });
-    this.getWeekData();
+    this.currentRoute$.subscribe((route) => {
+      console.log('Current route:', route);
+
+      // Perform actions based on the route
+      if (route === '/candidateList') {
+        this.showExcelDownload = true;
+        this.showRoleButton = false;
+      } else if (route === '/index' || route === '/') {
+        this.showRoleButton = true;
+        this.showExcelDownload = false;
+      } else {
+        this.showExcelDownload = false;
+        this.showRoleButton = false;
+      }
+    });
+    let isLoggedIn;
     setInterval(() => {
-      this.getWeekData();
+      isLoggedIn = localStorage.getItem('authToken'); // Example check for JWT token
     }, 5000);
+
+    debugger;
+    this.getWeekData();
+    if (isLoggedIn) {
+      setInterval(() => {
+        this.getWeekData();
+      }, 5000);
+    }
   }
 
   getWeekData() {
     this.candidateService.getWeekAndTodayData().subscribe((res: any) => {
       if (res.res) {
-        (this.todayDataCount = res.todayDataCount);
+        this.todayDataCount = res.todayDataCount;
       }
     });
   }
@@ -75,6 +100,7 @@ export class LayoutComponent {
   logOut() {
     this, this.router.navigateByUrl('/login');
     if (this.isBrowser()) {
+      localStorage.removeItem('authToken');
       localStorage.clear();
     }
   }

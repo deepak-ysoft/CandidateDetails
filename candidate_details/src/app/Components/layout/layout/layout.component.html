@@ -9,7 +9,7 @@
         class="d-inline-block align-text-top"
       />
     </a>
-
+    <!-- Navbar Content -->
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav">
         <li class="nav-item">
@@ -25,15 +25,10 @@
         <li class="nav-item">
           <a
             class="nav-link"
-            routerLink="/CandidateList"
+            routerLink="/candidateList"
             routerLinkActive="active"
           >
             <i class="fas fa-users me-1"></i>Candidate
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/roles" routerLinkActive="active">
-            <i class="fa-brands fa-critical-role me-1"></i>Roles
           </a>
         </li>
         <li class="nav-item">
@@ -48,7 +43,7 @@
         </li>
       </ul>
     </div>
-
+    <!-- Additional Navbar Buttons -->
     <div
       class="position-relative d-inline-block me-5"
       data-bs-toggle="dropdown"
@@ -63,8 +58,18 @@
         </span>
       </a>
     </div>
-
-    <button class="btn btn-success me-4" (click)="downloadCandidateExcel()">
+    <button
+      class="btn btn-success me-4"
+      *ngIf="showRoleButton"
+      routerLink="/roles"
+    >
+      <i class="fa-brands fa-critical-role me-2"></i> Roles
+    </button>
+    <button
+      class="btn btn-success me-4"
+      *ngIf="showExcelDownload"
+      (click)="downloadCandidateExcel()"
+    >
       <i class="fa fa-download"></i> Excel File
     </button>
     <button class="btn btn-secondary" (click)="logOut()">
@@ -73,6 +78,11 @@
   </div>
 </nav>
 
-<main id="main" class="main">
-  <router-outlet> </router-outlet>
-</main>
+<div class="page-container">
+  <main id="main" class="main">
+    <router-outlet></router-outlet>
+  </main>
+  <footer class="footer">
+    <p class="all-rights">© 2024 YSoft Solution. All Rights Reserved.</p>
+  </footer>
+</div>

@@ -67,7 +67,7 @@ export class LoginComponent implements OnInit {
         debugger;
         this.authService.storeToken(response.token.result);
         this.localStorageService.setEmp(response);
-        this.router.navigateByUrl('CandidateList');
+        this.router.navigateByUrl('/index');
       },
       error: (err: any) => {
         // Handle validation errors from the server

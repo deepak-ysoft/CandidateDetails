@@ -42,17 +42,31 @@ li {
       0 0 12px rgba(0, 255, 255, 0.3);
 }
 
-.notifications {
-   max-height: 500px;
+.page-container {
+   display: flex;
+   flex-direction: column;
+   min-height: calc(100vh - 85px); /* Ensures the container takes full height of the viewport */
+}
+
+main.main {
+   flex: 1; /* Pushes the footer to the bottom when content is small */
+   max-height: 88%;
    overflow-y: auto;
    overflow-x: auto;
 }
 
-.list-bg {
-   background-color: #7ea2c5;
+footer.footer {
+   background: #f8f9fa;
+   text-align: center;
+   padding: 10px 0;
+   position: relative;
+   width: 100%;
 }
-.main {
-   max-height: 91%;
-   overflow-y: auto;
-   overflow-x: hidden;
+.all-rights {
+   margin: 0;
+   font-size: 14px;
+   font-weight: 400; /* Adjust weight as needed */
+   color: #6c757d; /* Optional: Muted text color */
+   width: 100%; /* Ensures it spans the full width */
+   display: block; /* Ensures it behaves as a full-width block */
 }

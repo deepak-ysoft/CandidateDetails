@@ -17,7 +17,7 @@
     </div>
     <div class="row">
       <!-- Date -->
-      <div class="col-md-6 mb-3">
+      <div class="col-md-4 mb-3">
         <label for="date" class="form-label">Date</label>
         <input type="hidden" formControlName="id" />
         <input
@@ -43,7 +43,7 @@
       </div>
 
       <!-- Name -->
-      <div class="col-md-6 mb-3">
+      <div class="col-md-4 mb-3">
         <label for="name" class="form-label">Name</label>
         <input
           type="text"
@@ -66,11 +66,8 @@
           >{{ candidateForm.get('name')?.errors?.['serverError'] }}</small
         >
       </div>
-    </div>
-
-    <div class="row">
       <!-- Contact No -->
-      <div class="col-md-6 mb-3">
+      <div class="col-md-4 mb-3">
         <label for="contactNo" class="form-label">Contact Number</label>
         <input
           type="text"
@@ -79,45 +76,59 @@
           class="form-control magic-input"
         /><small
           class="text-danger"
-          class="text-danger"
-          *ngIf="candidateForm.controls['contact_No'].hasError('pattern')"
+          *ngIf="candidateForm.get('contact_No')?.hasError('serverError')"
         >
-          Please enter phone number!
+          {{ candidateForm.get('contact_No')?.errors?.['serverError'] }}
         </small>
+
         <small
           class="text-danger"
-          *ngIf="candidateForm.get('contact_No')?.hasError('serverError')"
-          >{{ candidateForm.get('contact_No')?.errors?.['serverError'] }}</small
-        ><small
           *ngIf="
-            !candidateForm.get('contact_No')?.hasError('serverError') &&
-            shouldShowError('contact_No') &&
-            !candidateForm.get('contact_No')?.hasError('minPhoneValue') &&
-            !candidateForm.get('contact_No')?.hasError('maxPhoneValue') &&
+            candidateForm.get('contact_No')?.hasError('pattern') &&
             !candidateForm.get('contact_No')?.hasError('serverError')
           "
-          class="text-danger"
         >
-          Please enter phone number!</small
-        >
+          Only numbers, '+' sign, and one space are allowed.
+        </small>
+
         <small
           class="text-danger"
-          *ngIf="candidateForm.get('contact_No')?.hasError('minPhoneValue')"
-          class="text-danger"
+          *ngIf="
+            candidateForm.get('contact_No')?.hasError('minlength') &&
+            !candidateForm.get('contact_No')?.hasError('serverError')
+          "
         >
           Phone number must have at least 10 digits.
         </small>
+
         <small
           class="text-danger"
-          *ngIf="candidateForm.get('contact_No')?.hasError('maxPhoneValue')"
-          class="text-danger"
+          *ngIf="
+            candidateForm.get('contact_No')?.hasError('maxlength') &&
+            !candidateForm.get('contact_No')?.hasError('serverError')
+          "
         >
-          Phone number cannot exceed 14.
+          Phone number cannot exceed 14 characters.
+        </small>
+
+        <small
+          class="text-danger"
+          *ngIf="
+          !candidateForm.get('contact_No')?.hasError('serverError') &&
+          shouldShowError('contact_No') &&
+          !candidateForm.get('contact_No')?.errors?.['pattern'] &&
+          !candidateForm.get('contact_No')?.errors?.['minlength'] &&
+          !candidateForm.get('contact_No')?.errors?.['maxlength']
+        "
+        >
+          Please enter a phone number!
         </small>
       </div>
+    </div>
 
+    <div class="row">
       <!-- LinkedIn Profile -->
-      <div class="col-md-6 mb-3">
+      <div class="col-md-4 mb-3">
         <label for="linkedinProfile" class="form-label">LinkedIn Profile</label>
         <input
           type="text"
@@ -126,11 +137,9 @@
           class="form-control magic-input"
         />
       </div>
-    </div>
 
-    <div class="row">
       <!-- Email -->
-      <div class="col-md-6 mb-3">
+      <div class="col-md-4 mb-3">
         <label for="email" class="form-label">Email</label>
         <input
           type="email"
@@ -161,7 +170,7 @@
       </div>
 
       <!-- Roles -->
-      <div class="col-md-6 mb-3">
+      <div class="col-md-4 mb-3">
         <label for="roles" class="form-label">Role</label>
         <select
           id="roles"
@@ -193,7 +202,7 @@
 
     <div class="row">
       <!-- Experience -->
-      <div class="col-md-6 mb-3">
+      <div class="col-md-4 mb-3">
         <label for="experience" class="form-label">Experience</label>
         <input
           type="text"
@@ -218,7 +227,7 @@
       </div>
 
       <!-- Skills -->
-      <div class="col-md-6 mb-3">
+      <div class="col-md-4 mb-3">
         <label for="skills" class="form-label">Skills</label>
         <input
           type="text"
@@ -242,11 +251,9 @@
           >{{ candidateForm.get('skills')?.errors?.['serverError'] }}</small
         >
       </div>
-    </div>
 
-    <div class="row">
       <!-- CTC -->
-      <div class="col-md-6 mb-3">
+      <div class="col-md-4 mb-3">
         <label for="ctc" class="form-label">CTC</label>
         <input
           type="number"
@@ -270,9 +277,11 @@
           >{{ candidateForm.get('ctc')?.errors?.['serverError'] }}</small
         >
       </div>
+    </div>
 
+    <div class="row">
       <!-- ETC -->
-      <div class="col-md-6 mb-3">
+      <div class="col-md-4 mb-3">
         <label for="etc" class="form-label">ETC</label>
         <input
           type="number"
@@ -296,11 +305,8 @@
           >{{ candidateForm.get('etc')?.errors?.['serverError'] }}</small
         >
       </div>
-    </div>
-
-    <div class="row">
       <!-- Notice Period -->
-      <div class="col-md-6 mb-3">
+      <div class="col-md-4 mb-3">
         <label for="noticePeriod" class="form-label">Notice Period</label>
         <input
           type="text"
@@ -326,7 +332,7 @@
       </div>
 
       <!-- Current Location -->
-      <div class="col-md-6 mb-3">
+      <div class="col-md-4 mb-3">
         <label for="currentLocation" class="form-label">Current Location</label>
         <input
           type="text"
@@ -354,7 +360,7 @@
 
     <div class="row">
       <!-- Prefer Location -->
-      <div class="col-md-6 mb-3">
+      <div class="col-md-4 mb-3">
         <label for="preferLocation" class="form-label"
           >Preferred Location</label
         >
@@ -381,7 +387,7 @@
       </div>
 
       <!-- Reason For Job Change -->
-      <div class="col-md-6 mb-3">
+      <div class="col-md-4 mb-3">
         <label for="reasonForJobChange" class="form-label"
           >Reason for Job Change</label
         >
@@ -411,11 +417,8 @@
           >{{ candidateForm.get('reason_For_Job_Change')?.errors?.['serverError'] }}</small
         >
       </div>
-    </div>
-
-    <div class="row">
       <!-- Schedule Interview -->
-      <div class="col-md-6 mb-3">
+      <div class="col-md-4 mb-3">
         <label for="scheduleInterview" class="form-label"
           >Schedule Interview</label
         >
@@ -426,40 +429,11 @@
           class="form-control magic-input"
         />
       </div>
-
-      <!-- Schedule Interview Status -->
-      <div class="col-md-6 mb-3">
-        <label for="scheduleInterviewStatus" class="form-label"> Status</label
-        ><br />
-        <input
-          type="radio"
-          id="Not Good"
-          formControlName="schedule_Interview_status"
-          value="Not Good"class="ms-3"
-        />
-        <label for="Not Good" class="ms-1">Not Good</label>
-        <input
-          type="radio"
-          id="Good"
-          formControlName="schedule_Interview_status"
-          value="Good"
-          class="ms-5"
-        />
-        <label for="Good" class="ms-1">Good</label>
-        <input
-          type="radio"
-          id="Excellent"
-          formControlName="schedule_Interview_status"
-          value="Excellent"
-          class="ms-5"
-        />
-        <label for="Excellent" class="ms-1">Excellent</label>
-      </div>
     </div>
 
     <div class="row">
       <!-- Comments -->
-      <div class="col-12 mb-3">
+      <div class="col-8 mb-3">
         <label for="comments" class="form-label">Comments</label>
         <textarea
           id="comments"
@@ -481,6 +455,35 @@
           *ngIf="candidateForm.get('comments')?.hasError('serverError')"
           >{{ candidateForm.get('comments')?.errors?.['serverError'] }}</small
         >
+      </div>
+      <!-- Schedule Interview Status -->
+      <div class="col-md-4 mt-4">
+        <label for="scheduleInterviewStatus" class="form-label"> Status</label
+        ><br />
+        <input
+          type="radio"
+          id="Not Good"
+          formControlName="schedule_Interview_status"
+          value="Not Good"
+          class="ms-3"
+        />
+        <label for="Not Good" class="ms-1 text-danger">Not Good</label>
+        <input
+          type="radio"
+          id="Good"
+          formControlName="schedule_Interview_status"
+          value="Good"
+          class="ms-5"
+        />
+        <label for="Good" class="ms-1 text-primary">Good</label>
+        <input
+          type="radio"
+          id="Excellent"
+          formControlName="schedule_Interview_status"
+          value="Excellent"
+          class="ms-5"
+        />
+        <label for="Excellent" class="ms-1 text-success">Excellent</label>
       </div>
     </div>
     <hr class="hr" />

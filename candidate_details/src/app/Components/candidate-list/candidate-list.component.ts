@@ -29,7 +29,7 @@ export class CandidateListComponent {
   isSort = false;
   sortDirection: string = 'desc';
   PageNumber: number = 1;
-  pageSize: number = 10;
+  pageSize: number = 15;
   searchTerms: string = '';
   searchTerm: string = '';
   heading = 'text-denger';
@@ -42,7 +42,7 @@ export class CandidateListComponent {
   closeResult = '';
   SearchField = '';
   firstCandidateOfPage = 1;
-  lastCandidateOfPage = 10;
+  lastCandidateOfPage = 15;
   excelFileUpload: File | null = null;
   CandidateModalHeader = 'Add Candidate';
 
@@ -71,7 +71,7 @@ export class CandidateListComponent {
 
   open(content: any) {
     this.modalService
-      .open(content, { ariaLabelledBy: 'modal-basic-title', size: 'lg' })
+      .open(content, { ariaLabelledBy: 'modal-basic-title', size: 'xl' })
       .result.then(
         (result) => {
           this.closeResult = `Closed with: ${result}`;
@@ -258,9 +258,9 @@ export class CandidateListComponent {
       this.SearchField
     );
 
-    this.lastCandidateOfPage = this.currentPage * 10;
+    this.lastCandidateOfPage = this.currentPage * 15;
 
-    this.firstCandidateOfPage = this.lastCandidateOfPage - 9;
+    this.firstCandidateOfPage = this.lastCandidateOfPage - 14;
     if (this.lastCandidateOfPage > this.totalcandidates) {
       this.lastCandidateOfPage = this.totalcandidates;
     }

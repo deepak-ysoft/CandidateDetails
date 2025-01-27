@@ -51,7 +51,7 @@ namespace CandidateDetails_API.Controllers
         /// </summary>
         /// <returns> week data and data count</returns>
         [HttpGet("getWeekAndTodayData")]
-        public async Task<IActionResult> getWeekAndTodayData() 
+        public async Task<IActionResult> getWeekAndTodayData()
         {
             try
             {
@@ -85,7 +85,7 @@ namespace CandidateDetails_API.Controllers
                     }
                 }
                 int todayDataCount = todayData.Count(); // Get the count of the  week data
-                return Ok(new {res = true, todayDataCount = todayDataCount, weekData = weekData, todayData }); // Return the data
+                return Ok(new { res = true, todayDataCount = todayDataCount, weekData = weekData, todayData }); // Return the data
             }
             catch (Exception ex)
             {
@@ -98,7 +98,7 @@ namespace CandidateDetails_API.Controllers
         /// </summary>
         /// <returns>List of candidates and count of candidates</returns>
         [HttpGet("GetCandidates")]
-        public async Task<IActionResult> GetCandidates(int page = 1, int pageSize = 10, string sortColumn = "id", string sortDirection = "asc", string SearchField = "", string SearchValue = "")
+        public async Task<IActionResult> GetCandidates(int page, int pageSize, string sortColumn, string sortDirection, string SearchField = "", string SearchValue = "")
         {
             try
             {   // Define the SQL output parameter

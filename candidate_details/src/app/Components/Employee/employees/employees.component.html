@@ -1,4 +1,4 @@
-<div class="container-fluid mt-4 magical-table-container">
+<div class="container-fluid mt-3 magical-table-container">
   <div class="float-start mb-1">
     <h2><b>Ysoft Employees</b></h2>
   </div>
@@ -100,11 +100,11 @@
     ></button>
   </div>
   <div class="modal-body">
-    <form class="p-5" [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+    <form class="p-3" [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
       <input type="hidden" formControlName="empId" />
       <input type="hidden" formControlName="empPassword" />
       <input type="hidden" formControlName="empPasswordConfirm" />
-      <div class="row mb-4">
+      <div class="row mb-2">
         <div class="col-12 d-flex justify-content-center">
           <input
             type="file"
@@ -126,7 +126,7 @@
           </div>
         </div>
       </div>
-      <div class="row mb-4">
+      <div class="row mb-2">
         <div class="col">
           <label class="ms-2 label" for="empName">Name</label>
           <input
@@ -189,7 +189,7 @@
           </small>
         </div>
       </div>
-      <div class="row mb-4" *ngIf="EmployeeModelHeader != 'Edit Employee'">
+      <div class="row mb-2" *ngIf="EmployeeModelHeader != 'Edit Employee'">
         <div class="col">
           <label class="form-label" for="empPassword">Password</label>
           <div class="input-group">
@@ -258,7 +258,7 @@
           >
         </div>
       </div>
-      <div class="row mb-4">
+      <div class="row mb-2">
         <div class="col">
           <label class="ms-1 label" for="empNumber">Phone Number</label>
           <input
@@ -315,7 +315,7 @@
         </div>
       </div>
 
-      <div class="row mb-4">
+      <div class="row mb-2">
         <div class="col">
           <label class="ms-1 label" for="empGender">Gender</label>
           <select
@@ -369,7 +369,7 @@
         </div>
       </div>
 
-      <div class="row mb-4">
+      <div class="row mb-2">
         <div class="col">
           <label class="ms-1 label" for="empExperience">Experience</label>
           <input
@@ -422,7 +422,7 @@
         </div>
       </div>
 
-      <div class="row mb-4">
+      <div class="row mb-2">
         <div class="col">
           <label class="ms-1 label" for="empAddress">Address</label>
           <textarea

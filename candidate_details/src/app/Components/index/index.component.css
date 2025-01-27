@@ -13,7 +13,8 @@ thead th {
 }
 
 tbody {
-   max-height: 700px; /* Set the height of the scrollable area */
+   display: block;
+   max-height: 663px; /* Set the height of the scrollable area */
    overflow-y: auto; /* Add vertical scrolling */
    overflow-x: hidden;
 }

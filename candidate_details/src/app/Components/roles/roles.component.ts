@@ -13,7 +13,7 @@ import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-roles',
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './roles.component.html',
   styleUrl: './roles.component.css',
 })

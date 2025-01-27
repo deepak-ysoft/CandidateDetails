@@ -28,7 +28,7 @@ export const routes: Routes = [
         component: IndexComponent,
       },
       {
-        path: 'CandidateList',
+        path: 'candidateList',
         component: CandidateListComponent,
       },
       {

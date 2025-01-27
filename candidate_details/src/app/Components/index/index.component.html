@@ -10,11 +10,11 @@
           <thead>
             <tr class="row">
               <th class="col ellipsis-cell">Name</th>
-              <th class="col ellipsis-cell">Contact Number</th>
+              <th class="col ellipsis-cell">Contact No.</th>
               <th class="col ellipsis-cell">Email</th>
               <th class="col ellipsis-cell">Role</th>
               <th class="col ellipsis-cell">Experience</th>
-              <th class="col-3">Interview Date</th>
+              <th class="col-3 me-3">Interview Date</th>
             </tr>
           </thead>
           <tbody>
@@ -25,10 +25,17 @@
             >
               <td class="col ellipsis-cell">{{ candidate.name }}</td>
               <td class="col ellipsis-cell">{{ candidate.contact_No }}</td>
-              <td class="col ellipsis-cell">{{ candidate.email_ID }}</td>
+              <td
+                class="col ellipsis-cell"
+                [matTooltip]="candidate.email_ID"
+                matTooltipPosition="above"
+                [matTooltipClass]="'custom-tooltip'"
+              >
+                {{ candidate.email_ID }}
+              </td>
               <td class="col ellipsis-cell">{{ candidate.roleName }}</td>
               <td class="col ellipsis-cell">{{ candidate.experience }}</td>
-              <td class="col-3">
+              <td class="col-3 me-3">
                 {{ candidate.schedule_Interview | date : "medium" }}
               </td>
             </tr>
@@ -49,11 +56,11 @@
           <thead>
             <tr class="row">
               <th class="col ellipsis-cell">Name</th>
-              <th class="col ellipsis-cell">Contact Number</th>
+              <th class="col ellipsis-cell">Contact No.</th>
               <th class="col ellipsis-cell">Email</th>
               <th class="col ellipsis-cell">Role</th>
               <th class="col ellipsis-cell">Experience</th>
-              <th class="col-3">Interview Date</th>
+              <th class="col-3 me-3">Interview Date</th>
             </tr>
           </thead>
           <tbody>
@@ -64,10 +71,17 @@
             >
               <td class="col ellipsis-cell">{{ candidate.name }}</td>
               <td class="col ellipsis-cell">{{ candidate.contact_No }}</td>
-              <td class="col ellipsis-cell">{{ candidate.email_ID }}</td>
+              <td
+                class="col ellipsis-cell"
+                [matTooltip]="candidate.email_ID"
+                matTooltipPosition="above"
+                [matTooltipClass]="'custom-tooltip'"
+              >
+                {{ candidate.email_ID }}
+              </td>
               <td class="col ellipsis-cell">{{ candidate.roleName }}</td>
               <td class="col ellipsis-cell">{{ candidate.experience }}</td>
-              <td class="col-3">
+              <td class="col-3 me-3">
                 {{ candidate.schedule_Interview | date : "medium" }}
               </td>
             </tr>

@@ -26,7 +26,9 @@
                 "glob": "**/*",
                 "input": "src/assets",
                 "output": "assets"
-              }
+              },
+              "src/web.config"
+            
             ],
             "styles": [
               "@angular/material/prebuilt-themes/azure-blue.css",

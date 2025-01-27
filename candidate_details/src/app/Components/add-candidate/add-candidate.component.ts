@@ -71,7 +71,9 @@ export class AddCandidateComponent implements OnInit {
         '',
         [
           Validators.required,
-          phoneValueRangeValidator(1000000000, 999999999999999),
+          Validators.pattern(/^(?:\+?[0-9 ]+)?$/),
+          Validators.minLength(10),
+          Validators.maxLength(14),
         ],
       ],
       linkedin_Profile: [''],
@@ -157,6 +159,7 @@ export class AddCandidateComponent implements OnInit {
     this.candidateForm.updateValueAndValidity();
   }
   onSubmit() {
+    debugger;
     this.submitted = true;
     if (this.candidateForm.valid) {
       const formData = new FormData();
@@ -259,27 +262,4 @@ export class AddCandidateComponent implements OnInit {
     const control = this.candidateForm.get(controlName);
     return (control?.invalid && (control.touched || this.submitted)) ?? false;
   }
-}
-// Phone number validation
-export function phoneValueRangeValidator(
-  minValue: number,
-  maxValue: number
-): ValidatorFn {
-  return (control: AbstractControl): ValidationErrors | null => {
-    const phoneValue = +control.value; // Convert to a number
-
-    if (!control.value || isNaN(phoneValue)) {
-      return null; // If the field is empty or not a number, return no error
-    }
-
-    if (phoneValue < minValue) {
-      return { minPhoneValue: true };
-    }
-
-    if (phoneValue > maxValue) {
-      return { maxPhoneValue: true };
-    }
-
-    return null; // If within range, no error
-  };
 }

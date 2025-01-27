@@ -2,10 +2,11 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CandidateService } from '../../Services/candidate.service';
 import { CommonModule, DatePipe } from '@angular/common';
 import { Candidate } from '../../Models/candidate.model';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-index',
-  imports: [CommonModule, DatePipe],
+  imports: [CommonModule, DatePipe,MatTooltipModule],
   templateUrl: './index.component.html',
   styleUrl: './index.component.css',
 })
@@ -24,9 +25,17 @@ export class IndexComponent implements OnInit {
 
   ngOnInit(): void {
     this.getLastWeekData();
+    let isLoggedIn;
     setInterval(() => {
-      this.getLastWeekData();
+      isLoggedIn = localStorage.getItem('authToken'); // Example check for JWT token
     }, 5000);
+
+    debugger;
+    if (isLoggedIn) {
+      setInterval(() => {
+        this.getLastWeekData();
+      }, 5000);
+    }
   }
 
   constructor() {
@@ -45,5 +54,4 @@ export class IndexComponent implements OnInit {
     this.candidate = candidate;
     this.showCandidate = true;
   }
-  
 }
