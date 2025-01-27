@@ -120,7 +120,7 @@ export class CandidateService {
     );
   }
 
-  getLastWeekData(){
-    return this.http.get(`${this.baseUrl}Candidate/getLastWeekData`);
+  getWeekAndTodayData() {
+    return this.http.get(`${this.baseUrl}Candidate/getWeekAndTodayData`);
   }
 }

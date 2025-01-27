@@ -54,7 +54,6 @@
     <table class="table magical-table border">
       <thead class="thead-dark bg-light">
         <tr>
-          <th class="sticky-col">Actions</th>
           <th class="mb-2">
             <span
               (click)="
@@ -155,7 +154,7 @@
                 )
               "
             >
-              Roles
+              Role
             </span>
           </th>
           <th class="ellipsis-cell">
@@ -226,90 +225,6 @@
               ETC
             </span>
           </th>
-          <th class="ellipsis-cell">
-            <span
-              (click)="
-                clickToSortCandidate(
-                  PageNumber,
-                  pageSize,
-
-                  'notice_Period',
-                  sortDirection,
-                  searchTerm,
-                  SearchField
-                )
-              "
-            >
-              Notice Period
-            </span>
-          </th>
-          <th class="ellipsis-cell">
-            <span
-              (click)="
-                clickToSortCandidate(
-                  PageNumber,
-                  pageSize,
-                  'current_Location',
-                  sortDirection,
-                  searchTerm,
-                  SearchField
-                )
-              "
-            >
-              Current Location
-            </span>
-          </th>
-          <th class="ellipsis-cell">
-            <span
-              (click)="
-                clickToSortCandidate(
-                  PageNumber,
-                  pageSize,
-                  'prefer_Location',
-                  sortDirection,
-                  searchTerm,
-                  SearchField
-                )
-              "
-            >
-              Prefer Location
-            </span>
-          </th>
-          <th class="ellipsis-cell">
-            <span
-              (click)="
-                clickToSortCandidate(
-                  PageNumber,
-                  pageSize,
-
-                  'reason_For_Job_Change',
-                  sortDirection,
-                  searchTerm,
-                  SearchField
-                )
-              "
-            >
-              Job Change Reason
-            </span>
-          </th>
-
-          <th class="ellipsis-cell">
-            <span
-              (click)="
-                clickToSortCandidate(
-                  PageNumber,
-                  pageSize,
-
-                  'schedule_Interview',
-                  sortDirection,
-                  searchTerm,
-                  SearchField
-                )
-              "
-            >
-              Schedule Interview
-            </span>
-          </th>
 
           <th class="ellipsis-cell">
             <span
@@ -327,41 +242,16 @@
               Interview Status
             </span>
           </th>
-          <th class="ellipsis-cell">
-            <span
-              (click)="
-                clickToSortCandidate(
-                  PageNumber,
-                  pageSize,
-                  'comments',
-                  sortDirection,
-                  searchTerm,
-                  SearchField
-                )
-              "
-            >
-              Comments
-            </span>
-          </th>
+
           <th class="ellipsis-cell">cv</th>
+          <th class="llipsis-cell">Actions</th>
         </tr>
       </thead>
-      <tbody *ngFor="let candidate of candidateList">
-        <tr *ngIf="candidateList && candidateList != null">
-          <td class="ellipsis-cell sticky-col">
-            <i
-              class="fas fa-edit text-primary fa-lg me-2 cursorPointer"
-              (click)="EditCandidate(candidate)"
-            ></i>
-            <i
-              class="fa fa-info-circle text-info fa-lg me-2 cursorPointer"
-              (click)="ShowCandidateDetails(candidate)"
-            ></i>
-            <i
-              class="fa fa-trash text-danger fa-lg cursorPointer"
-              (click)="deleteCandidate(candidate.id)"
-            ></i>
-          </td>
+      <tbody>
+        <tr
+          *ngFor="let candidate of candidateList"
+          (click)="ShowCandidateDetails(candidate)"
+        >
           <td class="ellipsis-cell">
             {{ candidate.date | date : "shortDate" }}
           </td>
@@ -408,21 +298,6 @@
           <td class="ellipsis-cell">
             {{ candidate.etc }}
           </td>
-          <td class="ellipsis-cell">
-            {{ candidate.notice_Period }}
-          </td>
-          <td class="ellipsis-cell">
-            {{ candidate.current_Location }}
-          </td>
-          <td class="ellipsis-cell">
-            {{ candidate.prefer_Location }}
-          </td>
-          <td class="ellipsis-cell">
-            {{ candidate.reason_For_Job_Change }}
-          </td>
-          <td class="ellipsis-cell">
-            {{ candidate.schedule_Interview | date : "short" }}
-          </td>
 
           <td
             class="ellipsis-cell"
@@ -432,9 +307,7 @@
           >
             {{ candidate.schedule_Interview_status }}
           </td>
-          <td class="ellipsis-cell">
-            {{ candidate.comments }}
-          </td>
+
           <td class="ellipsis-cell">
             <button
               class="text-success rounded-pill border-primary"
@@ -449,6 +322,17 @@
               <i class="fa-solid fa-download"></i>
               cv
             </button>
+          </td>
+          <td class="ellipsis-cell ">
+            <i
+              class="fas fa-edit text-primary fa-lg me-2 cursorPointer"
+              (click)="EditCandidate(candidate)"
+            ></i>
+
+            <i
+              class="fa fa-trash text-danger fa-lg cursorPointer"
+              (click)="deleteCandidate(candidate.id)"
+            ></i>
           </td>
         </tr>
       </tbody>
@@ -531,22 +415,105 @@
       />
     </div>
   </ng-template>
-
-  <ng-template #candidateDetails let-modal>
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Candidate Details</h4>
-      <button
-        type="button"
-        class="btn btn-close"
-        aria-label="Close"
-        (click)="modal.dismiss('Cross click')"
-      ></button>
-    </div>
-    <div class="modal-body">
-      <app-candidate-details
-        [candidateDetail]="clickedCandidateForDetails"
-        [CandidateRole]="CandidateRole"
-      />
-    </div>
-  </ng-template>
 </div>
+
+<!-- Candidate Details -->
+<div class="card container mt-5 details-shadow" *ngIf="clickedCandidate">
+  <div class="card-body magical-table-container">
+    <h4 class="card-title">
+      <b><u>Candidate Details</u></b>
+    </h4>
+    <hr class="hr" />
+    <div class="container-fluid mt-5">
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <strong class="me-4">Date:</strong>
+          <span>{{ candidateForDetails.date }}</span>
+        </div>
+        <div class="col-md-6">
+          <strong class="me-4">Name:</strong>
+          <span>{{ candidateForDetails.name }}</span>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <strong class="me-4">Contact No:</strong>
+          <span>{{ candidateForDetails.contact_No }}</span>
+        </div>
+        <div class="col-md-6">
+          <strong class="me-4">LinkedIn Profile:</strong>
+          <a [href]="candidateForDetails.linkedin_Profile" target="_blank">{{
+            candidateForDetails.linkedin_Profile
+          }}</a>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <strong class="me-4">Email ID:</strong>
+          <span>{{ candidateForDetails.email_ID }}</span>
+        </div>
+        <div class="col-md-6">
+          <strong class="me-4">Role:</strong>
+          <span>{{ candidateForDetails.roleName }}</span>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <strong class="me-4">Experience:</strong>
+          <span>{{ candidateForDetails.experience }}</span>
+        </div>
+        <div class="col-md-6">
+          <strong class="me-4">Skills:</strong>
+          <span>{{ candidateForDetails.skills }}</span>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <strong class="me-4">CTC:</strong>
+          <span>{{ candidateForDetails.ctc }}</span>
+        </div>
+        <div class="col-md-6">
+          <strong class="me-4">ETC:</strong>
+          <span>{{ candidateForDetails.etc }}</span>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <strong class="me-4">Notice Period:</strong>
+          <span>{{ candidateForDetails.notice_Period }}</span>
+        </div>
+        <div class="col-md-6">
+          <strong class="me-4">Current Location:</strong>
+          <span>{{ candidateForDetails.current_Location }}</span>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <strong class="me-4">Preferred Location:</strong>
+          <span>{{ candidateForDetails.prefer_Location }}</span>
+        </div>
+        <div class="col-md-6">
+          <strong class="me-4">Reason for Job Change:</strong>
+          <span>{{ candidateForDetails.reason_For_Job_Change }}</span>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <strong class="me-4">Schedule Interview:</strong>
+          <span>{{ candidateForDetails.schedule_Interview }}</span>
+        </div>
+        <div class="col-md-6">
+          <strong class="me-4">Interview Status:</strong>
+          <span>{{ candidateForDetails.schedule_Interview_status }}</span>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-12">
+          <strong class="me-4">Comments:</strong>
+          <p>{{ candidateForDetails.comments }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br />

@@ -12,10 +12,6 @@
   padding: 0.5rem 0;
 }
 
-.magical-table * {
-  border-bottom: 1px solid #c2d3d9 !important;
-}
-
 .card-footer {
   background-color: #f8f9fa;
 }
@@ -70,10 +66,7 @@ td {
   background-color: rgb(217, 246, 246);
 }
 
-.scrollable {
-  width: 300px;
-  overflow-y: auto;
-}
-table {
-  --bs-table-striped-bg: rgba(255, 255, 255, 0.05) !important;
+.details-shadow {
+  box-shadow: 0 5px 5px rgb(127, 127, 127);
+  background-color: aliceblue;
 }

@@ -9,16 +9,6 @@ body {
    font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-/* .sticky-col {
-   position: sticky ;
-   left: 0;
-   z-index: 2; 
-} */
-
-.table-responsive {
-   overflow-y: auto;
-}
-
 .mat-mdc-tooltip-surface {
    background-color: #ffdcd4 !important;
    color: rgb(0, 0, 0) !important;
@@ -59,7 +49,7 @@ body {
    border-color: #8e0404;
 }
 
-.btn-secondary{
+.btn-secondary {
    background-color: #aebac5;
    border-color: #5d5d5d;
    color: darkblue;
@@ -75,19 +65,8 @@ body {
    transform: translateY(-2px);
 }
 
-/* Sticky Column */
-.sticky-col {
-   position: sticky;
-   left: 0;
-   z-index: 3; /* Higher z-index to ensure visibility above others */
-   background-color: #ffffff; /* Optional: Matches table background */
-   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-}
-
 /* Magical Table Container */
 .magical-table-container {
-   max-width: 100%;
-   overflow-x: auto; /* Enable horizontal scrolling */
    text-align: center;
    font-family: "Arial", sans-serif;
 }
@@ -110,16 +89,6 @@ body {
    background: linear-gradient(135deg, #e3cbfc 0%, #c1d8ff 100%);
    color: black;
    font-weight: bold;
-}
-
-/* Sticky Column Header */
-.magical-table thead th.sticky-col {
-   background-color: #e3cbfc;
-}
-/* Sticky Column Body */
-.magical-table tbody td.sticky-col {
-   background: #ffffff;
-   border-bottom: none;
 }
 
 /* Body Styling */

@@ -112,7 +112,7 @@
           *ngIf="candidateForm.get('contact_No')?.hasError('maxPhoneValue')"
           class="text-danger"
         >
-          Phone number cannot exceed 12.
+          Phone number cannot exceed 14.
         </small>
       </div>
 
@@ -162,7 +162,7 @@
 
       <!-- Roles -->
       <div class="col-md-6 mb-3">
-        <label for="roles" class="form-label">Roles</label>
+        <label for="roles" class="form-label">Role</label>
         <select
           id="roles"
           class="magic-input form-select"
@@ -181,7 +181,7 @@
             shouldShowError('roles')
           "
         >
-          Roles is required.
+          Role is required.
         </small>
         <small
           class="text-danger"
@@ -429,15 +429,31 @@
 
       <!-- Schedule Interview Status -->
       <div class="col-md-6 mb-3">
-        <label for="scheduleInterviewStatus" class="form-label"
-          >Schedule Interview Status</label
-        >
+        <label for="scheduleInterviewStatus" class="form-label"> Status</label
+        ><br />
         <input
-          type="text"
-          id="scheduleInterviewStatus"
+          type="radio"
+          id="Not Good"
           formControlName="schedule_Interview_status"
-          class="form-control magic-input"
+          value="Not Good"class="ms-3"
         />
+        <label for="Not Good" class="ms-1">Not Good</label>
+        <input
+          type="radio"
+          id="Good"
+          formControlName="schedule_Interview_status"
+          value="Good"
+          class="ms-5"
+        />
+        <label for="Good" class="ms-1">Good</label>
+        <input
+          type="radio"
+          id="Excellent"
+          formControlName="schedule_Interview_status"
+          value="Excellent"
+          class="ms-5"
+        />
+        <label for="Excellent" class="ms-1">Excellent</label>
       </div>
     </div>
 

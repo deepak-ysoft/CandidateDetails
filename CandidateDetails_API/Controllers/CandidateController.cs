@@ -3,6 +3,7 @@ using CandidateDetails_API.Model;
 using ClosedXML.Excel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing.Matching;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
@@ -46,19 +47,45 @@ namespace CandidateDetails_API.Controllers
             }
         }
         /// <summary>
-        /// Get the last week data
+        /// Get the  week data
         /// </summary>
-        /// <returns>Last week data and data count</returns>
-        [HttpGet("getLastWeekData")]
-        public async Task<IActionResult> getLastWeekData() 
+        /// <returns> week data and data count</returns>
+        [HttpGet("getWeekAndTodayData")]
+        public async Task<IActionResult> getWeekAndTodayData() 
         {
             try
             {
-                var lastWeekData = await _context.candidateDetails.OrderBy(x=>x.schedule_Interview)
-                    .Where(x => x.schedule_Interview <= DateTime.Now.AddDays(+7) &&  x.schedule_Interview >= DateTime.Now)
-                    .ToListAsync(); // Get the last week data
-                int lastWeekDataCount = lastWeekData.Count(); // Get the count of the last week data
-                return Ok(new {res = true,count = lastWeekDataCount, data = lastWeekData }); // Return the data
+                var weekData = await _context.candidateDetails.OrderBy(x => x.schedule_Interview)
+                    .Where(x => x.schedule_Interview <= DateTime.Now.AddDays(+8) && x.schedule_Interview >= DateTime.Now.AddDays(+1))
+                    .ToListAsync(); // Get the  week data
+
+                var todayData = await _context.candidateDetails.OrderBy(x => x.schedule_Interview)
+                    .Where(x => x.schedule_Interview <= DateTime.Now.AddHours(+12) && x.schedule_Interview >= DateTime.Now)
+                    .ToListAsync(); // Get the  week data
+
+                // Get the Roles data (assuming you have a Roles table in your DbContext)
+                var roles = await _context.Roles.ToListAsync();
+
+                // Loop through the candidates and update the role value
+                foreach (var candidate in weekData)
+                {
+                    var role = roles.FirstOrDefault(r => r.rid == candidate.roles); // Match the role ID
+                    if (role != null)
+                    {
+                        candidate.roleName = role.role; // Replace the role ID with the role name
+                    }
+                }
+                // Loop through the candidates and update the role value
+                foreach (var candidate in todayData)
+                {
+                    var role = roles.FirstOrDefault(r => r.rid == candidate.roles); // Match the role ID
+                    if (role != null)
+                    {
+                        candidate.roleName = role.role; // Replace the role ID with the role name
+                    }
+                }
+                int todayDataCount = todayData.Count(); // Get the count of the  week data
+                return Ok(new {res = true, todayDataCount = todayDataCount, weekData = weekData, todayData }); // Return the data
             }
             catch (Exception ex)
             {

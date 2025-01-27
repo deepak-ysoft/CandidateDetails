@@ -1,0 +1,181 @@
+<div class="row m-4">
+  <div class="col">
+    <div class="card">
+      <div class="card-body magical-table-container">
+        <h4 class="card-title">
+          <b><u> Today Interview</u></b>
+        </h4>
+        <!-- Small tables -->
+        <table class="table table-sm magical-table">
+          <thead>
+            <tr class="row">
+              <th class="col ellipsis-cell">Name</th>
+              <th class="col ellipsis-cell">Contact Number</th>
+              <th class="col ellipsis-cell">Email</th>
+              <th class="col ellipsis-cell">Role</th>
+              <th class="col ellipsis-cell">Experience</th>
+              <th class="col-3">Interview Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              class="row"
+              *ngFor="let candidate of todayData"
+              (click)="CanidtateDetals(candidate)"
+            >
+              <td class="col ellipsis-cell">{{ candidate.name }}</td>
+              <td class="col ellipsis-cell">{{ candidate.contact_No }}</td>
+              <td class="col ellipsis-cell">{{ candidate.email_ID }}</td>
+              <td class="col ellipsis-cell">{{ candidate.roleName }}</td>
+              <td class="col ellipsis-cell">{{ candidate.experience }}</td>
+              <td class="col-3">
+                {{ candidate.schedule_Interview | date : "medium" }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <!-- End small tables -->
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card">
+      <div class="card-body magical-table-container">
+        <h4 class="card-title">
+          <b><u>This Week Interview</u></b>
+        </h4>
+        <!-- Small tables -->
+        <table class="table table-sm magical-table">
+          <thead>
+            <tr class="row">
+              <th class="col ellipsis-cell">Name</th>
+              <th class="col ellipsis-cell">Contact Number</th>
+              <th class="col ellipsis-cell">Email</th>
+              <th class="col ellipsis-cell">Role</th>
+              <th class="col ellipsis-cell">Experience</th>
+              <th class="col-3">Interview Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              class="row"
+              *ngFor="let candidate of weekData"
+              (click)="CanidtateDetals(candidate)"
+            >
+              <td class="col ellipsis-cell">{{ candidate.name }}</td>
+              <td class="col ellipsis-cell">{{ candidate.contact_No }}</td>
+              <td class="col ellipsis-cell">{{ candidate.email_ID }}</td>
+              <td class="col ellipsis-cell">{{ candidate.roleName }}</td>
+              <td class="col ellipsis-cell">{{ candidate.experience }}</td>
+              <td class="col-3">
+                {{ candidate.schedule_Interview | date : "medium" }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <!-- End small tables -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Candidate Details -->
+<div class="card container" *ngIf="showCandidate">
+  <div class="card-body magical-table-container">
+    <h4 class="card-title">
+      <b><u>Candidate Details</u></b>
+    </h4>
+
+    <hr class="hr" />
+    <div class="container-fluid mt-5">
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <strong class="me-4">Date:</strong>
+          <span>{{ candidate.date }}</span>
+        </div>
+        <div class="col-md-6">
+          <strong class="me-4">Name:</strong>
+          <span>{{ candidate.name }}</span>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <strong class="me-4">Contact No:</strong>
+          <span>{{ candidate.contact_No }}</span>
+        </div>
+        <div class="col-md-6">
+          <strong class="me-4">LinkedIn Profile:</strong>
+          <a [href]="candidate.linkedin_Profile" target="_blank">{{
+            candidate.linkedin_Profile
+          }}</a>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <strong class="me-4">Email ID:</strong>
+          <span>{{ candidate.email_ID }}</span>
+        </div>
+        <div class="col-md-6">
+          <strong class="me-4">Role:</strong>
+          <span>{{ candidate.roleName }}</span>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <strong class="me-4">Experience:</strong>
+          <span>{{ candidate.experience }}</span>
+        </div>
+        <div class="col-md-6">
+          <strong class="me-4">Skills:</strong>
+          <span>{{ candidate.skills }}</span>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <strong class="me-4">CTC:</strong>
+          <span>{{ candidate.ctc }}</span>
+        </div>
+        <div class="col-md-6">
+          <strong class="me-4">ETC:</strong>
+          <span>{{ candidate.etc }}</span>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <strong class="me-4">Notice Period:</strong>
+          <span>{{ candidate.notice_Period }}</span>
+        </div>
+        <div class="col-md-6">
+          <strong class="me-4">Current Location:</strong>
+          <span>{{ candidate.current_Location }}</span>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <strong class="me-4">Preferred Location:</strong>
+          <span>{{ candidate.prefer_Location }}</span>
+        </div>
+        <div class="col-md-6">
+          <strong class="me-4">Reason for Job Change:</strong>
+          <span>{{ candidate.reason_For_Job_Change }}</span>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <strong class="me-4">Schedule Interview:</strong>
+          <span>{{ candidate.schedule_Interview | date : "medium" }}</span>
+        </div>
+        <div class="col-md-6">
+          <strong class="me-4">Interview Status:</strong>
+          <span>{{ candidate.schedule_Interview_status }}</span>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-12">
+          <strong class="me-4">Comments:</strong>
+          <p>{{ candidate.comments }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

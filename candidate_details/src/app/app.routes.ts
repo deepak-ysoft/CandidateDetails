@@ -7,6 +7,7 @@ import { EmployeesComponent } from './Components/Employee/employees/employees.co
 import { EmployeeDetailsComponent } from './Components/Employee/employee-details/employee-details.component';
 import { LoginComponent } from './Components/login/login.component';
 import { authGuard } from './Services/auth.guard';
+import { IndexComponent } from './Components/index/index.component';
 
 export const routes: Routes = [
   {
@@ -20,7 +21,11 @@ export const routes: Routes = [
       },
       {
         path: '',
-        component: CandidateListComponent,
+        component: IndexComponent,
+      },
+      {
+        path: 'index',
+        component: IndexComponent,
       },
       {
         path: 'CandidateList',

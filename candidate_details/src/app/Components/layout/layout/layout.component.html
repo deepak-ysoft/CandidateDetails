@@ -15,11 +15,20 @@
         <li class="nav-item">
           <a
             class="nav-link"
-            routerLink="/candidateList"
+            routerLink="/index"
             routerLinkActive="active"
             [routerLinkActiveOptions]="{ exact: true }"
           >
             <i class="fa-solid fa-house me-1"></i>Home
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/CandidateList"
+            routerLinkActive="active"
+          >
+            <i class="fas fa-users me-1"></i>Candidate
           </a>
         </li>
         <li class="nav-item">
@@ -44,49 +53,16 @@
       class="position-relative d-inline-block me-5"
       data-bs-toggle="dropdown"
     >
-      <i class="fa-solid fa-bell fa-xl text-primary"></i>
-      <span
-        class="badge bg-danger badge-number position-absolute top-0 start-100 translate-middle"
-      >
-        {{ lastWeekDataCount }}
-      </span>
+      <a routerLink="/index">
+        <i class="fa-solid fa-bell fa-xl text-primary"></i>
+        <span
+          *ngIf="todayDataCount != 0"
+          class="badge bg-danger badge-number position-absolute top-0 start-100 translate-middle"
+        >
+          {{ todayDataCount }}
+        </span>
+      </a>
     </div>
-    <!-- End Notification Icon -->
-
-    <ul
-      class="overflow dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications list-bg"
-    >
-      <li class="li dropdown-header">
-        Open all notifications
-        <a routerLink="/contact-us-list"
-          ><span class="badge rounded-pill bg-primary p-2 ms-2"
-            >View all</span
-          ></a
-        >
-      </li>
-      <li>
-        <hr class="dropdown-divider" />
-      </li>
-      <ul
-        *ngFor="let data of lastWeekData; let i = index"
-        class="list-unstyled bg-white"
-      >
-        <a data-bs-toggle="modal" data-bs-target="#contactUsModal">
-          <li class="li notification-item">
-            <i class="bi bi-exclamation-circle text-warning"></i>
-            <div class="fa-sm ms-3">
-              <h4>{{ data.name }}</h4>
-              <p>{{ data.email_ID }}</p>
-              <p>{{ data.schedule_Interview | date : "medium" }}</p>
-            </div>
-          </li></a
-        >
-        <li>
-          <hr class="dropdown-divider" *ngIf="lastWeekDataCount > 0" />
-        </li>
-      </ul>
-    </ul>
-    <!-- End Notification Dropdown Items -->
 
     <button class="btn btn-success me-4" (click)="downloadCandidateExcel()">
       <i class="fa fa-download"></i> Excel File

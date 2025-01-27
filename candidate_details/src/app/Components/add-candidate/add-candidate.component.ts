@@ -71,7 +71,7 @@ export class AddCandidateComponent implements OnInit {
         '',
         [
           Validators.required,
-          phoneValueRangeValidator(1000000000, 999999999999),
+          phoneValueRangeValidator(1000000000, 999999999999999),
         ],
       ],
       linkedin_Profile: [''],

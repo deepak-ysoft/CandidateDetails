@@ -13,7 +13,7 @@ import { Candidate } from '../../../Models/candidate.model';
 
 @Component({
   selector: 'app-layout',
-  imports: [DatePipe, RouterOutlet, RouterLink, RouterLinkActive, CommonModule],
+  imports: [ RouterOutlet, RouterLink, RouterLinkActive, CommonModule],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.css',
 })
@@ -21,6 +21,7 @@ export class LayoutComponent {
   candidateService = inject(CandidateService);
   private currentRouteSubject = new BehaviorSubject<string>('');
   currentRoute$: Observable<string> = this.currentRouteSubject.asObservable();
+  todayDataCount = 0;
 
   constructor(
     private router: Router,
@@ -41,18 +42,16 @@ export class LayoutComponent {
       .subscribe((event: NavigationEnd) => {
         this.currentRouteSubject.next(event.url);
       });
-    this.getLastWeekData();
+    this.getWeekData();
     setInterval(() => {
-      this.getLastWeekData();
+      this.getWeekData();
     }, 5000);
   }
 
-  lastWeekDataCount = 0;
-  lastWeekData: Candidate[] = [];
-  getLastWeekData() {
-    this.candidateService.getLastWeekData().subscribe((res: any) => {
+  getWeekData() {
+    this.candidateService.getWeekAndTodayData().subscribe((res: any) => {
       if (res.res) {
-        (this.lastWeekDataCount = res.count), (this.lastWeekData = res.data);
+        (this.todayDataCount = res.todayDataCount);
       }
     });
   }

@@ -4,7 +4,6 @@ import { Candidate } from '../../Models/candidate.model';
 import { CommonModule } from '@angular/common';
 import { AddCandidateComponent } from '../add-candidate/add-candidate.component';
 import { FormsModule } from '@angular/forms';
-import { CandidateDetailsComponent } from '../candidate-details/candidate-details.component';
 import { CommonServiceService } from '../../Services/common-service.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
@@ -13,13 +12,7 @@ import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-candidate-list',
-  imports: [
-    FormsModule,
-    CommonModule,
-    AddCandidateComponent,
-    CandidateDetailsComponent,
-    MatTooltipModule,
-  ],
+  imports: [FormsModule, CommonModule, AddCandidateComponent, MatTooltipModule],
   templateUrl: './candidate-list.component.html',
   styleUrl: './candidate-list.component.css',
 })
@@ -27,8 +20,8 @@ export class CandidateListComponent {
   @ViewChild('addCandidate', { static: false }) addCandidate!: ElementRef;
   @ViewChild('candidateDetails', { static: false })
   candidateDetails!: ElementRef;
-  clickedCandidateForDetails!: Candidate;
-  CandidateRole = '';
+  candidateForDetails!: Candidate;
+  clickedCandidate = false;
   clickedCandidateForEdit!: Candidate;
   candidateList: Candidate[] = [];
   isCVAvailable = false; // Set to true if CV exists for the candidate
@@ -56,7 +49,9 @@ export class CandidateListComponent {
   constructor(
     private candidateService: CandidateService,
     private modalService: NgbModal
-  ) {}
+  ) {
+    this.clickedCandidate = false;
+  }
 
   ngOnInit(): void {
     this.candidateService.candidateList$.subscribe((candidates) => {
@@ -189,11 +184,8 @@ export class CandidateListComponent {
   }
 
   ShowCandidateDetails(candidate: Candidate) {
-    this.candidateService.GetCandidate(candidate.id).subscribe((res: any) => {
-      this.clickedCandidateForDetails = res.can;
-      this.CandidateRole = res.role.role;
-    });
-    this.open(this.candidateDetails);
+    this.clickedCandidate = true;
+    this.candidateForDetails = candidate;
   }
 
   deleteCandidate(id: number) {

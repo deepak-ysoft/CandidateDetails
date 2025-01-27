@@ -1,0 +1,39 @@
+.card {
+   box-shadow: 0 5px 5px rgb(149, 149, 149);
+}
+
+.card-body {
+   background-color: rgb(248, 252, 255);
+}
+
+thead th {
+   position: sticky;
+   top: 0;
+   z-index: 1; /* Ensure headers appear above the scrollable content */
+}
+
+tbody {
+   max-height: 700px; /* Set the height of the scrollable area */
+   overflow-y: auto; /* Add vertical scrolling */
+   overflow-x: hidden;
+}
+
+tbody {
+   -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
+   scrollbar-width: none; /* Hide scrollbar for Firefox */
+}
+
+tbody {
+   width: 100%;
+   border-collapse: collapse;
+}
+
+.ellipsis-cell {
+   width: 5%;
+   min-width: 5%;
+   max-width: 140px;
+   overflow: hidden; /* Hides content that overflows */
+   text-overflow: ellipsis; /* Adds ellipsis for overflow */
+   white-space: nowrap; /* Prevents wrapping to the next line */
+   /* display: inline-block; Keeps the element inline */
+}

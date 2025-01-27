@@ -51,3 +51,8 @@ li {
 .list-bg {
    background-color: #7ea2c5;
 }
+.main {
+   max-height: 91%;
+   overflow-y: auto;
+   overflow-x: hidden;
+}

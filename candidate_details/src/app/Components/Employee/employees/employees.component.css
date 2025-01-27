@@ -1,7 +1,3 @@
-.modal-header {
-   background-color: rgb(217, 246, 246);
-}
-
 table::-webkit-scrollbar {
    display: none; /* Hide scrollbar for WebKit browsers */
 }
