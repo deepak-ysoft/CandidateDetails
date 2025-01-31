@@ -1,6 +1,5 @@
 ﻿using CandidateDetails_API.IServices;
 using CandidateDetails_API.Model;
-using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,11 +21,11 @@ namespace CandidateDetails_API.ServiceContent
             }
 
             var hasher = new PasswordHasher<Employee>(); // Create an instance of PasswordHasher
-            var passwordVerificationResult = hasher.VerifyHashedPassword(employee, employee.empPassword, changePasswordVM.CurrentPassword); // To varify user password is correct or not
+            var passwordVerificationResult = hasher.VerifyHashedPassword(employee, employee.empPassword, changePasswordVM.currentPassword); // To varify user password is correct or not
 
             if (passwordVerificationResult == PasswordVerificationResult.Success) // If result us success
             {
-                employee.empPassword = hasher.HashPassword(employee, changePasswordVM.NewPassword); // To convert to encrypted password.
+                employee.empPassword = hasher.HashPassword(employee, changePasswordVM.newPassword); // To convert to encrypted password.
                 _context.Employees.Update(employee); // Update the employee
                 await _context.SaveChangesAsync();
                 return (true, "Password changed successfully.");
@@ -38,17 +37,19 @@ namespace CandidateDetails_API.ServiceContent
         }
 
         // Check user is valid or not
-        public async Task<bool> Login(Login model)
+        public async Task<(bool Success, string Message)> Login(Login model)
         {
             var hasher = new PasswordHasher<Employee>();
             var emp = await _context.Employees.FirstOrDefaultAsync(u => u.empEmail == model.email);
             if (emp != null)
             {
+                if(emp.isActive == false)
+                    return (false, "Your account is not active.");
                 var passwordVerificationResult = hasher.VerifyHashedPassword(emp, emp.empPassword, model.password); // To verify password
                 if (passwordVerificationResult == PasswordVerificationResult.Success)
-                    return true;
+                    return (true, "Login successfully.");
             }
-            return false;
+            return (false, "Wrong info.");
         }
     }
 }

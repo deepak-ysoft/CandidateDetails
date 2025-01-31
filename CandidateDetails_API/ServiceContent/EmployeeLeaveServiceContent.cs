@@ -18,6 +18,7 @@ namespace CandidateDetails_API.ServiceContent
             if (employeeLeave.leaveId == 0)
             {
                 employeeLeave.isDelete = false;
+                employeeLeave.isApprove = false;
                 employeeLeave.startDate = employeeLeave.startDate.AddHours(12);
                 employeeLeave.endDate = employeeLeave.endDate.AddHours(12);
                 await _context.employeesleave.AddAsync(employeeLeave); // Add new employee leave
@@ -45,7 +46,7 @@ namespace CandidateDetails_API.ServiceContent
             else
             {
                 employeeLeave.isDelete = false;
-
+                employeeLeave.isApprove = true;
                 _context.employeesleave.Update(employeeLeave); // Update employee leave
                 int result = await _context.SaveChangesAsync();
                 if (result > 0)

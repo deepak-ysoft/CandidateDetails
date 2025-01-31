@@ -79,6 +79,7 @@ namespace CandidateDetails_API.Controllers
         /// </summary>
         /// <param name="model">calendar model</param>
         /// <returns>true or false</returns>
+        [Authorize(Roles = "Admin,HR")]
         [HttpPost("CreateEditCalendar")] // Use the appropriate HTTP method for creating a resource
         public async Task<IActionResult> CreateEditCalendar([FromBody] Calendar model)
         {
@@ -150,6 +151,7 @@ namespace CandidateDetails_API.Controllers
         /// </summary>
         /// <param name="request">Update Calendar Request model</param>
         /// <returns>true or false</returns>
+        [Authorize(Roles = "Admin,HR")]
         [HttpPost("UpdateCalendar")]
         public async Task<IActionResult> UpdateCalendar([FromBody] UpdateCalendarRequest request)
         {
@@ -158,17 +160,24 @@ namespace CandidateDetails_API.Controllers
             {
                 //calendar.StartDate = request.NewStart.AddHours(5).AddMinutes(30);
                 //calendar.EndDate = request.NewEnd.AddHours(5).AddMinutes(30); 
+                var birthVM = await _context.employeeBirthdays.FirstOrDefaultAsync(x => x.calId == calendar.CalId);
+                var leaveVM = await _context.employeeLeaveVM.FirstOrDefaultAsync(x => x.calId == calendar.CalId);
 
+                if (birthVM != null|| leaveVM!=null)
+                {
+                    return Ok(false);
+                }
                 calendar.StartDate = request.NewStart;
                 calendar.EndDate = request.NewEnd;
 
                 await _context.SaveChangesAsync();
-                return Ok(); // Return a success response
+                return Ok(true); // Return a success response
             }
             return NotFound(); // Return a not found response if the calendar doesn't exist
         }
 
         // To delete a Calendar
+        [Authorize(Roles = "Admin,HR")]
         [HttpDelete("DeleteCalendar/{id}")]
         public async Task<IActionResult> DeleteCalendar(int id)
         {

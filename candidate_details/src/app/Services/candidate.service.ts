@@ -1,11 +1,10 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { inject, Injectable, OnInit } from '@angular/core';
+import {  Injectable } from '@angular/core';
 import { Candidate } from '../Models/candidate.model';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { environment } from '../../environments/environment';
 import Swal from 'sweetalert2';
 import { Roles } from '../Models/Roles.model';
-import { h } from '@fullcalendar/core/preact.js';
 
 @Injectable({
   providedIn: 'root',
@@ -48,7 +47,7 @@ export class CandidateService {
       .set('SearchValue', SearchValue);
 
     this.http
-      .get(`${this.baseUrl}Candidate/GetCandidates`, { params })
+      .get(`${this.baseUrl}api/Candidate/GetCandidates`, { params })
       .subscribe({
         next: (data: any) => {
           this.candidateListSubject.next(data.data);
@@ -63,21 +62,21 @@ export class CandidateService {
 
   UploadExcel(excel: FormData) {
     return this.http.post(
-      `${this.baseUrl}Candidate/AddCandidatesFromExcel`,
+      `${this.baseUrl}api/Candidate/AddCandidatesFromExcel`,
       excel
     );
   }
 
   uploadCV(cv: FormData) {
-    return this.http.post(`${this.baseUrl}Resume/UploadResume`, cv);
+    return this.http.post(`${this.baseUrl}api/Resume/UploadResume`, cv);
   }
 
   getRoles() {
-    return this.http.get(`${this.baseUrl}Candidate/GetRoles`);
+    return this.http.get(`${this.baseUrl}api/Candidate/GetRoles`);
   }
 
   AddUpdateRole(role: Roles) {
-    return this.http.post(`${this.baseUrl}Candidate/CreateEditRole`, role);
+    return this.http.post(`${this.baseUrl}api/Candidate/CreateEditRole`, role);
   }
 
   confirmDelete() {
@@ -92,35 +91,35 @@ export class CandidateService {
   }
 
   DeleteRole(roleId: number) {
-    return this.http.delete(`${this.baseUrl}Candidate/DeleteRole/${roleId}`);
+    return this.http.delete(`${this.baseUrl}api/Candidate/DeleteRole/${roleId}`);
   }
 
   AddEditCandidate(data: FormData) {
     this.isCandidateAddOrUpdate = true;
-    return this.http.post(`${this.baseUrl}Candidate/AddEditCandidate`, data);
+    return this.http.post(`${this.baseUrl}api/Candidate/AddEditCandidate`, data);
   }
 
   deleteCandidate(id: number) {
-    return this.http.delete(`${this.baseUrl}Candidate/DeleteCandidate/${id}`);
+    return this.http.delete(`${this.baseUrl}api/Candidate/DeleteCandidate/${id}`);
   }
 
   downloadCV(candidateId: number) {
-    const url = `${this.baseUrl}Candidate/DownloadCV/${candidateId}`;
+    const url = `${this.baseUrl}api/Candidate/DownloadCV/${candidateId}`;
     return this.http.get(url, { responseType: 'blob' });
   }
 
   downloadExcel() {
-    const url = `${this.baseUrl}Candidate/DownloadExcel`;
+    const url = `${this.baseUrl}api/Candidate/DownloadExcel`;
     return this.http.get(url, { responseType: 'blob' });
   }
 
   GetCandidate(candidateId: number) {
     return this.http.get(
-      `${this.baseUrl}Candidate/GetCandidate/${candidateId}`
+      `${this.baseUrl}api/Candidate/GetCandidate/${candidateId}`
     );
   }
 
   getWeekAndTodayData() {
-    return this.http.get(`${this.baseUrl}Candidate/getWeekAndTodayData`);
+    return this.http.get(`${this.baseUrl}api/Candidate/getWeekAndTodayData`);
   }
 }

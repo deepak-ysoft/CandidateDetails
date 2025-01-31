@@ -39,6 +39,11 @@
                 {{ candidate.schedule_Interview | date : "medium" }}
               </td>
             </tr>
+            <tr *ngIf="todayDataLength == 0" class="row p-5">
+              <h1>
+                <b>Today No Interview</b>
+              </h1>
+            </tr>
           </tbody>
         </table>
         <!-- End small tables -->
@@ -84,6 +89,11 @@
               <td class="col-3 me-3">
                 {{ candidate.schedule_Interview | date : "medium" }}
               </td>
+            </tr>
+            <tr *ngIf="weekDataLength == 0" class="row p-5">
+              <h1>
+                <b>This Week No Interview</b>
+              </h1>
             </tr>
           </tbody>
         </table>

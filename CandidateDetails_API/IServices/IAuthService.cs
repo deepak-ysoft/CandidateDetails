@@ -2,6 +2,6 @@
 {
     public interface IAuthService
     {
-       public Task<string> GenerateJwtToken(string empId);
+       public Task<string> GenerateJwtToken(string empId, string role);
     }
 }

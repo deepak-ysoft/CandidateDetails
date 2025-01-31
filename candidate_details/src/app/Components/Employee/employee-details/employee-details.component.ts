@@ -4,7 +4,6 @@ import {
   inject,
   OnInit,
   ViewChild,
-  ɵclearResolutionOfComponentResourcesQueue,
 } from '@angular/core';
 import { Employee } from '../../../Models/employee.model';
 import { CommonModule, DatePipe } from '@angular/common';
@@ -17,11 +16,16 @@ import {
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
+  ValidationErrors,
+  ValidatorFn,
   Validators,
 } from '@angular/forms';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
 import { CandidateService } from '../../../Services/candidate.service';
+import { environment } from '../../../../environments/environment';
+import { EmpLocalStorService } from '../../../Services/emp-local-stor.service';
+import { AuthService } from '../../../Services/auth.service';
 
 @Component({
   selector: 'app-employee-details',
@@ -36,17 +40,24 @@ import { CandidateService } from '../../../Services/candidate.service';
   styleUrl: './employee-details.component.css',
 })
 export class EmployeeDetailsComponent implements OnInit {
+  private baseUrl = environment.apiURL;
+  empImage: string;
   private modalRef: NgbModalRef | null = null; // Store the modal reference
   @ViewChild('leaveModal', { static: false }) leaveModal!: ElementRef;
   LeaveModalHeader = 'Add Leave';
   closeResult = '';
   leaveForm: FormGroup;
+  changePassForm: FormGroup;
   employee: Employee = new Employee();
   empLeaveList: EmployeeLeave[] = [];
   empLeave: EmployeeLeave = new EmployeeLeave();
   empLeaveEdit: EmployeeLeave = new EmployeeLeave();
   EmployeeService = inject(EmployeeService);
   candidateService = inject(CandidateService);
+  empLocalstorageService = inject(EmpLocalStorService);
+  authService = inject(AuthService);
+  userRole: string | null = null;
+  loggedEmp: any;
   PageNumber: number = 1;
   currentPage = 1;
   totalpages = 0;
@@ -55,8 +66,33 @@ export class EmployeeDetailsComponent implements OnInit {
   lastCandidateOfPage = 10;
   submitted = false;
   currentAge: number = 0;
+  show = false;
+  showNewPass = false;
+  showConPassword = false;
+  isReqLeave = true;
+  reqLeave: EmployeeLeave[] = [];
 
   constructor(private fb: FormBuilder, private modalService: NgbModal) {
+    this.userRole = this.authService.getRole();
+    this.empImage = `${this.baseUrl}` + `uploads/images/employee/`;
+    this.getCurrentEmpData();
+    this.changePassForm = this.fb.group(
+      {
+        empId: [0],
+        currentPassword: ['', [Validators.required]],
+        newPassword: [
+          '',
+          [
+            Validators.required,
+            Validators.pattern(
+              /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
+            ),
+          ],
+        ],
+        newCPassword: ['', [Validators.required]],
+      },
+      { validator: passwordMatchValidator() }
+    );
     this.leaveForm = this.fb.group(
       {
         leaveId: [0],
@@ -69,12 +105,29 @@ export class EmployeeDetailsComponent implements OnInit {
     );
   }
 
+  getCurrentEmpData() {
+    this.empLocalstorageService.emp$.subscribe((emp) => {
+      this.loggedEmp = emp;
+    });
+  }
+
   ngOnInit(): void {
+    this.show = false;
+    this.showNewPass = false;
+    this.showConPassword = false;
+    this.isReqLeave = false;
+
+    this.submitted = false;
     const state = window.history.state as { emp: Employee };
     if (state && state.emp) {
       this.employee = state.emp;
       this.calculateAge(); // Calculate age after assigning employee details
     }
+    this.GetLeave(); // Trigger data fetch
+    this.EmployeeService.empLeaveRequestList$.subscribe((empLeave) => {
+      this.reqLeave = empLeave;
+    });
+
     this.EmployeeService.empLeaveList$.subscribe((empLeave) => {
       this.empLeaveList = empLeave;
     });
@@ -86,8 +139,27 @@ export class EmployeeDetailsComponent implements OnInit {
     this.EmployeeService.totalPages$.subscribe((pages) => {
       this.totalpages = pages;
     });
+  }
 
-    this.EmployeeService.GetLeave(this.employee.empId); // Trigger data fetch
+  GetLeave() {
+    this.EmployeeService.GetLeave(this.employee.empId);
+    this.isReqLeave = false;
+  }
+
+  GetRequestLeave(empId: number) {
+    this.hasLeave(this.employee.empId);
+    if (this.isSame) {
+      this.isReqLeave = true;
+      this.empLeaveList = this.reqLeave.filter(
+        (leave) => leave.empId === empId
+      );
+    }
+  }
+
+  isSame: any;
+  hasLeave(empId: number): boolean {
+    this.isSame = this.reqLeave.some((leave) => leave.empId === empId);
+    return this.isSame;
   }
 
   // Method to calculate age
@@ -165,7 +237,6 @@ export class EmployeeDetailsComponent implements OnInit {
   // Leave
 
   openModal() {
-    debugger;
     this.leaveForm.reset(); // Resets all controls to their initial state
     this.open(this.leaveModal);
     this.LeaveModalHeader = 'Add Leave';
@@ -181,12 +252,15 @@ export class EmployeeDetailsComponent implements OnInit {
       endDate: leave.endDate,
       empId: leave.empId,
     });
-    this.open(this.leaveModal);
+    if (!this.isReqLeave) {
+      this.open(this.leaveModal);
+    } else {
+      this.onSubmit();
+    }
   }
 
   onSubmit() {
     this.submitted = true;
-    debugger;
     if (this.leaveForm.valid) {
       if (this.leaveForm.get('leaveId')?.value == null) {
         this.leaveForm.get('leaveId')?.setValue(0);
@@ -197,12 +271,13 @@ export class EmployeeDetailsComponent implements OnInit {
       ).subscribe({
         next: (res: any) => {
           this.leaveForm.reset();
+          this.isReqLeave = false;
           this.closeModal();
           this.EmployeeService.GetLeave(this.employee.empId);
           if (res.success) {
             Swal.fire({
-              title: 'Done!',
-              text: 'Leave Added/Updated.',
+              title: 'Done! &#128522;',
+              text: 'Request sent successfully :)',
               icon: 'success',
               timer: 1000, // Auto-close after 2 seconds
               timerProgressBar: true,
@@ -229,28 +304,74 @@ export class EmployeeDetailsComponent implements OnInit {
     }
   }
 
-  DeleteLeave(leaveId: number) {
-    this.candidateService.confirmDelete().then((result: any) => {
-      if (result.isConfirmed) {
-        this.EmployeeService.deleteEmployeeLeave(leaveId).subscribe((res: any) => {
+  onChangePasswordSubmit() {
+    this.submitted = true;
+    if (this.changePassForm.valid) {
+      this.changePassForm.get('empId')?.setValue(this.loggedEmp.employee.empId);
+      this.EmployeeService.changePassword(this.changePassForm.value).subscribe({
+        next: (res: any) => {
           if (res.success) {
-            this.EmployeeService.GetLeave(this.employee.empId); // Trigger data fetch
+            Swal.fire({
+              title: 'Done! &#128522;',
+              text: 'Password Changed.',
+              icon: 'success',
+              timer: 1000, // Auto-close after 2 seconds
+              timerProgressBar: true,
+            });
+            this.changePassForm.reset();
           } else {
             Swal.fire({
-              title: 'Cancelled',
-              text: 'Something is wrong :)',
+              title: 'Cancelled! &#128078;',
+              text: 'Current Password is wrong :)',
               icon: 'error',
               timer: 2000, // Auto-close after 2 seconds
               timerProgressBar: true,
             });
           }
-        });
+        },
+        error: (err: any) => {
+          // Handle validation errors from the server
+          if (err.status === 400) {
+            const validationErrors = err.error.errors;
+            for (const field in validationErrors) {
+              const formControl = this.changePassForm.get(
+                field.charAt(0).toLowerCase() + field.slice(1)
+              );
+              if (formControl) {
+                formControl.setErrors({
+                  serverError: validationErrors[field].join(' '),
+                });
+              }
+            }
+          }
+        },
+      });
+    }
+  }
+
+  DeleteLeave(leaveId: number) {
+    this.candidateService.confirmDelete().then((result: any) => {
+      if (result.isConfirmed) {
+        this.EmployeeService.deleteEmployeeLeave(leaveId).subscribe(
+          (res: any) => {
+            if (res.success) {
+              this.EmployeeService.GetLeave(this.employee.empId); // Trigger data fetch
+            } else {
+              Swal.fire({
+                title: 'Cancelled! &#128078;',
+                text: 'Something is wrong :)',
+                icon: 'error',
+                timer: 2000, // Auto-close after 2 seconds
+                timerProgressBar: true,
+              });
+            }
+          }
+        );
       }
     });
   }
 
   open(content: any) {
-    debugger;
     this.modalRef = this.modalService.open(content, {
       ariaLabelledBy: 'modal-basic-title',
     });
@@ -280,6 +401,22 @@ export class EmployeeDetailsComponent implements OnInit {
     return (control?.invalid && (control.touched || this.submitted)) ?? false;
   }
 
+  // show server side error if client-side not working
+  shouldShowChangePassError(controlName: string): boolean {
+    const control = this.changePassForm.get(controlName);
+    return (control?.invalid && (control.touched || this.submitted)) ?? false;
+  }
+
+  Show() {
+    this.show = !this.show;
+  }
+  ShowNewPass() {
+    this.showNewPass = !this.showNewPass;
+  }
+  ShowConPassword() {
+    this.showConPassword = !this.showConPassword;
+  }
+
   // Custom validator to check startDate and endDate
   dateRangeValidator(
     control: AbstractControl
@@ -292,4 +429,13 @@ export class EmployeeDetailsComponent implements OnInit {
     }
     return null; // No error if valid
   }
+}
+// copmare password validation
+export function passwordMatchValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const password = control.get('newPassword')?.value;
+    const cPassword = control.get('newCPassword')?.value;
+
+    return password === cPassword ? null : { mismatch: true };
+  };
 }

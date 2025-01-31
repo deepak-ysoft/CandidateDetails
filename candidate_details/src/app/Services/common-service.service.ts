@@ -22,4 +22,6 @@ export class CommonServiceService {
   setCandidateData(data: any) {
     this.candidateSubject.next(data);
   }
+
+  
 }

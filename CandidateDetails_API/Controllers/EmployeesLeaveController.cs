@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using System.Buffers;
 using System.Data;
 
 namespace CandidateDetails_API.Controllers
@@ -46,11 +45,14 @@ namespace CandidateDetails_API.Controllers
 
                 // Call the stored procedure using FromSqlRaw
                 var leaves = await _context.employeesleave
-                    .FromSqlRaw("EXEC usp_GetAllEmployeeLeave @empId, @PageNumber,@TotalRecords OUT", parameters)
+                    .FromSqlRaw("EXEC usp_GetAllEmployeeLeave @empId, @PageNumber, @TotalRecords OUT", parameters)
+                    .ToListAsync();
+                var leaveRequests = await _context.employeesleave
+                    .FromSqlRaw("EXEC usp_GetAllEmployeeLeaveRequests" )
                     .ToListAsync();
 
                 int totalRecords = (int)totalRecordsParam.Value;
-                return Ok(new { data = leaves, totalCount = totalRecords });
+                return Ok(new { data = leaves, reqLeave = leaveRequests, totalCount = totalRecords });
             }
             catch (Exception ex)
             {
@@ -86,6 +88,7 @@ namespace CandidateDetails_API.Controllers
         /// </summary>
         /// <param name="id">Leave id </param>
         /// <returns>true if delete</returns>
+       [Authorize(Roles = "Admin,HR")]
         [HttpDelete("DeleteEmployeeLeave/{leaveId}")]
         public async Task<IActionResult> DeleteEmployeeLeave(int leaveId)
         {

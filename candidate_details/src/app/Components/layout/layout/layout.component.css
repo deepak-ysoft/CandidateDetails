@@ -46,6 +46,9 @@ li {
    display: flex;
    flex-direction: column;
    min-height: calc(100vh - 85px); /* Ensures the container takes full height of the viewport */
+   max-height: calc(100vh - 82px);
+   overflow-y: hidden;
+   overflow-x: hidden;
 }
 
 main.main {
@@ -69,4 +72,9 @@ footer.footer {
    color: #6c757d; /* Optional: Muted text color */
    width: 100%; /* Ensures it spans the full width */
    display: block; /* Ensures it behaves as a full-width block */
+}
+
+.emp-dot {
+   left: 95%;
+   bottom: 45%;
 }

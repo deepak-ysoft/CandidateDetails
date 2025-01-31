@@ -8,14 +8,13 @@ using Path = System.IO.Path;
 using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas.Parser.Listener;
 using iText.Kernel.Pdf.Canvas.Parser;
-using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 
 namespace CandidateDetails_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [Authorize(Roles = "Admin,HR")]
     public class ResumeController : ControllerBase
     {
         /// <summary>
@@ -68,6 +67,9 @@ namespace CandidateDetails_API.Controllers
                 "Angular", "AngularJS", "Angular 2+", "TypeScript", "RxJS", "NgRx", "JavaScript (ES6+)",
                 "HTML5", "CSS3", "SCSS/SASS", "RESTful APIs", "Material Design", "Bootstrap",
 
+                // Html,css,Bootstrap
+                "Html", "css", "Html 5", "Bootstrap 5", "Bootstrap 4", "SCSS",
+
                 // React
                 "React", "ReactJS", "Redux", "React Router", "JavaScript (ES6+)", "JSX", "Hooks",
                 "Context API", "Next.js", "Styled Components", "Tailwind CSS", "REST/GraphQL APIs",
@@ -109,56 +111,128 @@ namespace CandidateDetails_API.Controllers
                 "Asynchronous Programming", "Web Server Development", "Real-Time Applications (e.g., Socket.io)",
                 "Full-Stack Development (Node.js + Frontend Frameworks)"
             };
+
             string name = await ExtractNameAsync(text);
             string email = await ExtractEmailAsync(text);
             string phone = await ExtractPhoneAsync(text);
-            List<string> skills = await ExtractSkillsAsync(text, skillTags);
-            List<string> experience = await ExtractExperienceAsync(text);
+
+            // Extract skills only from the "Skills" section
+            //string skillsSection = ExtractSkillsSection(text);
+            List<string> skills = await ExtractSkillsAsync( skillTags,text);
+
+           // List<string> experience = await ExtractExperienceAsync(text);
 
             return new ResumeParsedData
             {
                 Name = name,
                 Email = email,
                 Phone = phone,
-                Skills = skills,
-                Experience = experience
+                Skills = skills
             };
         }
-        private async Task<List<string>> ExtractExperienceAsync(string text)
+        private async Task<List<string>> ExtractSkillsAsync(List<string> skillTags, string text)
         {
             return await Task.Run(() =>
             {
-                var experienceKeywords = new List<string> { "Experience", "Work History", "Professional Experience" };
-                List<string> experiences = new List<string>();
+                var skillsKeywords = new List<string> { "Experience", "Work History", "Professional Experience", "Skills", @"\nSkills", "Technical Skills", "Key Skills" };
+                List<string> skills1 = new List<string>();
 
-                foreach (var keyword in experienceKeywords)
+                // Extract skills section text
+                string extractedSkillsText = "";
+
+                foreach (var keyword in skillsKeywords)
                 {
                     int index = text.IndexOf(keyword, StringComparison.OrdinalIgnoreCase);
                     if (index >= 0)
                     {
-                        // Extract the section of text following the keyword (adjust logic for better precision)
-                        experiences.Add(text.Substring(index, Math.Min(500, text.Length - index)));
+                        // Extract up to 500 characters after the keyword
+                        string extractedPart = text.Substring(index, Math.Min(500, text.Length - index)).ToLower();
+                        skills1.Add(extractedPart);
                     }
                 }
-                return experiences;
+
+                // Combine extracted skill sections into a single string
+                extractedSkillsText = string.Join(" ", skills1);
+
+                // Create a new list for matched skills
+                List<string> matchedSkills = new List<string>();
+
+                foreach (var skill in skillTags)
+                {
+                    string lowerSkill = skill.ToLower();
+                    if (extractedSkillsText.Contains(lowerSkill, StringComparison.OrdinalIgnoreCase))
+                    {
+                        Console.WriteLine($"Matched Skill: {skill}");
+                        matchedSkills.Add(skill);
+                    }
+                }
+
+                return matchedSkills;
             });
         }
 
-        private async Task<List<string>> ExtractSkillsAsync(string text, List<string> skillKeywords)
-        {
-            return await Task.Run(() =>
-            {
-                List<string> foundSkills = new List<string>();
-                foreach (var skill in skillKeywords)
-                {
-                    if (text.Contains(skill.ToLower(), StringComparison.OrdinalIgnoreCase) || text.Contains(skill, StringComparison.OrdinalIgnoreCase))
-                    {
-                        foundSkills.Add(skill);
-                    }
-                }
-                return foundSkills;
-            });
-        }
+        //private string ExtractSkillsSection(string text)
+        //{
+        //    var skillsSectionStart = new[] { "Skills", @"\nSkills", "Technical Skills", "Key Skills" };
+        //    var nextSectionStart = new[] { "Experience", @"\nExperience", "Work Experience", "Professional Experience", "Education", @"\nEducation", "Projects" };
+
+        //    string lowerText = text.ToLower();
+        //    int startIdx = -1;
+
+        //    foreach (var marker in skillsSectionStart)
+        //    {
+        //        startIdx = lowerText.IndexOf(marker.ToLower());
+        //        if (startIdx != -1) break;
+        //    }
+
+        //    if (startIdx == -1)
+        //    {
+        //        Console.WriteLine("Skills section not found.");
+        //        return string.Empty;
+        //    }
+
+        //    int endIdx = text.Length;
+
+        //    foreach (var marker in nextSectionStart)
+        //    {
+        //        int idx = lowerText.IndexOf(marker.ToLower(), startIdx + 1);
+        //        if (idx != -1 && idx < endIdx)
+        //        {
+        //            endIdx = idx;
+        //        }
+        //    }
+
+        //    string extractedSkillsSection = text.Substring(startIdx, endIdx - startIdx).Trim();
+        //    Console.WriteLine($"Extracted Skills Section: {extractedSkillsSection}");
+
+        //    return extractedSkillsSection;
+        //}
+
+
+        //private async Task<List<string>> ExtractSkillsAsync(string text, List<string> skillTags)
+        //{
+        //    var skills = new List<string>();
+
+        //    if (string.IsNullOrWhiteSpace(text))
+        //    {
+        //        Console.WriteLine("Extracted skills section is empty.");
+        //        return skills;
+        //    }
+
+        //    string lowerText = text.ToLower();
+
+        //    foreach (var skill in skillTags)
+        //    {
+        //        string lowerSkill = skill.ToLower();
+        //        if (lowerText.Contains(lowerSkill, StringComparison.OrdinalIgnoreCase))
+        //        {
+        //            Console.WriteLine($"Matched Skill: {skill}");
+        //            skills.Add(skill);
+        //        }
+        //    }
+
+        //    return await Task.FromResult(skills);
+        //}
 
         private Task<string> ExtractNameAsync(string text)
         {

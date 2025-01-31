@@ -15,7 +15,7 @@ namespace CandidateDetails_API.Model
         public string empEmail { get; set; }
         [Required]
         [DataType(DataType.Password)]
-        [RegularExpression("^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*#?&]{8,}$", ErrorMessage = "Must Enter At Least 8 characters and must include Uppercase, Lowercase, digit and Special character")]
+        [RegularExpression("^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*#?&]{8,}$", ErrorMessage = "At least 8 char, with upper, lower, num & special char.")]
         public string  empPassword { get; set; }
         [NotMapped]
         [Required]
@@ -37,9 +37,12 @@ namespace CandidateDetails_API.Model
         [Required]
         public string empAddress { get; set; }
         public string? ImagePath { get; set; }
-
         [NotMapped]
         public IFormFile? Photo { get; set; }
         public bool? isDelete { get; set; }
+        [ForeignKey("UserRoles")]
+        public int RoleId { get; set; }
+        public bool? isActive { get; set; }
+        public UserRoles? Role { get; set; }
     }
 }

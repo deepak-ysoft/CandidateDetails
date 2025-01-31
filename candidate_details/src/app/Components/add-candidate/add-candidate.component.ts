@@ -1,18 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, Input, OnInit, output } from '@angular/core';
 import {
-  AbstractControl,
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
-  ValidationErrors,
-  ValidatorFn,
   Validators,
 } from '@angular/forms';
 import { CandidateService } from '../../Services/candidate.service';
 import { CommonServiceService } from '../../Services/common-service.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Roles } from '../../Models/Roles.model';
+import { AuthService } from '../../Services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-candidate',
@@ -22,6 +21,9 @@ import { Roles } from '../../Models/Roles.model';
 })
 export class AddCandidateComponent implements OnInit {
   candidateForm: FormGroup;
+  authService = inject(AuthService);
+  router = inject(Router);
+  userRole: string | null = null;
   submitted = false;
   selectedFile: any = null;
   candidateServices = inject(CandidateService);
@@ -31,8 +33,11 @@ export class AddCandidateComponent implements OnInit {
   isclick = output<boolean>();
   RolesList: Roles[] = [];
   selectedRoleId = '';
-
+  
   ngOnInit(): void {
+    if (this.userRole === 'Employee') {
+      this.router.navigateByUrl('/calendar');
+    }
     this.candidateServices.resetForm$.subscribe(() => this.onAdd());
     this.getRoles();
     if (this.candidateEdit?.id && !this.addClicked) {
@@ -62,6 +67,7 @@ export class AddCandidateComponent implements OnInit {
     }
   }
   constructor(private fb: FormBuilder, private modalService: NgbModal) {
+    this.userRole = this.authService.getRole();
     this.submitted = false;
     this.candidateForm = this.fb.group({
       id: [null],
@@ -120,25 +126,30 @@ export class AddCandidateComponent implements OnInit {
   }
   // when user click on change password
   onFileChange(event: any): void {
-    debugger;
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
       this.selectedFile = file;
     }
-    const formData = new FormData();
-    formData.append('file', this.selectedFile);
-    this.candidateServices.uploadCV(formData).subscribe((res: any) => {
-      if (res.success) {
-        console.log('CV data...', res.data);
-        this.candidateForm.patchValue({
-          name: res.data.name,
-          email_ID: res.data.email,
-          experience: res.data.experience,
-          contact_No: res.data.phone,
-          skills: res.data.skills,
-        });
-      }
-    });
+    const validTypes = [
+      'application/pdf',
+      'application/msword',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    ];
+    if (validTypes.includes(this.selectedFile.type)) {
+      const formData = new FormData();
+      formData.append('file', this.selectedFile);
+      this.candidateServices.uploadCV(formData).subscribe((res: any) => {
+        if (res.success) {
+          console.log('CV data...', res.data);
+          this.candidateForm.patchValue({
+            name: res.data.name,
+            email_ID: res.data.email,
+            contact_No: res.data.phone,
+            skills: res.data.skills,
+          });
+        }
+      });
+    }
   }
 
   getRoles() {
@@ -159,7 +170,6 @@ export class AddCandidateComponent implements OnInit {
     this.candidateForm.updateValueAndValidity();
   }
   onSubmit() {
-    debugger;
     this.submitted = true;
     if (this.candidateForm.valid) {
       const formData = new FormData();

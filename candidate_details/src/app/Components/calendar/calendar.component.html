@@ -1,12 +1,23 @@
 <div *ngIf="showCalendar">
   <div class="container mt-3">
     <!-- Trigger Button -->
-    <a class="btn btn-primary" (click)="onAdd()"
-      ><i class="fa-solid fa-plus me-2"></i>Add Event</a
-    >
-    <a class="btn btn-success float-end" (click)="ShowEventList()"
-      ><i class="fa-regular fa-calendar me-2"></i>Events</a
-    >
+    <div class="row">
+      <div class="col" *ngIf="userRole === 'Admin' || userRole === 'HR'">
+        <a class="btn btn-primary" (click)="onAdd()"
+          ><i class="fa-solid fa-plus me-2"></i>Add Event</a
+        >
+      </div>
+      <div class="col" *ngIf="userRole === 'Admin' || userRole === 'HR'">
+        <a class="btn btn-success float-end" (click)="ShowEventList()"
+          ><i class="fa-regular fa-calendar me-2"></i>Events</a
+        >
+      </div>
+      <div class="col" *ngIf="userRole === 'Employee'">
+        <a class="btn btn-success float-start" (click)="ShowEventList()"
+          ><i class="fa-regular fa-calendar me-2"></i>Events</a
+        >
+      </div>
+    </div>
     <full-calendar
       #calendar
       [options]="calendarOptions"
@@ -187,23 +198,25 @@
           </div>
         </div>
       </div>
-      <hr class="hr" *ngIf="!isUsed" />
-      <button
-        class="btn btn-primary"
-        *ngIf="!isUsed"
-        (click)="editcalendar(fullcalendar)"
-      >
-        <i class="fas fa-edit me-2"></i>Edit
-      </button>
-      <button
-        class="btn btn-danger ms-3"
-        *ngIf="!isUsed"
-        aria-label="Close"
-        (click)="modal.dismiss('Cross click')"
-        (click)="DeleteCalendar(fullcalendar.calId)"
-      >
-        <i class="fa fa-trash me-2"></i> Delete
-      </button>
+      <div *ngIf="userRole === 'Admin' || userRole === 'HR'">
+        <hr class="hr" *ngIf="!isUsed" />
+        <button
+          class="btn btn-primary"
+          *ngIf="!isUsed"
+          (click)="editcalendar(fullcalendar)"
+        >
+          <i class="fas fa-edit me-2"></i>Edit
+        </button>
+        <button
+          class="btn btn-danger ms-3"
+          *ngIf="!isUsed"
+          aria-label="Close"
+          (click)="modal.dismiss('Cross click')"
+          (click)="DeleteCalendar(fullcalendar.calId)"
+        >
+          <i class="fa fa-trash me-2"></i> Delete
+        </button>
+      </div>
     </section>
   </div>
 </ng-template>
@@ -236,10 +249,13 @@
                       >
                     </div>
                     <div class="col-5">
-                      {{ Holiday.startDate | date : "dd/MM/yyyy" }} To
-                      {{ Holiday.endDate | date : "dd/MM/yyyy" }}
+                      {{ Holiday.startDate | date : "dd/MMM/yyyy" }} To
+                      {{ Holiday.endDate | date : "dd/MMM/yyyy" }}
                     </div>
-                    <div class="col-2">
+                    <div
+                      class="col-2"
+                      *ngIf="userRole === 'Admin' || userRole === 'HR'"
+                    >
                       <span class="float-end"
                         ><i
                           class="fas fa-edit text-primary me-3 hover-scale"
@@ -276,9 +292,12 @@
                       <b>{{ birthday.description }}</b>
                     </div>
                     <div class="col-5">
-                      {{ birthday.startDate | date : "dd/MM/yyyy" }}
+                      {{ birthday.startDate | date : "dd/MMM/yyyy" }}
                     </div>
-                    <div class="col-2">
+                    <div
+                      class="col-2"
+                      *ngIf="userRole === 'Admin' || userRole === 'HR'"
+                    >
                       <span class="float-end">
                         <i
                           class="fas fa-edit text-primary me-3 hover-scale"

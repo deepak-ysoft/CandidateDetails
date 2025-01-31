@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -9,7 +9,8 @@ import { Roles } from '../../Models/Roles.model';
 import { CandidateService } from '../../Services/candidate.service';
 import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
-import { RouterLink } from '@angular/router';
+import { AuthService } from '../../Services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-roles',
@@ -18,6 +19,9 @@ import { RouterLink } from '@angular/router';
   styleUrl: './roles.component.css',
 })
 export class RolesComponent implements OnInit {
+  authService = inject(AuthService);
+  userRole: string | null = null;
+  router = inject(Router);
   roleForm: FormGroup;
   roleEdit: Roles = new Roles();
   formType: string = 'Add Role';
@@ -27,12 +31,16 @@ export class RolesComponent implements OnInit {
     private candidateService: CandidateService,
     private fb: FormBuilder
   ) {
+    this.userRole = this.authService.getRole();
     this.roleForm = this.fb.group({
       rid: [null],
       role: ['', Validators.required],
     });
   }
   ngOnInit(): void {
+    if (this.userRole === 'Employee') {
+      this.router.navigateByUrl('/calendar');
+    }
     this.getRoles();
     this.formType = 'Add Role';
   }
@@ -57,7 +65,6 @@ export class RolesComponent implements OnInit {
 
   submitted = false;
   createEditRole() {
-    debugger;
     this.submitted = true;
     if (this.roleForm.valid) {
       let role: Roles = new Roles();
@@ -115,7 +122,7 @@ export class RolesComponent implements OnInit {
             if (err.status === 500) {
               // Extract error message from the response
               Swal.fire({
-                title: 'Can Not Delete!',
+                title: 'Can Not Delete! &#128078;',
                 text: 'This role is used as foreign key :)',
                 icon: 'error',
                 timer: 3000, // Auto-close after 3 seconds
@@ -123,7 +130,7 @@ export class RolesComponent implements OnInit {
               });
             } else {
               Swal.fire({
-                title: 'error',
+                title: 'error! &#128078;',
                 text: 'Somthing is wring :)',
                 icon: 'error',
                 timer: 2000, // Auto-close after 2 seconds

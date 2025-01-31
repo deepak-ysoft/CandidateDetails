@@ -1,8 +1,8 @@
 ﻿using CandidateDetails_API.IServices;
 using CandidateDetails_API.Model;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CandidateDetails_API.Controllers
 {
@@ -23,13 +23,49 @@ namespace CandidateDetails_API.Controllers
         ///   Get all employees
         /// </summary>
         /// <returns>Employee list</returns>
+        [Authorize(Roles = "Admin,HR")]
         [HttpGet("GetEmployees")]
         public async Task<IActionResult> Employees()
         {
             try
             {
                 var employees = await _service.GetEmployees(); // Get all employees
-                return Ok(new { succes = true, res = employees });
+                var requestedEmployees = await _service.GetRequestedEmployees(); // Get all requested employees
+                int requestedEmpCount =  requestedEmployees.Count();
+                return Ok(new { success = true, res = employees,requestres = requestedEmployees ,reqEmpCount = requestedEmpCount });
+            }
+            catch (Exception ex)
+            {
+                throw ex;   
+            }
+        }
+
+        /// <summary>
+        ///   Add an employee
+        /// </summary>
+        /// <param name="employee"> Employee model object</param>
+        /// <returns>true if add or update success</returns>
+        [AllowAnonymous]
+        [HttpPost("AddEmployee")]
+        public async Task<IActionResult> AddEmployee([FromForm] Employee employee)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                var emailExists = await _context.Employees.AnyAsync(u => u.empEmail.ToLower() == employee.empEmail.ToLower() ); // To check duplicate emails.
+                if (emailExists)
+                {
+                    return Ok(new { success = false, message = "Duplicate Email" });
+                }
+                var result = await _service.AddEmployee(employee); // Add or update an employee
+                if (result)
+                {
+                    return Ok(new { success = true, message = "Employee added successfully" });
+                }
+                return Ok(new { success = false, message = "Failed to add employee" });
             }
             catch (Exception ex)
             {
@@ -38,12 +74,13 @@ namespace CandidateDetails_API.Controllers
         }
 
         /// <summary>
-        ///   Add or update an employee
+        ///   Add an employee
         /// </summary>
         /// <param name="employee"> Employee model object</param>
         /// <returns>true if add or update success</returns>
-        [HttpPost("AddUpdateEmployee")]
-        public async Task<IActionResult> AddUpdateEmployee([FromForm] Employee employee)
+        [Authorize(Roles = "Admin,HR")]
+        [HttpPost("UpdateEmployee")]
+        public async Task<IActionResult> UpdateEmployee([FromForm] Employee employee)
         {
             if (!ModelState.IsValid)
             {
@@ -51,12 +88,17 @@ namespace CandidateDetails_API.Controllers
             }
             try
             {
-                var result = await _service.AddUpdateEmployee(employee); // Add or update an employee
+                var emailExists = await _context.Employees.AnyAsync(u => u.empEmail.ToLower() == employee.empEmail.ToLower() && u.empId != employee.empId); // To check duplicate emails.
+                if (emailExists)
+                {
+                    return Ok(new { success = false, message = "Duplicate Email" });
+                }
+                var result = await _service.UpdateEmployee(employee); // Add or update an employee
                 if (result)
                 {
-                    return Ok(new { success = true, message = "Employee added/updated successfully" });
+                    return Ok(new { success = true, message = "Employee updated successfully" });
                 }
-                return Ok(new { success = false, message = "Failed to add/update employee" });
+                return Ok(new { success = false, message = "Failed to update employee" });
             }
             catch (Exception ex)
             {
@@ -69,6 +111,7 @@ namespace CandidateDetails_API.Controllers
         /// </summary>
         /// <param name="empId">Employee id</param>
         /// <returns>true if delete is success</returns>
+        [Authorize(Roles = "Admin,HR")]
         [HttpDelete("DeleteEmployee/{empId}")]
         public async Task<IActionResult> DeleteEmployee(int empId)
         {
@@ -86,7 +129,5 @@ namespace CandidateDetails_API.Controllers
                 throw ex;
             }
         }
-
-        
     }
 }

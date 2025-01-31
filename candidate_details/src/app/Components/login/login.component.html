@@ -1,29 +1,31 @@
 <div class="container">
   <section
-    class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4"
+    class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center"
   >
-    <div class="container">
-      <div class="row justify-content-center">
-        <div
-          class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center"
-        >
-          <div class="d-flex justify-content-center py-4">
-            <a
-              class="logo d-flex text-decoration-none align-items-center w-auto"
-            >
-              <img
-                src="https://www.ysoftsolution.com/wp-content/uploads/2024/02/final-logo-1024x505.png"
-                alt="Y Soft Solution Logo"
-                width="150"
-                height="75"
-                class="d-inline-block align-text-top"
-              />
-            </a>
-          </div>
-          <!-- End Logo -->
+    <div class="row justify-content-center">
+      <div
+        [ngClass]="
+          isLogin
+            ? 'col-lg-7 col-md-9 d-flex flex-column align-items-center justify-content-center'
+            : 'col-md-12 d-flex flex-column align-items-center justify-content-center'
+        "
+      >
+        <div class="d-flex justify-content-center py-4">
+          <a class="logo d-flex text-decoration-none align-items-center w-auto">
+            <img
+              src="https://www.ysoftsolution.com/wp-content/uploads/2024/02/final-logo-1024x505.png"
+              alt="Y Soft Solution Logo"
+              width="150"
+              height="75"
+              class="d-inline-block align-text-top"
+            />
+          </a>
+        </div>
+        <!-- End Logo -->
 
-          <div class="card mb-3 border-0 shadow">
-            <div class="card-body">
+        <div class="card p-3 mb-3 border-0 shadow">
+          <div class="card-body">
+            <div *ngIf="isLogin">
               <div class="pt-4 pb-2">
                 <h5 class="card-title text-center pb-0 fs-4">
                   Login to Your Account
@@ -34,13 +36,13 @@
               </div>
 
               <form
-                class="row g-3 needs-validation"
+                class="row g-1 p-4 needs-validation"
                 (ngSubmit)="onlogin()"
                 [formGroup]="onLoginForm"
               >
                 <div class="col-12 mb-3">
                   <label for="email" class="form-label">Email</label>
-                  <div class="input-group has-validation">
+                  <div class="has-validation">
                     <input
                       type="text"
                       formControlName="email"
@@ -95,18 +97,478 @@
                   </div>
                 </div>
                 <div class="col-12 d-flex justify-content-center">
-                  <button class="btn btn-primary w-25" type="submit">
+                  <button class="btn btn-primary" type="submit">
                     <i class="fa-solid fa-arrow-right-to-bracket me-2"></i>
                     Login
                   </button>
                 </div>
               </form>
+              <div class="d-flex justify-content-center">
+                <p>
+                  Don't have any account ?<a
+                    (click)="FlipAnother()"
+                    class="text-danger"
+                    >&nbsp;click</a
+                  >
+                </p>
+              </div>
             </div>
-          </div>
+            <div *ngIf="!isLogin">
+              <div class="pt-4 pb-2">
+                <h5 class="card-title text-center pb-0 fs-4">
+                  Register to Your Account
+                </h5>
+                <p class="text-center small">Enter your details to register</p>
+              </div>
+              <form
+                class="p-3"
+                [formGroup]="employeeForm"
+                (ngSubmit)="onSubmit()"
+              >
+                <input type="hidden" formControlName="empId" />
+                <input type="hidden" formControlName="empPassword" />
+                <input type="hidden" formControlName="empPasswordConfirm" />
+                <div class="row">
+                  <div class="col-4 d-flex justify-content-center">
+                    <input
+                      type="file"
+                      #fileInput
+                      (change)="onFileChange($event)"
+                      formControlName="photo"
+                      class="d-none"
+                      accept="image/*"
+                    />
 
-          <div class="credits">
-            Designed by
-            <a href="https://www.ysoftsolution.com/">YSoft Solution</a>
+                    <!-- Default or selected image -->
+                    <div class="image-container">
+                      <img
+                        [src]="selectedImage || defaultImage"
+                        alt="Profile Photo"
+                        class="profile-photo"
+                        (click)="fileInput.click()"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="col-4">
+                    <div class="row mb-2 m-1">
+                      <label class="form-label" for="empName">Name</label>
+                      <input
+                        id="empName"
+                        type="text"
+                        class="form-control magic-input"
+                        formControlName="empName"
+                      />
+                      <small
+                        class="text-danger"
+                        *ngIf="
+                          !employeeForm
+                            .get('empName')
+                            ?.hasError('serverError') &&
+                          shouldShowRegisterError('empName') &&
+                          !employeeForm.controls['empName'].hasError('pattern')
+                        "
+                      >
+                        Name is required.
+                      </small>
+                      <small
+                        class="text-danger"
+                        *ngIf="
+                          employeeForm.get('empName')?.hasError('serverError')
+                        "
+                        >{{ employeeForm.get('empName')?.errors?.['serverError'] }}</small
+                      ><small
+                        class="text-danger"
+                        *ngIf="
+                          employeeForm.controls['empName'].hasError('pattern')
+                        "
+                      >
+                        Name must start with letters, followed by a surname
+                        (numbers allowed).
+                      </small>
+                    </div>
+                    <div class="row mb-2">
+                      <label class="form-label ms-3" for="empPassword"
+                        >Password</label
+                      >
+                      <div class="input-group">
+                        <input
+                          [type]="show ? 'text' : 'password'"
+                          formControlName="empPassword"
+                          class="form-control magic-input RegisterPass"
+                        />
+                        <span
+                          class="input-group-text password-toggle magic-input"
+                          (click)="Show()"
+                        >
+                          <i
+                            [class]="show ? 'fa fa-eye-slash' : 'fa fa-eye'"
+                          ></i>
+                        </span>
+                      </div>
+                      <small
+                        class="text-danger"
+                        *ngIf="
+                          employeeForm
+                            .get('empPassword')
+                            ?.hasError('serverError')
+                        "
+                        >{{ employeeForm.get('empPassword')?.errors?.['serverError'] }}</small
+                      ><small
+                        *ngIf="
+                          shouldShowRegisterError('empPassword') &&
+                          !employeeForm.controls['empPassword'].hasError(
+                            'pattern'
+                          ) &&
+                          !employeeForm
+                            .get('empPassword')
+                            ?.hasError('serverError')
+                        "
+                        class="text-danger"
+                        >Please enter Password.</small
+                      >
+                      <small
+                        class="text-danger"
+                        *ngIf="
+                          employeeForm.controls['empPassword'].hasError(
+                            'pattern'
+                          )
+                        "
+                      >
+                        At least 8 char, with upper, lower, num & special char.
+                      </small>
+                    </div>
+                    <div class="row mb-2 m-1">
+                      <label class="form-label" for="empNumber"
+                        >Phone Number</label
+                      >
+                      <input
+                        id="empNumber"
+                        type="text"
+                        class="form-control magic-input"
+                        formControlName="empNumber"
+                      />
+                      <small
+                        class="text-danger"
+                        *ngIf="
+                          !employeeForm
+                            .get('empNumber')
+                            ?.hasError('serverError') &&
+                          shouldShowRegisterError('empNumber') &&
+                          !employeeForm.controls['empNumber'].hasError(
+                            'pattern'
+                          )
+                        "
+                      >
+                        Mobile Number is required.
+                      </small>
+                      <small
+                        class="text-danger"
+                        *ngIf="
+                          employeeForm.get('empNumber')?.hasError('serverError')
+                        "
+                        >{{ employeeForm.get('empNumber')?.errors?.['serverError'] }}</small
+                      >
+                      <small
+                        class="text-danger"
+                        *ngIf="
+                          employeeForm.controls['empNumber'].hasError('pattern')
+                        "
+                      >
+                        Mobile number not valid..
+                      </small>
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <div class="row mb-2 m-1">
+                      <label class="form-label" for="empEmail">Email</label>
+                      <input
+                        id="empEmail"
+                        type="email"
+                        class="form-control magic-input"
+                        formControlName="empEmail"
+                      />
+                      <small
+                        class="text-danger"
+                        *ngIf="
+                          !employeeForm
+                            .get('empEmail')
+                            ?.hasError('serverError') &&
+                          shouldShowRegisterError('empEmail') &&
+                          !employeeForm.controls['empEmail'].hasError('pattern')
+                        "
+                      >
+                        Email is required.
+                      </small>
+                      <small
+                        class="text-danger"
+                        *ngIf="
+                          employeeForm.get('empEmail')?.hasError('serverError')
+                        "
+                        >{{ employeeForm.get('empEmail')?.errors?.['serverError'] }}</small
+                      >
+                      <small
+                        class="text-danger"
+                        *ngIf="
+                          employeeForm.controls['empEmail'].hasError('pattern')
+                        "
+                      >
+                        Email address not valid.
+                      </small>
+                    </div>
+                    <div class="row mb-2">
+                      <label class="form-label ms-3" for="empPasswordConfirm"
+                        >Confirm Password</label
+                      >
+                      <div class="input-group">
+                        <input
+                          [type]="showConPassword ? 'text' : 'password'"
+                          formControlName="empPasswordConfirm"
+                          class="form-control magic-input RegisterPass"
+                        />
+                        <span
+                          class="input-group-text password-toggle magic-input"
+                          (click)="ShowConPassword()"
+                        >
+                          <i
+                            [class]="
+                              showConPassword ? 'fa fa-eye-slash' : 'fa fa-eye'
+                            "
+                          ></i>
+                        </span>
+                      </div>
+                      <small
+                        *ngIf="
+                          employeeForm
+                            .get('empPasswordConfirm')
+                            ?.hasError('serverError')
+                        "
+                        >{{ employeeForm.get('empPasswordConfirm')?.errors?.['serverError'] }}</small
+                      ><small
+                        *ngIf="employeeForm.errors?.['mismatch'] || submitted && shouldShowRegisterError('empPasswordConfirm')"
+                        class="text-danger"
+                      >
+                        Passwords do not match!</small
+                      >
+                    </div>
+                    <div class="row mb-2 m-1">
+                      <label class="form-label" for="empDateOfBirth"
+                        >Date of Birth</label
+                      >
+                      <input
+                        id="empDateOfBirth"
+                        type="date"
+                        class="form-control magic-input"
+                        formControlName="empDateOfBirth"
+                      />
+                      <small
+                        class="text-danger"
+                        *ngIf="
+                          !employeeForm
+                            .get('empDateOfBirth')
+                            ?.hasError('serverError') &&
+                          shouldShowRegisterError('empDateOfBirth')
+                        "
+                      >
+                        Date of birth is required.
+                      </small>
+                      <small
+                        class="text-danger"
+                        *ngIf="
+                          employeeForm
+                            .get('empDateOfBirth')
+                            ?.hasError('serverError')
+                        "
+                        >{{ employeeForm.get('empDateOfBirth')?.errors?.['serverError'] }}</small
+                      >
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row mb-2">
+                  <div class="col">
+                    <label class="form-label ms-3" for="empGender"
+                      >Gender</label
+                    >
+                    <select
+                      id="empGender"
+                      class="form-select magic-input"
+                      formControlName="empGender"
+                    >
+                      <option value="" disabled>Select Gender</option>
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                      <option value="Other">Other</option>
+                    </select>
+                    <small
+                      class="text-danger"
+                      *ngIf="
+                        !employeeForm
+                          .get('empGender')
+                          ?.hasError('serverError') &&
+                        shouldShowRegisterError('empGender')
+                      "
+                    >
+                      Gender is required.
+                    </small>
+                    <small
+                      class="text-danger"
+                      *ngIf="
+                        employeeForm.get('empGender')?.hasError('serverError')
+                      "
+                      >{{ employeeForm.get('empGender')?.errors?.['serverError'] }}</small
+                    >
+                  </div>
+                  <div class="col">
+                    <label class="form-label ms-3" for="empJobTitle"
+                      >Job Title</label
+                    >
+                    <input
+                      id="empJobTitle"
+                      type="text"
+                      class="form-control magic-input"
+                      formControlName="empJobTitle"
+                    />
+                    <small
+                      class="text-danger"
+                      *ngIf="
+                        !employeeForm
+                          .get('empJobTitle')
+                          ?.hasError('serverError') &&
+                        shouldShowRegisterError('empJobTitle')
+                      "
+                    >
+                      Job Title is required.
+                    </small>
+                    <small
+                      class="text-danger"
+                      *ngIf="
+                        employeeForm.get('empJobTitle')?.hasError('serverError')
+                      "
+                      >{{ employeeForm.get('empJobTitle')?.errors?.['serverError'] }}</small
+                    >
+                  </div>
+                  <div class="col">
+                    <label class="form-label ms-3" for="empExperience"
+                      >Experience</label
+                    >
+                    <input
+                      id="empExperience"
+                      type="text"
+                      class="form-control magic-input"
+                      formControlName="empExperience"
+                    />
+                    <small
+                      class="text-danger"
+                      *ngIf="
+                        !employeeForm
+                          .get('empExperience')
+                          ?.hasError('serverError') &&
+                        shouldShowRegisterError('empExperience')
+                      "
+                    >
+                      Experience is required.
+                    </small>
+                    <small
+                      class="text-danger"
+                      *ngIf="
+                        employeeForm
+                          .get('empExperience')
+                          ?.hasError('serverError')
+                      "
+                      >{{ employeeForm.get('empExperience')?.errors?.['serverError'] }}</small
+                    >
+                  </div>
+                </div>
+
+                <div class="row mb-2">
+                  <div class="col">
+                    <label class="form-label ms-3" for="empDateofJoining"
+                      >Date of Joining</label
+                    >
+                    <input
+                      id="empDateofJoining"
+                      type="date"
+                      class="form-control magic-input"
+                      formControlName="empDateofJoining"
+                    />
+                    <small
+                      class="text-danger"
+                      *ngIf="
+                        !employeeForm
+                          .get('empDateofJoining')
+                          ?.hasError('serverError') &&
+                        shouldShowRegisterError('empDateofJoining')
+                      "
+                    >
+                      Date of Joining is required.
+                    </small>
+                    <small
+                      class="text-danger"
+                      *ngIf="
+                        employeeForm
+                          .get('empDateofJoining')
+                          ?.hasError('serverError')
+                      "
+                      >{{ employeeForm.get('empDateofJoining')?.errors?.['serverError'] }}</small
+                    >
+                  </div>
+                  <div class="col">
+                    <label class="form-label ms-3" for="empAddress"
+                      >Address</label
+                    >
+                    <textarea
+                      id="empAddress"
+                      class="form-control magic-input"
+                      formControlName="empAddress"
+                    ></textarea>
+                    <small
+                      class="text-danger"
+                      *ngIf="
+                        !employeeForm
+                          .get('empAddress')
+                          ?.hasError('serverError') &&
+                        shouldShowRegisterError('empAddress')
+                      "
+                    >
+                      Address is required.
+                    </small>
+                    <small
+                      class="text-danger"
+                      *ngIf="
+                        employeeForm.get('empAddress')?.hasError('serverError')
+                      "
+                      >{{ employeeForm.get('empAddress')?.errors?.['serverError'] }}</small
+                    >
+                  </div>
+                </div>
+
+                <hr class="hr" />
+                <div class="row">
+                  <div class="col-4 d-flex justify-content-start">
+                    <p>
+                      Already have an account ?<a
+                        (click)="FlipAnother()"
+                        class="text-danger"
+                        >&nbsp;click</a
+                      >
+                    </p>
+                  </div>
+                  <div class="col-8 d-flex justify-content-start">
+                    <button type="submit" class="btn btn-primary mt-2">
+                      <i class="fa-regular fa-thumbs-up me-1"></i>Submit
+                    </button>
+
+                    <button
+                      type="reset"
+                      class="btn btn-danger mt-2 ms-4 shadow-sm"
+                    >
+                      <i class="fa-solid fa-arrows-rotate me-2"></i> Reset
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       </div>
@@ -115,6 +577,3 @@
 </div>
 <!-- End #main -->
 
-<a href="#" class="back-to-top d-flex align-items-center justify-content-center"
-  ><i class="bi bi-arrow-up-short"></i
-></a>

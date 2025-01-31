@@ -21,45 +21,10 @@ body {
    padding: 10px !important; /* Optional: Adjust padding */
    border-radius: 5px !important; /* Optional: Rounded corners */
 }
-.btn-success {
-   background-color: rgb(196, 246, 126);
-   border-color: rgb(80, 133, 6);
-   color: darkblue;
-}
 
-.btn-success:hover {
-   background-color: #32a84b;
-   border-color: #075e1c;
-}
-.btn-primary {
-   background-color: #7ed2f3;
-   border-color: #1591c2;
-   color: darkblue;
-}
-
-.btn-primary:hover {
-   background-color: #25a9de;
-   border-color: #0275a3;
-}
-
-.btn-danger {
-   background-color: #ff6d6d;
-   border-color: #be0e0e;
-   color: darkblue;
-}
-
-.btn-danger:hover {
-   background-color: #f83434;
-   border-color: #8e0404;
-}
-
-.btn-secondary {
-   background-color: #aebac5;
-   border-color: #5d5d5d;
-   color: darkblue;
-}
 .btn {
    border-radius: 25px !important;
+   padding: 5px 20px;
    transition:
       box-shadow 0.3s ease,
       transform 0.3s ease;
@@ -158,6 +123,20 @@ body {
    background: linear-gradient(135deg, #e3cbfc 0%, #c1d8ff 100%);
 }
 
+a {
+   cursor: pointer;
+}
 .cursorPointer {
    cursor: pointer;
 }
+
+/* Hide the cursor globally */
+* {
+   caret-color: transparent;
+}
+
+/* Show cursor only inside input fields */
+input,
+textarea {
+   caret-color: auto;
+}  

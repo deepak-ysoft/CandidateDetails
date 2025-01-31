@@ -18,7 +18,7 @@ namespace CandidateDetails_API.ServiceContent
         }
 
         // Generate Jwt Token by emp id
-        public async Task<string> GenerateJwtToken(string empId)
+        public async Task<string> GenerateJwtToken(string empId, string role)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_jwtKey);
@@ -27,9 +27,10 @@ namespace CandidateDetails_API.ServiceContent
             {
                 Subject = new ClaimsIdentity(new[]
                 {
-                   new Claim(ClaimTypes.Name, empId)
-                }),
-                Expires = DateTime.UtcNow.AddHours(1),
+            new Claim(ClaimTypes.Name, empId),
+            new Claim(ClaimTypes.Role, role) // Add role claim
+        }),
+                Expires = DateTime.UtcNow.AddHours(10),
                 Issuer = _jwtIssuer,
                 Audience = _jwtIssuer,
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

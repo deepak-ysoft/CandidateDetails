@@ -11,7 +11,7 @@
           (change)="onFileChange($event)"
           formControlName="cv"
           name="cv"
-          accept="application/pdf"
+          accept=".pdf, .doc, .docx, image/*"
         />
       </div>
     </div>
@@ -472,13 +472,13 @@
           type="radio"
           id="Good"
           formControlName="schedule_Interview_status"
-          value="Good"
+          value="Good "
           class="ms-5"
         />
-        <label for="Good" class="ms-1 text-primary">Good</label>
+        <label for="Good " class="ms-1 text-primary">Good</label>
         <input
           type="radio"
-          id="Excellent"
+          id="Excellent "
           formControlName="schedule_Interview_status"
           value="Excellent"
           class="ms-5"

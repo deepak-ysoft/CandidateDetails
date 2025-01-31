@@ -8,12 +8,12 @@ import {
 import { Employee } from '../../../Models/employee.model';
 import { EmployeeService } from '../../../Services/employee.service';
 import { CommonModule, DatePipe } from '@angular/common';
-import { FullCalendarComponent } from '@fullcalendar/angular';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import {
   AbstractControl,
   FormBuilder,
   FormGroup,
+  FormsModule,
   ReactiveFormsModule,
   ValidationErrors,
   ValidatorFn,
@@ -22,21 +22,37 @@ import {
 import Swal from 'sweetalert2';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { CandidateService } from '../../../Services/candidate.service';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
+import { environment } from '../../../../environments/environment';
+import { AuthService } from '../../../Services/auth.service';
+import { EmpLocalStorService } from '../../../Services/emp-local-stor.service';
+import { EmployeeLeave } from '../../../Models/employeeLeave.model';
 
 @Component({
   selector: 'app-employees',
-  imports: [CommonModule, DatePipe, ReactiveFormsModule, MatTooltipModule],
+  imports: [
+    CommonModule,
+    DatePipe,
+    ReactiveFormsModule,
+    MatTooltipModule,
+    FormsModule,
+  ],
   templateUrl: './employees.component.html',
   styleUrl: './employees.component.css',
 })
 export class EmployeesComponent implements OnInit {
   @ViewChild('employeeModal', { static: false }) employeeModal!: ElementRef;
+  private baseUrl = environment.apiURL;
+  empImage: string;
   employeeList: Employee[] = [];
+  reqestedEmployeeList: Employee[] = [];
   employee: Employee = new Employee();
+  empLocalstorageService = inject(EmpLocalStorService);
   employeeService = inject(EmployeeService);
   candidateService = inject(CandidateService);
+  authService = inject(AuthService);
   router = inject(Router);
+  userRole: string | null = null;
   closeResult = '';
   EmployeeModelHeader = 'Add Employee';
   employeeForm: FormGroup;
@@ -47,12 +63,20 @@ export class EmployeesComponent implements OnInit {
   selectedImage: string | null = null; // For showing the selected image
   show = false;
   showConPassword = false;
+  reqEmpCount = 0;
+  isRequestedEmp = false;
+  empRole = 3;
+  loggedEmp: any;
+  reqLeave: EmployeeLeave[] = [];
 
   constructor(private fb: FormBuilder, private modalService: NgbModal) {
+    this.userRole = this.authService.getRole();
+    this.empImage = `${this.baseUrl}` + `uploads/images/employee/`;
     this.submitted = false;
     this.employeeForm = this.fb.group(
       {
         empId: [0],
+        roleId: [3],
         empName: [
           '',
           [
@@ -91,27 +115,44 @@ export class EmployeesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.empLocalstorageService.emp$.subscribe((emp) => {
+      this.loggedEmp = emp;
+    });
+    this.employeeService.GetLeave(this.loggedEmp.employee.empId); // Trigger data fetch
+    this.employeeService.empLeaveRequestList$.subscribe((empLeave) => {
+      this.reqLeave = empLeave;
+    });
+    if (this.userRole === 'Employee') {
+      this.router.navigateByUrl('/calendar');
+    }
+    this.empImage = `${this.baseUrl}` + `uploads/images/employee/`;
     this.getEmployees();
     this.show = false;
     this.showConPassword = false;
+    this.isRequestedEmp = false;
   }
 
   getEmployees() {
+    this.isRequestedEmp = false;
     this.employeeService.getEmployee().subscribe((res: any) => {
-      if (res.succes) {
+      if (res.success) {
         this.employeeList = res.res;
+        this.reqestedEmployeeList = res.requestres;
+        this.reqEmpCount = res.reqEmpCount;
+        this.reqestedEmployeeList = res.requestres;
       }
     });
   }
+  hasLeave(empId: number): boolean {
+    return this.reqLeave.some((leave) => leave.empId === empId);
+  }
 
-  // // when user click on change password
-  // onFileChange(event: any): void {
-  //   const input = event.target as HTMLInputElement;
-  //   if (event.target.files && event.target.files.length > 0) {
-  //     const file = event.target.files[0];
-  //     this.selectedFile = file;
-  //   }
-  // }
+  GetRequestedEmployee() {
+    if (this.reqEmpCount > 0) {
+      this.isRequestedEmp = true;
+      this.employeeList = this.reqestedEmployeeList;
+    }
+  }
 
   onFileChange(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -135,11 +176,9 @@ export class EmployeesComponent implements OnInit {
   }
 
   editEmployee(Employee: Employee) {
-    debugger;
-    this.open(this.employeeModal);
-    this.EmployeeModelHeader = 'Edit Employee';
     // Assign the employee's imagePath to selectedImage
-    this.selectedImage = Employee.imagePath || this.defaultImage;
+    this.selectedImage =
+      this.empImage + Employee.imagePath || this.empImage + this.defaultImage;
     this.employeeForm.patchValue({
       empId: Employee.empId,
       empName: Employee.empName,
@@ -154,11 +193,16 @@ export class EmployeesComponent implements OnInit {
       empAddress: Employee.empAddress,
       photo: Employee.photo,
     });
+    this.EmployeeModelHeader = 'Edit Employee';
+    if (!this.isRequestedEmp) {
+      this.open(this.employeeModal);
+    } else {
+      this.onSubmit();
+    }
   }
 
   onSubmit() {
     this.submitted = true;
-    debugger;
     var formData = new FormData();
 
     console.log('Form Submitted:', this.employeeForm.value);
@@ -230,23 +274,43 @@ export class EmployeesComponent implements OnInit {
         'empAddress',
         this.employeeForm.get('empAddress')?.value || ''
       );
+      formData.append('roleId', this.employeeForm.get('roleId')?.value || '3');
 
       formData.forEach((value, key) => {
         console.log(`${key}:`, value);
       });
-      this.employeeService.addUpdateEmployee(formData).subscribe({
+      this.employeeService.updateEmployee(formData).subscribe({
         next: (res: any) => {
           if (res.success) {
             this.employeeForm.reset();
             this.closeModal();
             this.getEmployees();
+
             Swal.fire({
-              title: 'Done!',
-              text: 'Employee Added/Updated.',
+              title: 'Done! &#128522;',
+              text: 'Employee Added.',
               icon: 'success',
               timer: 1000, // Auto-close after 2 seconds
               timerProgressBar: true,
             });
+          } else {
+            if (res.message == 'Duplicate Email') {
+              Swal.fire({
+                title: 'Duplicate Email! &#128078;',
+                text: 'Email already exist :)',
+                icon: 'error',
+                timer: 2000, // Auto-close after 2 seconds
+                timerProgressBar: true,
+              });
+            } else {
+              Swal.fire({
+                title: 'Cancelled! &#128078;',
+                text: 'Something is wrong :)',
+                icon: 'error',
+                timer: 2000, // Auto-close after 2 seconds
+                timerProgressBar: true,
+              });
+            }
           }
         },
         error: (err: any) => {
@@ -276,7 +340,7 @@ export class EmployeesComponent implements OnInit {
             this.getEmployees();
           } else {
             Swal.fire({
-              title: 'Cancelled',
+              title: 'Cancelled! &#128078;',
               text: 'Something is wrong :)',
               icon: 'error',
               timer: 2000, // Auto-close after 2 seconds
@@ -325,11 +389,9 @@ export class EmployeesComponent implements OnInit {
   }
 
   Show() {
-    debugger;
     this.show = !this.show;
   }
   ShowConPassword() {
-    debugger;
     this.showConPassword = !this.showConPassword;
   }
 }

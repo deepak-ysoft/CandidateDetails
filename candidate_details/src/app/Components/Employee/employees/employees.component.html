@@ -2,8 +2,22 @@
   <div class="float-start mb-1">
     <h2><b>Ysoft Employees</b></h2>
   </div>
-  <button class="btn btn-primary float-end pe-4 ps-4" (click)="openModal()">
-    <b> <i class="fa-solid fa-plus me-2"></i>Add </b>
+  <button
+    class="btn btn-primary float-end pe-4 ps-4"
+    *ngIf="!isRequestedEmp"
+    (click)="GetRequestedEmployee()"
+  >
+    <b>
+      <i class="fa-solid fa-user-plus me-2"></i>Requests
+      <span class="emp-count" *ngIf="reqEmpCount != 0"> {{ reqEmpCount }}</span>
+    </b>
+  </button>
+  <button
+    class="btn btn-primary float-end pe-4 ps-4"
+    *ngIf="isRequestedEmp"
+    (click)="getEmployees()"
+  >
+    <b> <i class="fa-solid fa-rotate-left me-2"></i>Get Back </b>
   </button>
 
   <table class="table magical-table">
@@ -23,15 +37,14 @@
       </tr>
     </thead>
     <tbody class="tbody">
-      <tr
-        class="row"
-        *ngFor="let emp of employeeList"
-        (click)="employeeDetails(emp)"
-      >
-        <td class="col d-flex justify-content-center">
+      <tr class="row" *ngFor="let emp of employeeList">
+        <td
+          (click)="employeeDetails(emp)"
+          class="col d-flex justify-content-center"
+        >
           <img
             *ngIf="emp?.imagePath != null"
-            [src]="emp?.imagePath"
+            [src]="empImage + emp?.imagePath"
             class="rounded-circle"
             alt="Emp image"
           />
@@ -41,9 +54,22 @@
             src="assets/Image/Default.jpg"
             alt="Emp image"
           />
+
+          <span
+            *ngIf="hasLeave(emp.empId)"
+            class="badge bg-danger rounded-circle position-absolute emp-dot translate-middle"
+            style="width: 8px; height: 8px; padding: 0"
+            >.</span
+          >
         </td>
-        <td class="col d-flex justify-content-center">{{ emp.empName }}</td>
         <td
+          (click)="employeeDetails(emp)"
+          class="col d-flex justify-content-center"
+        >
+          {{ emp.empName }}
+        </td>
+        <td
+          (click)="employeeDetails(emp)"
           class="col d-flex justify-content-center"
           [matTooltip]="emp.empEmail"
           matTooltipPosition="above"
@@ -51,20 +77,45 @@
         >
           {{ emp.empEmail }}
         </td>
-        <td class="col d-flex justify-content-center">{{ emp.empNumber }}</td>
-        <td class="col d-flex justify-content-center">
+        <td
+          (click)="employeeDetails(emp)"
+          class="col d-flex justify-content-center"
+        >
+          {{ emp.empNumber }}
+        </td>
+        <td
+          (click)="employeeDetails(emp)"
+          class="col d-flex justify-content-center"
+        >
           {{ emp.empDateOfBirth | date : "longDate" }}
         </td>
-        <td class="col d-flex justify-content-center">{{ emp.empGender }}</td>
-        <td class="col d-flex justify-content-center">{{ emp.empJobTitle }}</td>
+        <td
+          (click)="employeeDetails(emp)"
+          class="col d-flex justify-content-center"
+        >
+          {{ emp.empGender }}
+        </td>
+        <td
+          (click)="employeeDetails(emp)"
+          class="col d-flex justify-content-center"
+        >
+          {{ emp.empJobTitle }}
+        </td>
 
-        <td class="col d-flex justify-content-center">
+        <td
+          (click)="employeeDetails(emp)"
+          class="col d-flex justify-content-center"
+        >
           {{ emp.empExperience }}
         </td>
-        <td class="col d-flex justify-content-center">
+        <td
+          (click)="employeeDetails(emp)"
+          class="col d-flex justify-content-center"
+        >
           {{ emp.empDateofJoining | date : "longDate" }}
         </td>
         <td
+          (click)="employeeDetails(emp)"
           class="col d-flex justify-content-center ett"
           [matTooltip]="emp.empAddress"
           matTooltipPosition="above"
@@ -74,7 +125,11 @@
         </td>
         <td class="col d-flex justify-content-center">
           <i
-            class="fas fa-edit text-primary me-2 cursorPointer"
+            [ngClass]="
+              !isRequestedEmp
+                ? 'fas fa-edit text-primary me-2 cursorPointer'
+                : 'fa-solid fa-thumbs-up text-primary me-2 cursorPointer'
+            "
             (click)="editEmployee(emp)"
           ></i>
 
@@ -251,7 +306,7 @@
             "
             >{{ employeeForm.get('empPasswordConfirm')?.errors?.['serverError'] }}</small
           ><small
-            *ngIf="employeeForm.errors?.['mismatch']||submitted&&shouldShowError('empPasswordConfirm')"
+            *ngIf="employeeForm.errors?.['mismatch'] || submitted && shouldShowError('empPasswordConfirm')"
             class="text-danger"
           >
             Passwords do not match!</small
@@ -392,6 +447,18 @@
             *ngIf="employeeForm.get('empExperience')?.hasError('serverError')"
             >{{ employeeForm.get('empExperience')?.errors?.['serverError'] }}</small
           >
+        </div>
+        <div class="col" *ngIf="this.userRole == 'Admin'">
+          <label class="ms-1 label">Role</label>
+          <select
+            id="empGender"
+            class="form-select magic-input"
+            formControlName="roleId"
+          >
+            <option value="" disabled>Select Role</option>
+            <option value="3">Employee</option>
+            <option value="2">HR</option>
+          </select>
         </div>
         <div class="col">
           <label class="ms-1 label" for="empDateofJoining"

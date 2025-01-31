@@ -1,8 +1,8 @@
 ﻿using CandidateDetails_API.IServices;
 using CandidateDetails_API.Model;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CandidateDetails_API.Controllers
 {
@@ -20,42 +20,48 @@ namespace CandidateDetails_API.Controllers
             _service = service;
             _context = context;
         }
+
         /// <summary>
         /// To login employee
         /// </summary>
         /// <param name="model">login model</param>
         /// <returns>if login success then return logged employee data,Employee job and login token.</returns>
         /// 
-
         [AllowAnonymous]
-        [HttpPost("Login")] // Specify the route for the API method
-        public async Task<IActionResult> Login([FromBody] Login model) // Expect the request body to contain the Employees object
+        [HttpPost("Login")]
+        public async Task<IActionResult> Login([FromBody] Login model)
         {
             try
             {
-                if (await _service.Login(model)) // Check employee is exist or not 
+                var result = await _service.Login(model); // Assuming Login is now async
+                if (result.Success)
                 {
-                    var employeeData = _context.Employees.FirstOrDefault(x => x.empEmail.ToLower() == model.email.ToLower()); // Get EmployeeData by email
+                    var employeeData = _context.Employees.Include(e => e.Role) // Include the Role navigation property
+                        .FirstOrDefault(x => x.empEmail.ToLower() == model.email.ToLower());
+
                     if (employeeData == null)
                     {
                         return NotFound("Employee not found.");
                     }
 
-                    var token = _authService.GenerateJwtToken(employeeData.empId.ToString()); // Call AuthService
-                    return Ok(new
+                    var token = _authService.GenerateJwtToken(employeeData.empId.ToString(), employeeData.Role.URole); // GenerateJwtToken returns a token
+
+                    return Ok(new 
                     {
+                        success = true,
                         employee = employeeData,
                         token = token
-                    });
+                    }); // Login returns a result with Success property
                 }
                 else
                 {
-                    return Ok(false);
+                    if (result.Message == "Your account is not active.") // Login returns a result with Message property
+                        return Ok(new { success = false, message = result.Message });
+                    return Ok(new { success = false, message = result.Message }); 
                 }
             }
             catch (Exception ex)
             {
-                // Log the exception here if needed
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
         }
@@ -65,16 +71,16 @@ namespace CandidateDetails_API.Controllers
         /// </summary>
         /// <param name="empObj">Employee class object with properties value.</param>
         /// <returns></returns>
+        [Authorize]
         [HttpPost("ChangePassword")]
-        public async Task<IActionResult> ChangePassword([FromForm] ChangePassword model)
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePassword model)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             var result = await _service.ChangePasswordAsync(model); // Assuming ChangePassword is now async
-            if (result.Success) // Assuming ChangePassword returns a result with IsSuccess property
-                return Ok(true); // or return the updated employee object
-            return Ok(false);
+            return Ok(new { success = result.Success }); // Assuming ChangePassword returns a result with IsSuccess property
+
         }
     }
 }

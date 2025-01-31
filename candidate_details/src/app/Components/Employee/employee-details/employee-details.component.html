@@ -10,7 +10,7 @@
           >
             <img
               *ngIf="employee.imagePath != null"
-              [src]="employee.imagePath"
+              [src]="empImage + employee.imagePath"
               alt="Profile"
               class="rounded-circle border border-primary shadow"
               width="280"
@@ -28,23 +28,13 @@
             <h2 class="mt-3 text-primary">{{ employee.empName }}</h2>
             <h3 class="text-secondary">{{ employee.empJobTitle }}</h3>
             <h4>Age {{ currentAge }}</h4>
-            <div class="social-links mt-3">
-              <a href="#" class="twitter text-primary me-2 fs-4"
-                ><i class="bi bi-twitter"></i
-              ></a>
-              <a href="#" class="facebook text-primary me-2 fs-4"
-                ><i class="bi bi-facebook"></i
-              ></a>
-              <a href="#" class="instagram text-danger me-2 fs-4"
-                ><i class="bi bi-instagram"></i
-              ></a>
-              <a href="#" class="linkedin text-primary fs-4"
-                ><i class="bi bi-linkedin"></i
-              ></a>
-            </div>
           </div>
         </div>
-        <button class="btn btn-success px-4 mb-2 mt-5" routerLink="/employees">
+        <button
+          *ngIf="userRole === 'Admin' || userRole === 'HR'"
+          class="btn btn-success px-4 mb-2 mt-5"
+          routerLink="/employees"
+        >
           <i class="fa-solid fa-rotate-left"></i> Employees
         </button>
       </div>
@@ -60,20 +50,20 @@
             >
               <li class="nav-item me-2" role="presentation">
                 <button
-                  class="btn btn-primary border-success px-4 text-uppercase"
+                  class="btn border-secondary px-4 text-uppercase"
                   data-bs-toggle="tab"
                   data-bs-target="#profile-Details"
                   aria-selected="true"
                   role="tab"
                 >
-                  <i class="fa fa-info-circle fa-lg me-2 cursorPointer"></i>
+                  <i class="fa fa-info-circle fa-lg me-2"></i>
                   Details
                 </button>
               </li>
 
-              <li class="nav-item" role="presentation">
+              <li class="nav-item me-2" role="presentation">
                 <button
-                  class="btn btn-success border-secondary text-uppercase px-4"
+                  class="btn border-secondary text-uppercase px-4"
                   data-bs-toggle="tab"
                   data-bs-target="#profile-Leave"
                   aria-selected="false"
@@ -81,6 +71,25 @@
                   role="tab"
                 >
                   <i class="fa-solid fa-mug-hot fa-lg me-2"></i>leave
+                  <span
+                    *ngIf="hasLeave(employee.empId)"
+                    class="badge bg-danger rounded-circle ms-1 translate-middle"
+                    style="width: 8px; height: 8px; padding: 0"
+                    >.</span
+                  >
+                </button>
+              </li>
+
+              <li class="nav-item" role="presentation">
+                <button
+                  class="btn border-secondary text-uppercase px-4"
+                  data-bs-toggle="tab"
+                  data-bs-target="#profile-password"
+                  aria-selected="false"
+                  tabindex="-1"
+                  role="tab"
+                >
+                  <i class="fas fa-key fa-lg me-2"></i>Change
                 </button>
               </li>
             </ul>
@@ -189,10 +198,31 @@
               >
                 <div>
                   <button
-                    class="btn btn-primary float-end mb-2"
+                    *ngIf="!isReqLeave"
+                    class="btn btn-primary float-start mb-2"
                     (click)="openModal()"
                   >
-                    <i class="fa-solid fa-plus me-2"></i>Add Leave
+                    <i class="fa-solid fa-plus me-1"></i> Leave Request
+                  </button>
+
+                  <button
+                    *ngIf="userRole != 'Employee' && !isReqLeave"
+                    class="btn btn-primary float-end mb-2"
+                    (click)="GetRequestLeave(employee.empId)"
+                  >
+                    <i class="fa-solid fa-info-circle me-1"></i> Requests
+                    <span
+                      *ngIf="hasLeave(employee.empId)"
+                      class="badge bg-danger text-primary rounded-circle ms-1 translate-middle"
+                      style="width: 8px; height: 8px; padding: 0"
+                      >.</span
+                    ></button
+                  ><button
+                    *ngIf="userRole != 'Employee' && isReqLeave"
+                    class="btn btn-primary float-end mb-2"
+                    (click)="GetLeave()"
+                  >
+                    <i class="fa-solid fa-rotate-left me-2"></i>Get Back
                   </button>
                   <table class="table magical-table border">
                     <thead>
@@ -206,7 +236,10 @@
                         <th class="col d-flex justify-content-center">
                           End Date
                         </th>
-                        <th class="col d-flex justify-content-center">
+                        <th
+                          *ngIf="userRole !== 'Employee'"
+                          class="col d-flex justify-content-center"
+                        >
                           Actions
                         </th>
                       </tr>
@@ -225,9 +258,16 @@
                         <td class="col d-flex justify-content-center">
                           {{ leave.endDate | date : "d, MMM, y" }}
                         </td>
-                        <td class="col d-flex justify-content-center">
+                        <td
+                          class="col d-flex justify-content-center"
+                          *ngIf="userRole !== 'Employee'"
+                        >
                           <i
-                            class="fas fa-edit text-primary me-3 cursorPointer"
+                          [ngClass]="
+                          !isReqLeave
+                            ? 'fas fa-edit text-primary me-2 cursorPointer'
+                            : 'fa-solid fa-thumbs-up text-primary me-2 cursorPointer'
+                        "
                             (click)="editLeave(leave)"
                           ></i>
                           <i
@@ -288,6 +328,149 @@
                     </ul>
                   </nav>
                 </div>
+              </div>
+
+              <!-- Leave Tab -->
+              <div
+                class="tab-pane fade pt-3 rounded"
+                id="profile-password"
+                role="tabpanel"
+              >
+                <form
+                  class="p-3"
+                  [formGroup]="changePassForm"
+                  (ngSubmit)="onChangePasswordSubmit()"
+                >
+                  <div class="row mb-4">
+                    <div class="col-3"></div>
+                    <div class="col-6">
+                      <label class="form-label" for="currentPassword"
+                        >Old Password</label
+                      >
+                      <div class="input-group">
+                        <input
+                          [type]="show ? 'text' : 'password'"
+                          formControlName="currentPassword"
+                          class="form-control magic-input"
+                        />
+                        <span
+                          class="input-group-text password-toggle magic-input"
+                          (click)="Show()"
+                        >
+                          <i
+                            [class]="show ? 'fa fa-eye-slash' : 'fa fa-eye'"
+                          ></i>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row pb-4">
+                    <div class="col">
+                      <label class="form-label" for="newPassword"
+                        >New Password</label
+                      >
+                      <div class="input-group">
+                        <input
+                          [type]="showNewPass ? 'text' : 'password'"
+                          formControlName="newPassword"
+                          class="form-control magic-input"
+                        />
+                        <span
+                          class="input-group-text password-toggle magic-input"
+                          (click)="ShowNewPass()"
+                        >
+                          <i
+                            [class]="
+                              showNewPass ? 'fa fa-eye-slash' : 'fa fa-eye'
+                            "
+                          ></i>
+                        </span>
+                      </div>
+                      <small
+                        class="text-danger"
+                        *ngIf="
+                          changePassForm
+                            .get('newPassword')
+                            ?.hasError('serverError')
+                        "
+                        >{{ changePassForm.get('newPassword')?.errors?.['serverError'] }}</small
+                      ><small
+                        *ngIf="
+                          shouldShowChangePassError('newPassword') &&
+                          !changePassForm.controls['newPassword'].hasError(
+                            'pattern'
+                          ) &&
+                          !changePassForm
+                            .get('newPassword')
+                            ?.hasError('serverError')
+                        "
+                        class="text-danger"
+                        >Please enter Password.</small
+                      >
+                      <small
+                        class="text-danger"
+                        *ngIf="
+                          changePassForm.controls['newPassword'].hasError(
+                            'pattern'
+                          )
+                        "
+                      >
+                        Password must be at least 8 characters long, with an
+                        uppercase, lowercase, number, and special character.
+                      </small>
+                    </div>
+                    <div class="col">
+                      <label class="form-label" for="newCPassword"
+                        >Confirm Password</label
+                      >
+                      <div class="input-group">
+                        <input
+                          [type]="showConPassword ? 'text' : 'password'"
+                          formControlName="newCPassword"
+                          class="form-control magic-input"
+                        />
+                        <span
+                          class="input-group-text password-toggle magic-input"
+                          (click)="ShowConPassword()"
+                        >
+                          <i
+                            [class]="
+                              showConPassword ? 'fa fa-eye-slash' : 'fa fa-eye'
+                            "
+                          ></i>
+                        </span>
+                      </div>
+                      <small
+                        *ngIf="
+                          changePassForm
+                            .get('newCPassword')
+                            ?.hasError('serverError')
+                        "
+                        >{{ changePassForm.get('newCPassword')?.errors?.['serverError'] }}</small
+                      ><small
+                        *ngIf="changePassForm.errors?.['mismatch']||submitted && shouldShowChangePassError('newCPassword')"
+                        class="text-danger"
+                      >
+                        Passwords do not match!</small
+                      >
+                    </div>
+                  </div>
+                  <hr class="hr" />
+                  <div class="row">
+                    <div class="col-12 d-flex justify-content-center">
+                      <button type="submit" class="btn btn-primary mt-4">
+                        <i class="fa-regular fa-thumbs-up me-1"></i>Change
+                      </button>
+
+                      <button
+                        type="reset"
+                        class="btn btn-danger mt-4 ms-4 shadow-sm"
+                      >
+                        <i class="fa-solid fa-arrows-rotate me-2"></i> Cancel
+                      </button>
+                    </div>
+                  </div>
+                </form>
               </div>
             </div>
             <!-- End Styled Tabs -->

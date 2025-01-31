@@ -8,7 +8,8 @@ import { CommonServiceService } from '../../Services/common-service.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
+import { AuthService } from '../../Services/auth.service';
 
 @Component({
   selector: 'app-candidate-list',
@@ -19,6 +20,9 @@ import { RouterLink } from '@angular/router';
 export class CandidateListComponent {
   @ViewChild('addCandidate', { static: false }) addCandidate!: ElementRef;
   @ViewChild('candidateDetails', { static: false })
+  authService = inject(AuthService);
+  router = inject(Router);
+  userRole: string | null = null;
   candidateDetails!: ElementRef;
   candidateForDetails!: Candidate;
   clickedCandidate = false;
@@ -50,10 +54,14 @@ export class CandidateListComponent {
     private candidateService: CandidateService,
     private modalService: NgbModal
   ) {
+    this.userRole = this.authService.getRole();
     this.clickedCandidate = false;
   }
 
   ngOnInit(): void {
+    if (this.userRole === 'Employee') {
+      this.router.navigateByUrl('/calendar');
+    }
     this.candidateService.candidateList$.subscribe((candidates) => {
       this.candidateList = candidates;
     });
@@ -96,7 +104,7 @@ export class CandidateListComponent {
       if (res.success) {
         this.candidateService.getCandidates(); // Trigger data fetch
         Swal.fire({
-          title: 'Done!',
+          title: 'Done! &#128522;',
           text: 'Excel file successfully uploaded.',
           icon: 'success',
           timer: 2000, // Auto-close after 2 seconds
@@ -104,7 +112,7 @@ export class CandidateListComponent {
         });
       } else {
         Swal.fire({
-          title: 'Cancelled',
+          title: 'Cancelled! &#128078;',
           text: 'Something is wrong :)',
           icon: 'error',
           timer: 3000, // Auto-close after 3 seconds
@@ -269,17 +277,42 @@ export class CandidateListComponent {
   downloadCV(candidateId: number, candidateName: string) {
     this.candidateService.downloadCV(candidateId).subscribe({
       next: (response: Blob) => {
-        const url = window.URL.createObjectURL(response);
+        const contentType = response.type; // Get MIME type directly from the Blob
+        const fileExtension = this.getFileExtensionFromMimeType(contentType); // Map MIME type to file extension
+        const fileName = `Candidate_${candidateName}_${candidateId}_CV${fileExtension}`; // Generate the file name
+
+        const url = window.URL.createObjectURL(response); // Create a URL for the Blob
         const link = document.createElement('a');
+
         link.href = url;
-        link.download = `Candidate_${candidateName}${candidateId}_CV.pdf`;
+        link.download = fileName; // Use the generated file name
         link.click();
-        window.URL.revokeObjectURL(url);
+
+        window.URL.revokeObjectURL(url); // Clean up
       },
       error: (err) => {
-        //   console.error(err);
+        console.error(err);
         alert('Error downloading CV.');
       },
     });
+  }
+
+  /**
+   * Maps MIME types to file extensions.
+   */
+  private getFileExtensionFromMimeType(mimeType: string): string {
+    const mimeTypeToExtensionMap: { [key: string]: string } = {
+      'application/pdf': '.pdf',
+      'application/msword': '.doc',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+        '.docx',
+      'image/jpeg': '.jpg',
+      'image/png': '.png',
+      'image/gif': '.gif',
+      'text/plain': '.txt',
+    };
+
+    // Default to ".bin" for unknown MIME types
+    return mimeTypeToExtensionMap[mimeType] || '.bin';
   }
 }

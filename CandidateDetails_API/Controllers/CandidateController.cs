@@ -3,7 +3,6 @@ using CandidateDetails_API.Model;
 using ClosedXML.Excel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing.Matching;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
@@ -12,7 +11,7 @@ namespace CandidateDetails_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [Authorize(Roles = "Admin,HR")]
     public class CandidateController : ControllerBase
     {
         private readonly ICandidateService _service;
@@ -199,7 +198,7 @@ namespace CandidateDetails_API.Controllers
                             await candidate.cv.CopyToAsync(stream);
                         }
                         // Save the file path in the database
-                        candidate.cvPath = $"https://localhost:44319/CandidateCV/{fileName}";
+                        candidate.cvPath = fileName;
                     }
                 }
                 else
@@ -227,7 +226,7 @@ namespace CandidateDetails_API.Controllers
                         }
 
                         // Save the file path in the database
-                        candidate.cvPath = $"https://localhost:44319/CandidateCV/{fileName}";
+                        candidate.cvPath = fileName;
                     }
                 }
                 // Save candidate details
@@ -269,21 +268,46 @@ namespace CandidateDetails_API.Controllers
         [HttpGet("DownloadCV/{candidateId}")]
         public async Task<IActionResult> DownloadCV(int candidateId)
         {
-            var candidate = await _context.candidateDetails.FirstOrDefaultAsync(x => x.id == candidateId); // Get the candidate details
-            string getFileName = Path.GetFileName(candidate.cvPath); // Get the file name from the path
-            // Path where CV files are stored
+            // Get the candidate details
+            var candidate = await _context.candidateDetails.FirstOrDefaultAsync(x => x.id == candidateId);
+            if (candidate == null || string.IsNullOrEmpty(candidate.cvPath))
+            {
+                return NotFound("Candidate or CV not found.");
+            }
+
+            string getFileName = Path.GetFileName(candidate.cvPath); // Extract the file name
+            string getEx = Path.GetExtension(getFileName); // Extract the file extension
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "CandidateCV", getFileName); // Combine the file path
 
-            if (!System.IO.File.Exists(filePath)) // Check if the file exists
+            // Check if the file exists
+            if (!System.IO.File.Exists(filePath))
             {
                 return NotFound("File not found.");
             }
 
-            var fileBytes = System.IO.File.ReadAllBytes(filePath); // Read the file bytes
-            var fileName = $"{candidate.name}_CV.pdf"; // Generate the file name
+            // Read the file bytes
+            var fileBytes = await System.IO.File.ReadAllBytesAsync(filePath);
 
-            return File(fileBytes, "application/pdf", fileName);
+            // Determine MIME type based on file extension
+            string mimeType = getEx.ToLower() switch
+            {
+                ".pdf" => "application/pdf",
+                ".doc" => "application/msword",
+                ".docx" => "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                ".jpg" or ".jpeg" => "image/jpeg",
+                ".png" => "image/png",
+                ".gif" => "image/gif",
+                ".txt" => "text/plain",
+                _ => "application/octet-stream" // Default fallback for unknown file types
+            };
+
+            // Generate a user-friendly file name
+            var fileName = $"{candidate.name}_CV{getEx}";
+
+            // Return the file with appropriate MIME type and file name
+            return File(fileBytes, mimeType, fileName);
         }
+
 
         /// <summary>
         /// Get the candidate details by id

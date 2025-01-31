@@ -31,14 +31,14 @@
         <option value="">Select field...</option>
         <option value="Name">Name</option>
         <option value="Contact_No">Contact No</option>
-        <option value="Linkedin_Profile">LinkedIn Profile</option>
+        <option value="Linkedin_Profile">LinkedIn</option>
         <option value="Email_ID">Email</option>
         <option value="Roles">Roles</option>
         <option value="Experience">Experience</option>
         <option value="Skills">Skills</option>
         <option value="CTC">CTC</option>
         <option value="ETC">ETC</option>
-        <option value="Schedule_Interview_status">Interview Status</option>
+        <option value="Schedule_Interview_status">Status</option>
       </select>
       <input
         type="text"
@@ -248,22 +248,28 @@
         </tr>
       </thead>
       <tbody>
-        <tr
-          *ngFor="let candidate of candidateList"
-          (click)="ShowCandidateDetails(candidate)"
-          class="row"
-        >
-          <td class="ellipsis-cell col">
+        <tr *ngFor="let candidate of candidateList" class="row">
+          <td
+            (click)="ShowCandidateDetails(candidate)"
+            class="ellipsis-cell col"
+          >
             {{ candidate.date | date : "shortDate" }}
           </td>
 
-          <td class="ellipsis-cell col">
+          <td
+            (click)="ShowCandidateDetails(candidate)"
+            class="ellipsis-cell col"
+          >
             {{ candidate.name }}
           </td>
-          <td class="ellipsis-cell col">
+          <td
+            (click)="ShowCandidateDetails(candidate)"
+            class="ellipsis-cell col"
+          >
             {{ candidate.contact_No }}
           </td>
           <td
+            (click)="ShowCandidateDetails(candidate)"
             class="ellipsis-cell col"
             [matTooltip]="candidate.linkedin_Profile"
             matTooltipPosition="above"
@@ -272,6 +278,7 @@
             {{ candidate.linkedin_Profile }}
           </td>
           <td
+            (click)="ShowCandidateDetails(candidate)"
             class="ellipsis-cell col"
             [matTooltip]="candidate.email_ID"
             matTooltipPosition="above"
@@ -279,13 +286,20 @@
           >
             {{ candidate.email_ID }}
           </td>
-          <td class="ellipsis-cell col">
+          <td
+            (click)="ShowCandidateDetails(candidate)"
+            class="ellipsis-cell col"
+          >
             {{ candidate.roleName }}
           </td>
-          <td class="ellipsis-cell col">
+          <td
+            (click)="ShowCandidateDetails(candidate)"
+            class="ellipsis-cell col"
+          >
             {{ candidate.experience }}
           </td>
           <td
+            (click)="ShowCandidateDetails(candidate)"
             class="ellipsis-cell col"
             [matTooltip]="candidate.skills"
             matTooltipPosition="above"
@@ -293,17 +307,24 @@
           >
             {{ candidate.skills }}
           </td>
-          <td class="ellipsis-cell col">
+          <td
+            (click)="ShowCandidateDetails(candidate)"
+            class="ellipsis-cell col"
+          >
             {{ candidate.ctc }}
           </td>
-          <td class="ellipsis-cell col">
+          <td
+            (click)="ShowCandidateDetails(candidate)"
+            class="ellipsis-cell col"
+          >
             {{ candidate.etc }}
           </td>
 
           <td
+            (click)="ShowCandidateDetails(candidate)"
             class="ellipsis-cell col"
             [ngClass]="{
-              'text-primary': candidate.schedule_Interview_status === 'Good',
+              'text-primary': candidate.schedule_Interview_status === 'Good ',
               'text-success':
                 candidate.schedule_Interview_status === 'Excellent',
               'text-danger': candidate.schedule_Interview_status === 'Not Good'
@@ -514,7 +535,7 @@
           <span
             [ngClass]="{
               'text-primary':
-                candidateForDetails.schedule_Interview_status === 'Good',
+                candidateForDetails.schedule_Interview_status === 'Good ',
               'text-success':
                 candidateForDetails.schedule_Interview_status === 'Excellent',
               'text-danger':

@@ -10,12 +10,12 @@ export class CalendarService {
   constructor(private http: HttpClient) {}
   private baseUrl = environment.apiURL;
   getEventList() {
-    return this.http.get(`${this.baseUrl}Calendar/GetEventList`);
+    return this.http.get(`${this.baseUrl}api/Calendar/GetEventList`);
   }
 
   insertCalendar(Calendar: any) {
     return this.http.post(
-      `${this.baseUrl}Calendar/CreateEditCalendar`,
+      `${this.baseUrl}api/Calendar/CreateEditCalendar`,
       Calendar
     );
   }
@@ -26,9 +26,9 @@ export class CalendarService {
     newEnd: string
   ): Observable<any> {
     const payload = { id, newStart, newEnd };
-    return this.http.post(`${this.baseUrl}Calendar/UpdateCalendar`, payload);
+    return this.http.post(`${this.baseUrl}api/Calendar/UpdateCalendar`, payload);
   }
   successDelete(id: number) {
-    return this.http.delete(`${this.baseUrl}Calendar/DeleteCalendar/${id}`);
+    return this.http.delete(`${this.baseUrl}api/Calendar/DeleteCalendar/${id}`);
   }
 }

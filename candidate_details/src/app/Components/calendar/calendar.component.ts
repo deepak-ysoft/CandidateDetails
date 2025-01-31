@@ -26,10 +26,11 @@ import { environment } from '../../../environments/environment';
 import { CalendarService } from '../../Services/calendar.service';
 import { CandidateService } from '../../Services/candidate.service';
 import Swal from 'sweetalert2';
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Calendar } from '../../Models/calendar.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { format } from 'date-fns';
+import { AuthService } from '../../Services/auth.service';
 
 @Component({
   selector: 'app-calendar',
@@ -46,6 +47,8 @@ export class CalendarComponent implements OnInit {
   editcalendarVar: Calendar = new Calendar();
   service = inject(CalendarService);
   candidateService = inject(CandidateService);
+  authService = inject(AuthService);
+  userRole: string | null = null;
   submitted = false;
   closeResult = '';
   private baseUrl = environment.apiURL;
@@ -97,16 +100,17 @@ export class CalendarComponent implements OnInit {
   }
 
   onAdd() {
-    this.open(this.calendarModel);
-    this.onSubmitForm.reset();
-    this.modalPopupAndMsg = 'Add Event';
+    if (this.userRole !== 'Employee') {
+      this.open(this.calendarModel);
+      this.onSubmitForm.reset();
+      this.modalPopupAndMsg = 'Add Event';
+    }
   }
 
   onSubmit() {
-    debugger;
     this.submitted = true;
     // Submit if valid
-    if (this.onSubmitForm.valid) {
+    if (this.onSubmitForm.valid && this.userRole !== 'Employee') {
       this.onSubmitForm.get('calId')?.value == null
         ? 0
         : this.editcalendarVar.calId;
@@ -121,7 +125,7 @@ export class CalendarComponent implements OnInit {
             this.onSubmitForm.reset();
           } else {
             Swal.fire({
-              title: 'Error!',
+              title: 'Error! &#128078;',
               text: 'Not Added.',
               icon: 'error',
               timer: 2000, // Auto close after 2000 milliseconds
@@ -174,7 +178,7 @@ export class CalendarComponent implements OnInit {
     this.showCalendar = true;
     this.isDetailClicked = false;
     // load all event when page load
-
+    this.userRole = this.authService.getRole();
     this.updateCalendarOptions(); // Update the calendar options
   }
 
@@ -184,7 +188,7 @@ export class CalendarComponent implements OnInit {
     successCallback: any,
     failureCallback: any
   ): void {
-    this.http.get(`${this.baseUrl}Calendar/GetCalendar`).subscribe(
+    this.http.get(`${this.baseUrl}api/Calendar/GetCalendar`).subscribe(
       (data: any) => {
         const events = data.map(
           (calendar: {
@@ -195,7 +199,7 @@ export class CalendarComponent implements OnInit {
             description: any;
           }) => ({
             id: calendar.calId,
-            title: calendar.title,
+            title: calendar.description,
             start: calendar.start,
             end: calendar.end,
             description: calendar.description,
@@ -212,47 +216,82 @@ export class CalendarComponent implements OnInit {
 
   // Handle event drop (move event)
   handleEventDrop(eventDropInfo: { event: any; revert: () => void }): void {
-    const event = eventDropInfo.event;
-    const eventId = event.id || Math.random().toString(36).substring(2, 9);
-    const newStart = format(event.start, "yyyy-MM-dd'T'HH:mm:ssxxx");
-    const newEnd = event.end
-      ? format(event.end, "yyyy-MM-dd'T'HH:mm:ssxxx")
-      : newStart;
+    if (this.userRole !== 'Employee') {
+      const event = eventDropInfo.event;
+      const eventId = event.id || Math.random().toString(36).substring(2, 9);
+      const newStart = format(event.start, "yyyy-MM-dd'T'HH:mm:ssxxx");
+      const newEnd = event.end
+        ? format(event.end, "yyyy-MM-dd'T'HH:mm:ssxxx")
+        : newStart;
 
-    const payload = {
-      id: eventId,
-      newStart: newStart,
-      newEnd: newEnd,
-    };
+      const payload = {
+        id: eventId,
+        newStart: newStart,
+        newEnd: newEnd,
+      };
 
-    this.service.updateCalendar(eventId, newStart, newEnd).subscribe({
-      next: (response) => {},
-      error: (error) => {
-        // console.error('Error updating event', error);
-        eventDropInfo.revert(); // Revert the changes if failed
-      },
-      complete: () => {},
-    });
+      this.service.updateCalendar(eventId, newStart, newEnd).subscribe({
+        next: (response) => {
+          if (!response) {
+            Swal.fire({
+              title: 'Not Allowed! &#128544;',
+              text: 'You can not edit this event.',
+              icon: 'error',
+              timer: 2000, // Auto close after 2000 milliseconds
+              showConfirmButton: false,
+            });
+            this.updateCalendarOptions();
+          }
+        },
+        error: (error) => {
+          // console.error('Error updating event', error);
+          eventDropInfo.revert(); // Revert the changes if failed
+        },
+        complete: () => {},
+      });
+    } else {
+      Swal.fire({
+        title: 'Not Allowed! &#128544;',
+        text: 'You can not edit any event.',
+        icon: 'error',
+        timer: 2000, // Auto close after 2000 milliseconds
+        showConfirmButton: false,
+      });
+      this.updateCalendarOptions();
+    }
   }
 
   // Handle event resize
   handleEventResize(eventResizeInfo: { event: any; revert: () => void }): void {
-    const event = eventResizeInfo.event;
-    const newStart = event.start.toISOString();
-    const newEnd = event.end ? event.end.toISOString() : newStart;
-    this.http
-      .post(`${this.baseUrl}Calendar/UpdateCalendar`, {
-        id: event.id,
-        newStart,
-        newEnd,
-      })
-      .subscribe(
-        (response) => {},
-        (error) => {
-          // console.error('Error resizing event', error);
-          eventResizeInfo.revert(); // Revert changes if failed
-        }
-      );
+    if (this.userRole !== 'Employee') {
+      const event = eventResizeInfo.event;
+      const newStart = event.start.toISOString();
+      const newEnd = event.end ? event.end.toISOString() : newStart;
+      this.http
+        .post(`${this.baseUrl}api/Calendar/UpdateCalendar`, {
+          id: event.id,
+          newStart,
+          newEnd,
+        })
+        .subscribe(
+          (response) => {
+            if (!response) {
+              Swal.fire({
+                title: 'Not Allowed! &#128544;',
+                text: 'You can not edit this event.',
+                icon: 'error',
+                timer: 2000, // Auto close after 2000 milliseconds
+                showConfirmButton: false,
+              });
+              this.updateCalendarOptions();
+            }
+          },
+          (error) => {
+            // console.error('Error resizing event', error);
+            eventResizeInfo.revert(); // Revert changes if failed
+          }
+        );
+    }
   }
 
   // Handle event click
@@ -261,7 +300,7 @@ export class CalendarComponent implements OnInit {
     this.isDetailClicked = true;
 
     this.http
-      .get(`${this.baseUrl}Calendar/GetCalendarDetails/${eventId}`)
+      .get(`${this.baseUrl}api/Calendar/GetCalendarDetails/${eventId}`)
       .subscribe(
         (data: any) => {
           // Show appointment details (can integrate with a modal)
@@ -293,39 +332,43 @@ export class CalendarComponent implements OnInit {
 
   // edit calendar
   editcalendar(calendar: Calendar) {
-    this.editcalendarVar = calendar;
-    this.onSubmitForm.patchValue({
-      calId: calendar.calId,
-      subject: calendar.subject,
-      description: calendar.description,
-      startDate: calendar.startDate,
-      endDate: calendar.endDate,
-      cancelAnimationFrameId: calendar.calId,
-    });
-    this.fullcalendar = calendar;
-    this.modalPopupAndMsg = 'Edit Event';
+    if (this.userRole !== 'Employee') {
+      this.editcalendarVar = calendar;
+      this.onSubmitForm.patchValue({
+        calId: calendar.calId,
+        subject: calendar.subject,
+        description: calendar.description,
+        startDate: calendar.startDate,
+        endDate: calendar.endDate,
+        cancelAnimationFrameId: calendar.calId,
+      });
+      this.fullcalendar = calendar;
+      this.modalPopupAndMsg = 'Edit Event';
 
-    if (!this.isDetailClicked) {
-      this.open(this.calendarModel);
+      if (!this.isDetailClicked) {
+        this.open(this.calendarModel);
+      }
+      this.isDetailClicked = false;
     }
-    this.isDetailClicked = false;
   }
   // Delete calendar by id
   DeleteCalendar(Id: any) {
-    this.candidateService.confirmDelete().then((result) => {
-      this.getEventList();
-      if (result.isConfirmed) {
-        this.service.successDelete(Id).subscribe({
-          next: () => {
-            this.getEventList(); // Refresh the lists after deletion
-            this.updateCalendarOptions(); // Update the calendar options
-          },
-          error: (err) => {
-            //console.error('Error deleting calendar:', err);
-          },
-        });
-      }
-    });
+    if (this.userRole !== 'Employee') {
+      this.candidateService.confirmDelete().then((result) => {
+        this.getEventList();
+        if (result.isConfirmed) {
+          this.service.successDelete(Id).subscribe({
+            next: () => {
+              this.getEventList(); // Refresh the lists after deletion
+              this.updateCalendarOptions(); // Update the calendar options
+            },
+            error: (err) => {
+              //console.error('Error deleting calendar:', err);
+            },
+          });
+        }
+      });
+    }
   }
 
   updateCalendarOptions() {
