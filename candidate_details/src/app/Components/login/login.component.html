@@ -6,7 +6,7 @@
       <div
         [ngClass]="
           isLogin
-            ? 'col-lg-7 col-md-9 d-flex flex-column align-items-center justify-content-center'
+            ? 'col-lg-6 col-md-8 col-sm-10 d-flex flex-column align-items-center justify-content-center'
             : 'col-md-12 d-flex flex-column align-items-center justify-content-center'
         "
       >
@@ -36,7 +36,7 @@
               </div>
 
               <form
-                class="row g-1 p-4 needs-validation"
+                class="row g-3 p-4 needs-validation"
                 (ngSubmit)="onlogin()"
                 [formGroup]="onLoginForm"
               >
@@ -129,7 +129,7 @@
                 <input type="hidden" formControlName="empPassword" />
                 <input type="hidden" formControlName="empPasswordConfirm" />
                 <div class="row">
-                  <div class="col-4 d-flex justify-content-center">
+                  <div class="col-12 col-md-4 d-flex justify-content-center mb-3">
                     <input
                       type="file"
                       #fileInput
@@ -150,8 +150,8 @@
                     </div>
                   </div>
 
-                  <div class="col-4">
-                    <div class="row mb-2 m-1">
+                  <div class="col-12 col-md-4 mb-3">
+                    <div class="row mb-2">
                       <label class="form-label" for="empName">Name</label>
                       <input
                         id="empName"
@@ -159,46 +159,17 @@
                         class="form-control magic-input"
                         formControlName="empName"
                       />
-                      <small
-                        class="text-danger"
-                        *ngIf="
-                          !employeeForm
-                            .get('empName')
-                            ?.hasError('serverError') &&
-                          shouldShowRegisterError('empName') &&
-                          !employeeForm.controls['empName'].hasError('pattern')
-                        "
-                      >
-                        Name is required.
-                      </small>
-                      <small
-                        class="text-danger"
-                        *ngIf="
-                          employeeForm.get('empName')?.hasError('serverError')
-                        "
-                        >{{ employeeForm.get('empName')?.errors?.['serverError'] }}</small
-                      ><small
-                        class="text-danger"
-                        *ngIf="
-                          employeeForm.controls['empName'].hasError('pattern')
-                        "
-                      >
-                        Name must start with letters, followed by a surname
-                        (numbers allowed).
-                      </small>
                     </div>
                     <div class="row mb-2">
-                      <label class="form-label ms-3" for="empPassword"
-                        >Password</label
-                      >
+                      <label class="form-label" for="empPassword">Password</label>
                       <div class="input-group">
                         <input
                           [type]="show ? 'text' : 'password'"
                           formControlName="empPassword"
-                          class="form-control magic-input RegisterPass"
+                          class="form-control magic-input"
                         />
                         <span
-                          class="input-group-text password-toggle magic-input"
+                          class="input-group-text password-toggle"
                           (click)="Show()"
                         >
                           <i
@@ -206,81 +177,20 @@
                           ></i>
                         </span>
                       </div>
-                      <small
-                        class="text-danger"
-                        *ngIf="
-                          employeeForm
-                            .get('empPassword')
-                            ?.hasError('serverError')
-                        "
-                        >{{ employeeForm.get('empPassword')?.errors?.['serverError'] }}</small
-                      ><small
-                        *ngIf="
-                          shouldShowRegisterError('empPassword') &&
-                          !employeeForm.controls['empPassword'].hasError(
-                            'pattern'
-                          ) &&
-                          !employeeForm
-                            .get('empPassword')
-                            ?.hasError('serverError')
-                        "
-                        class="text-danger"
-                        >Please enter Password.</small
-                      >
-                      <small
-                        class="text-danger"
-                        *ngIf="
-                          employeeForm.controls['empPassword'].hasError(
-                            'pattern'
-                          )
-                        "
-                      >
-                        At least 8 char, with upper, lower, num & special char.
-                      </small>
                     </div>
-                    <div class="row mb-2 m-1">
-                      <label class="form-label" for="empNumber"
-                        >Phone Number</label
-                      >
+                    <div class="row mb-2">
+                      <label class="form-label" for="empNumber">Phone Number</label>
                       <input
                         id="empNumber"
                         type="text"
                         class="form-control magic-input"
                         formControlName="empNumber"
                       />
-                      <small
-                        class="text-danger"
-                        *ngIf="
-                          !employeeForm
-                            .get('empNumber')
-                            ?.hasError('serverError') &&
-                          shouldShowRegisterError('empNumber') &&
-                          !employeeForm.controls['empNumber'].hasError(
-                            'pattern'
-                          )
-                        "
-                      >
-                        Mobile Number is required.
-                      </small>
-                      <small
-                        class="text-danger"
-                        *ngIf="
-                          employeeForm.get('empNumber')?.hasError('serverError')
-                        "
-                        >{{ employeeForm.get('empNumber')?.errors?.['serverError'] }}</small
-                      >
-                      <small
-                        class="text-danger"
-                        *ngIf="
-                          employeeForm.controls['empNumber'].hasError('pattern')
-                        "
-                      >
-                        Mobile number not valid..
-                      </small>
                     </div>
                   </div>
-                  <div class="col-4">
-                    <div class="row mb-2 m-1">
+
+                  <div class="col-12 col-md-4 mb-3">
+                    <div class="row mb-2">
                       <label class="form-label" for="empEmail">Email</label>
                       <input
                         id="empEmail"
@@ -288,108 +198,31 @@
                         class="form-control magic-input"
                         formControlName="empEmail"
                       />
-                      <small
-                        class="text-danger"
-                        *ngIf="
-                          !employeeForm
-                            .get('empEmail')
-                            ?.hasError('serverError') &&
-                          shouldShowRegisterError('empEmail') &&
-                          !employeeForm.controls['empEmail'].hasError('pattern')
-                        "
-                      >
-                        Email is required.
-                      </small>
-                      <small
-                        class="text-danger"
-                        *ngIf="
-                          employeeForm.get('empEmail')?.hasError('serverError')
-                        "
-                        >{{ employeeForm.get('empEmail')?.errors?.['serverError'] }}</small
-                      >
-                      <small
-                        class="text-danger"
-                        *ngIf="
-                          employeeForm.controls['empEmail'].hasError('pattern')
-                        "
-                      >
-                        Email address not valid.
-                      </small>
                     </div>
                     <div class="row mb-2">
-                      <label class="form-label ms-3" for="empPasswordConfirm"
-                        >Confirm Password</label
-                      >
+                      <label class="form-label" for="empPasswordConfirm">Confirm Password</label>
                       <div class="input-group">
                         <input
                           [type]="showConPassword ? 'text' : 'password'"
                           formControlName="empPasswordConfirm"
-                          class="form-control magic-input RegisterPass"
+                          class="form-control magic-input"
                         />
                         <span
-                          class="input-group-text password-toggle magic-input"
+                          class="input-group-text password-toggle"
                           (click)="ShowConPassword()"
                         >
                           <i
-                            [class]="
-                              showConPassword ? 'fa fa-eye-slash' : 'fa fa-eye'
-                            "
+                            [class]="showConPassword ? 'fa fa-eye-slash' : 'fa fa-eye'"
                           ></i>
                         </span>
                       </div>
-                      <small
-                        *ngIf="
-                          employeeForm
-                            .get('empPasswordConfirm')
-                            ?.hasError('serverError')
-                        "
-                        >{{ employeeForm.get('empPasswordConfirm')?.errors?.['serverError'] }}</small
-                      ><small
-                        *ngIf="employeeForm.errors?.['mismatch'] || submitted && shouldShowRegisterError('empPasswordConfirm')"
-                        class="text-danger"
-                      >
-                        Passwords do not match!</small
-                      >
-                    </div>
-                    <div class="row mb-2 m-1">
-                      <label class="form-label" for="empDateOfBirth"
-                        >Date of Birth</label
-                      >
-                      <input
-                        id="empDateOfBirth"
-                        type="date"
-                        class="form-control magic-input"
-                        formControlName="empDateOfBirth"
-                      />
-                      <small
-                        class="text-danger"
-                        *ngIf="
-                          !employeeForm
-                            .get('empDateOfBirth')
-                            ?.hasError('serverError') &&
-                          shouldShowRegisterError('empDateOfBirth')
-                        "
-                      >
-                        Date of birth is required.
-                      </small>
-                      <small
-                        class="text-danger"
-                        *ngIf="
-                          employeeForm
-                            .get('empDateOfBirth')
-                            ?.hasError('serverError')
-                        "
-                        >{{ employeeForm.get('empDateOfBirth')?.errors?.['serverError'] }}</small
-                      >
                     </div>
                   </div>
                 </div>
 
                 <div class="row mb-2">
-                  <div class="col">
-                    <label class="form-label ms-3" for="empGender"
-                      >Gender</label
-                    >
+                  <div class="col-12 col-md-6">
+                    <label class="form-label" for="empGender">Gender</label>
                     <select
                       id="empGender"
                       class="form-select magic-input"
@@ -400,152 +233,62 @@
                       <option value="Female">Female</option>
                       <option value="Other">Other</option>
                     </select>
-                    <small
-                      class="text-danger"
-                      *ngIf="
-                        !employeeForm
-                          .get('empGender')
-                          ?.hasError('serverError') &&
-                        shouldShowRegisterError('empGender')
-                      "
-                    >
-                      Gender is required.
-                    </small>
-                    <small
-                      class="text-danger"
-                      *ngIf="
-                        employeeForm.get('empGender')?.hasError('serverError')
-                      "
-                      >{{ employeeForm.get('empGender')?.errors?.['serverError'] }}</small
-                    >
                   </div>
-                  <div class="col">
-                    <label class="form-label ms-3" for="empJobTitle"
-                      >Job Title</label
-                    >
+                  <div class="col-12 col-md-6">
+                    <label class="form-label" for="empJobTitle">Job Title</label>
                     <input
                       id="empJobTitle"
                       type="text"
                       class="form-control magic-input"
                       formControlName="empJobTitle"
                     />
-                    <small
-                      class="text-danger"
-                      *ngIf="
-                        !employeeForm
-                          .get('empJobTitle')
-                          ?.hasError('serverError') &&
-                        shouldShowRegisterError('empJobTitle')
-                      "
-                    >
-                      Job Title is required.
-                    </small>
-                    <small
-                      class="text-danger"
-                      *ngIf="
-                        employeeForm.get('empJobTitle')?.hasError('serverError')
-                      "
-                      >{{ employeeForm.get('empJobTitle')?.errors?.['serverError'] }}</small
-                    >
                   </div>
-                  <div class="col">
-                    <label class="form-label ms-3" for="empExperience"
-                      >Experience</label
-                    >
+                </div>
+
+                <div class="row mb-2">
+                  <div class="col-12 col-md-6">
+                    <label class="form-label" for="empExperience">Experience</label>
                     <input
                       id="empExperience"
                       type="text"
                       class="form-control magic-input"
                       formControlName="empExperience"
                     />
-                    <small
-                      class="text-danger"
-                      *ngIf="
-                        !employeeForm
-                          .get('empExperience')
-                          ?.hasError('serverError') &&
-                        shouldShowRegisterError('empExperience')
-                      "
-                    >
-                      Experience is required.
-                    </small>
-                    <small
-                      class="text-danger"
-                      *ngIf="
-                        employeeForm
-                          .get('empExperience')
-                          ?.hasError('serverError')
-                      "
-                      >{{ employeeForm.get('empExperience')?.errors?.['serverError'] }}</small
-                    >
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <label class="form-label" for="empDateOfBirth">Date of Birth</label>
+                    <input
+                      id="empDateOfBirth"
+                      type="date"
+                      class="form-control magic-input"
+                      formControlName="empDateOfBirth"
+                    />
                   </div>
                 </div>
 
                 <div class="row mb-2">
-                  <div class="col">
-                    <label class="form-label ms-3" for="empDateofJoining"
-                      >Date of Joining</label
-                    >
+                  <div class="col-12 col-md-6">
+                    <label class="form-label" for="empDateofJoining">Date of Joining</label>
                     <input
                       id="empDateofJoining"
                       type="date"
                       class="form-control magic-input"
                       formControlName="empDateofJoining"
                     />
-                    <small
-                      class="text-danger"
-                      *ngIf="
-                        !employeeForm
-                          .get('empDateofJoining')
-                          ?.hasError('serverError') &&
-                        shouldShowRegisterError('empDateofJoining')
-                      "
-                    >
-                      Date of Joining is required.
-                    </small>
-                    <small
-                      class="text-danger"
-                      *ngIf="
-                        employeeForm
-                          .get('empDateofJoining')
-                          ?.hasError('serverError')
-                      "
-                      >{{ employeeForm.get('empDateofJoining')?.errors?.['serverError'] }}</small
-                    >
                   </div>
-                  <div class="col">
-                    <label class="form-label ms-3" for="empAddress"
-                      >Address</label
-                    >
+                  <div class="col-12 col-md-6">
+                    <label class="form-label" for="empAddress">Address</label>
                     <textarea
                       id="empAddress"
                       class="form-control magic-input"
                       formControlName="empAddress"
                     ></textarea>
-                    <small
-                      class="text-danger"
-                      *ngIf="
-                        !employeeForm
-                          .get('empAddress')
-                          ?.hasError('serverError') &&
-                        shouldShowRegisterError('empAddress')
-                      "
-                    >
-                      Address is required.
-                    </small>
-                    <small
-                      class="text-danger"
-                      *ngIf="
-                        employeeForm.get('empAddress')?.hasError('serverError')
-                      "
-                      >{{ employeeForm.get('empAddress')?.errors?.['serverError'] }}</small
-                    >
                   </div>
                 </div>
 
                 <hr class="hr" />
                 <div class="row">
-                  <div class="col-4 d-flex justify-content-start">
+                  <div class="col-12 col-md-4 d-flex justify-content-start">
                     <p>
                       Already have an account ?<a
                         (click)="FlipAnother()"
@@ -554,7 +297,7 @@
                       >
                     </p>
                   </div>
-                  <div class="col-8 d-flex justify-content-start">
+                  <div class="col-12 col-md-8 d-flex justify-content-start">
                     <button type="submit" class="btn btn-primary mt-2">
                       <i class="fa-regular fa-thumbs-up me-1"></i>Submit
                     </button>
@@ -575,5 +318,3 @@
     </div>
   </section>
 </div>
-<!-- End #main -->
-

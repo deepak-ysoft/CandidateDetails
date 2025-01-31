@@ -1,8 +1,8 @@
 <!-- Add this in your component HTML file -->
 <div class="container-fluid mt-4">
   <div class="row mb-1">
-    <div class="col-4 d-flex justify-content-start">
-      <div class="btn btn-success align-iten-center h-75 me-3 uploadDiv">
+    <div class="col-12 col-md-4 d-flex justify-content-start mb-3 mb-md-0">
+      <div class="btn btn-success align-items-center h-75 me-3 uploadDiv">
         <i class="fa-solid fa-upload"></i>
         Upload Excel
         <input
@@ -13,20 +13,20 @@
         />
       </div>
       <div
-        class="btn btn-primary align-iten-center h-75"
+        class="btn btn-primary align-items-center h-75"
         (click)="openAccCandidateModel()"
       >
         <i class="fa-solid fa-plus me-2"></i> Add Candidate
       </div>
     </div>
-    <div class="col-4 d-flex justify-content-center">
+    <div class="col-12 col-md-4 d-flex justify-content-center mb-3 mb-md-0">
       <h2>Candidates</h2>
     </div>
-    <div class="col-4 d-flex justify-content-end">
+    <div class="col-12 col-md-4 d-flex justify-content-end d-none d-md-flex">
       <select
         [(ngModel)]="SearchField"
         (change)="onSearchFieldChange($event)"
-        class="form-select h-100 me-2 w-25 magic-input"
+        class="form-select h-100 me-2 w-100 w-md-25 magic-input"
       >
         <option value="">Select field...</option>
         <option value="Name">Name</option>
@@ -43,13 +43,14 @@
       <input
         type="text"
         placeholder="Search..."
-        class="form-control rounded-pill w-75 magic-input"
+        class="form-control rounded-pill w-100 w-md-75 magic-input"
         id="searchTerm"
         [(ngModel)]="searchTerms"
         (input)="clickToSearchCandidate()"
       />
     </div>
   </div>
+
   <div class="magical-table-container">
     <table class="table magical-table border">
       <thead class="thead-dark bg-light">
@@ -60,7 +61,6 @@
                 clickToSortCandidate(
                   PageNumber,
                   pageSize,
-
                   'Date',
                   sortDirection,
                   searchTerm,
@@ -71,14 +71,12 @@
               Date
             </span>
           </th>
-
           <th class="ellipsis-cell col">
             <span
               (click)="
                 clickToSortCandidate(
                   PageNumber,
                   pageSize,
-
                   'Name',
                   sortDirection,
                   searchTerm,
@@ -95,7 +93,6 @@
                 clickToSortCandidate(
                   PageNumber,
                   pageSize,
-
                   'Contact_No',
                   sortDirection,
                   searchTerm,
@@ -112,7 +109,6 @@
                 clickToSortCandidate(
                   PageNumber,
                   pageSize,
-
                   'LinkedIn_Profile',
                   sortDirection,
                   searchTerm,
@@ -129,7 +125,6 @@
                 clickToSortCandidate(
                   PageNumber,
                   pageSize,
-
                   'Email_ID',
                   sortDirection,
                   searchTerm,
@@ -146,7 +141,6 @@
                 clickToSortCandidate(
                   PageNumber,
                   pageSize,
-
                   'Roles',
                   sortDirection,
                   searchTerm,
@@ -163,7 +157,6 @@
                 clickToSortCandidate(
                   PageNumber,
                   pageSize,
-
                   'Experience',
                   sortDirection,
                   searchTerm,
@@ -180,7 +173,6 @@
                 clickToSortCandidate(
                   PageNumber,
                   pageSize,
-
                   'Skills',
                   sortDirection,
                   searchTerm,
@@ -197,7 +189,6 @@
                 clickToSortCandidate(
                   PageNumber,
                   pageSize,
-
                   'CTC',
                   sortDirection,
                   searchTerm,
@@ -214,7 +205,6 @@
                 clickToSortCandidate(
                   PageNumber,
                   pageSize,
-
                   'ETC',
                   sortDirection,
                   searchTerm,
@@ -225,7 +215,6 @@
               ETC
             </span>
           </th>
-
           <th class="ellipsis-cell col">
             <span
               (click)="
@@ -242,9 +231,8 @@
               Interview Status
             </span>
           </th>
-
-          <th class="ellipsis-cell col">cv</th>
-          <th class="llipsis-cell col">Actions</th>
+          <th class="ellipsis-cell col">CV</th>
+          <th class="ellipsis-cell col">Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -255,7 +243,6 @@
           >
             {{ candidate.date | date : "shortDate" }}
           </td>
-
           <td
             (click)="ShowCandidateDetails(candidate)"
             class="ellipsis-cell col"
@@ -319,7 +306,6 @@
           >
             {{ candidate.etc }}
           </td>
-
           <td
             (click)="ShowCandidateDetails(candidate)"
             class="ellipsis-cell col"
@@ -335,7 +321,6 @@
           >
             {{ candidate.schedule_Interview_status }}
           </td>
-
           <td class="ellipsis-cell col">
             <button
               class="text-success rounded-pill border-primary"
@@ -347,8 +332,7 @@
               }"
               (click)="downloadCV(candidate.id, candidate.name)"
             >
-              <i class="fa-solid fa-download"></i>
-              cv
+              <i class="fa-solid fa-download"></i> CV
             </button>
           </td>
           <td class="ellipsis-cell col">
@@ -356,7 +340,6 @@
               class="fas fa-edit text-primary fa-lg me-2 cursorPointer"
               (click)="EditCandidate(candidate)"
             ></i>
-
             <i
               class="fa fa-trash text-danger fa-lg cursorPointer"
               (click)="deleteCandidate(candidate.id)"
@@ -366,6 +349,7 @@
       </tbody>
     </table>
   </div>
+
   <span
     >Showing {{ firstCandidateOfPage }} to {{ lastCandidateOfPage }} of
     {{ totalcandidates }} candidates.</span
@@ -454,21 +438,21 @@
     <hr class="hr" />
     <div class="container-fluid mt-5">
       <div class="row mb-3">
-        <div class="col-md-6">
+        <div class="col-12 col-md-6">
           <strong class="me-4">Date:</strong>
           <span>{{ candidateForDetails.date }}</span>
         </div>
-        <div class="col-md-6">
+        <div class="col-12 col-md-6">
           <strong class="me-4">Name:</strong>
           <span>{{ candidateForDetails.name }}</span>
         </div>
       </div>
       <div class="row mb-3">
-        <div class="col-md-6">
+        <div class="col-12 col-md-6">
           <strong class="me-4">Contact No:</strong>
           <span>{{ candidateForDetails.contact_No }}</span>
         </div>
-        <div class="col-md-6">
+        <div class="col-12 col-md-6">
           <strong class="me-4">LinkedIn Profile:</strong>
           <a [href]="candidateForDetails.linkedin_Profile" target="_blank">{{
             candidateForDetails.linkedin_Profile
@@ -476,61 +460,61 @@
         </div>
       </div>
       <div class="row mb-3">
-        <div class="col-md-6">
+        <div class="col-12 col-md-6">
           <strong class="me-4">Email ID:</strong>
           <span>{{ candidateForDetails.email_ID }}</span>
         </div>
-        <div class="col-md-6">
+        <div class="col-12 col-md-6">
           <strong class="me-4">Role:</strong>
           <span>{{ candidateForDetails.roleName }}</span>
         </div>
       </div>
       <div class="row mb-3">
-        <div class="col-md-6">
+        <div class="col-12 col-md-6">
           <strong class="me-4">Experience:</strong>
           <span>{{ candidateForDetails.experience }}</span>
         </div>
-        <div class="col-md-6">
+        <div class="col-12 col-md-6">
           <strong class="me-4">Skills:</strong>
           <span>{{ candidateForDetails.skills }}</span>
         </div>
       </div>
       <div class="row mb-3">
-        <div class="col-md-6">
+        <div class="col-12 col-md-6">
           <strong class="me-4">CTC:</strong>
           <span>{{ candidateForDetails.ctc }}</span>
         </div>
-        <div class="col-md-6">
+        <div class="col-12 col-md-6">
           <strong class="me-4">ETC:</strong>
           <span>{{ candidateForDetails.etc }}</span>
         </div>
       </div>
       <div class="row mb-3">
-        <div class="col-md-6">
+        <div class="col-12 col-md-6">
           <strong class="me-4">Notice Period:</strong>
           <span>{{ candidateForDetails.notice_Period }}</span>
         </div>
-        <div class="col-md-6">
+        <div class="col-12 col-md-6">
           <strong class="me-4">Current Location:</strong>
           <span>{{ candidateForDetails.current_Location }}</span>
         </div>
       </div>
       <div class="row mb-3">
-        <div class="col-md-6">
+        <div class="col-12 col-md-6">
           <strong class="me-4">Preferred Location:</strong>
           <span>{{ candidateForDetails.prefer_Location }}</span>
         </div>
-        <div class="col-md-6">
+        <div class="col-12 col-md-6">
           <strong class="me-4">Reason for Job Change:</strong>
           <span>{{ candidateForDetails.reason_For_Job_Change }}</span>
         </div>
       </div>
       <div class="row mb-3">
-        <div class="col-md-6">
+        <div class="col-12 col-md-6">
           <strong class="me-4">Schedule Interview:</strong>
           <span>{{ candidateForDetails.schedule_Interview }}</span>
         </div>
-        <div class="col-md-6">
+        <div class="col-12 col-md-6">
           <strong class="me-4">Interview Status:</strong>
           <span
             [ngClass]="{
@@ -541,8 +525,9 @@
               'text-danger':
                 candidateForDetails.schedule_Interview_status === 'Not Good'
             }"
-            >{{ candidateForDetails.schedule_Interview_status }}</span
           >
+            {{ candidateForDetails.schedule_Interview_status }}
+          </span>
         </div>
       </div>
       <div class="row mb-3">
@@ -554,4 +539,5 @@
     </div>
   </div>
 </div>
+
 <br />

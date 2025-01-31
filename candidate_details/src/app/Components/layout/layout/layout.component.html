@@ -1,14 +1,15 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
-    <a class="navbar-brand" *ngIf="userRole==='Employee'" routerLink="/calendar">
+    <a class="navbar-brand" *ngIf="userRole === 'Employee'" routerLink="/calendar">
       <img
         src="https://www.ysoftsolution.com/wp-content/uploads/2024/02/final-logo-1024x505.png"
         alt="Y Soft Solution Logo"
         width="100"
         height="50"
         class="d-inline-block align-text-top"
-      /> </a
-    ><a class="navbar-brand" *ngIf="userRole!=='Employee'" routerLink="/index">
+      />
+    </a>
+    <a class="navbar-brand" *ngIf="userRole !== 'Employee'" routerLink="/index">
       <img
         src="https://www.ysoftsolution.com/wp-content/uploads/2024/02/final-logo-1024x505.png"
         alt="Y Soft Solution Logo"
@@ -18,24 +19,18 @@
       />
     </a>
     <!-- Navbar Content -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav">
         <li class="nav-item" *ngIf="userRole === 'Admin' || userRole === 'HR'">
-          <a
-            class="nav-link"
-            routerLink="/index"
-            routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
+          <a class="nav-link" routerLink="/index" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
             <i class="fa-solid fa-house me-1"></i>Home
           </a>
         </li>
         <li class="nav-item" *ngIf="userRole === 'Admin' || userRole === 'HR'">
-          <a
-            class="nav-link"
-            routerLink="/candidateList"
-            routerLinkActive="active"
-          >
+          <a class="nav-link" routerLink="/candidateList" routerLinkActive="active">
             <i class="fas fa-users me-1"></i>Candidate
           </a>
         </li>
@@ -45,97 +40,53 @@
           </a>
         </li>
         <li class="nav-item" *ngIf="userRole === 'Admin' || userRole === 'HR'">
-          <a
-            class="nav-link position-relative"
-            routerLink="/employees"
-            routerLinkActive="active"
-          >
+          <a class="nav-link position-relative" routerLink="/employees" routerLinkActive="active">
             <i class="fa-regular fa-user me-1"></i> Employee
             <span
               *ngIf="reqEmpCount != 0 || reqLeaveCount != 0"
               class="badge bg-danger rounded-circle position-absolute emp-dot translate-middle"
               style="width: 8px; height: 8px; padding: 0"
-              >.</span
-            >
+            >.</span>
           </a>
         </li>
       </ul>
     </div>
     <!-- Additional Navbar Buttons -->
-    <div
-      class="position-relative d-inline-block me-5"
-      *ngIf="userRole === 'Admin' || userRole === 'HR'"
-    >
+    <div class="position-relative d-inline-block me-5" *ngIf="userRole === 'Admin' || userRole === 'HR'">
       <a routerLink="/index">
         <i class="fa-solid fa-bell fa-xl text-primary"></i>
-        <span
-          *ngIf="todayDataCount != 0"
-          class="badge bg-danger badge-number position-absolute top-0 start-100 translate-middle"
-        >
+        <span *ngIf="todayDataCount != 0" class="badge bg-danger badge-number position-absolute top-0 start-100 translate-middle">
           {{ todayDataCount }}
         </span>
       </a>
     </div>
-    <button
-      class="btn btn-success me-4"
-      *ngIf="(userRole === 'Admin' || userRole === 'HR') && showRoleButton"
-      routerLink="/roles"
-    >
+    <button class="btn btn-success me-4" *ngIf="(userRole === 'Admin' || userRole === 'HR') && showRoleButton" routerLink="/roles">
       <i class="fa-brands fa-critical-role me-2"></i> Roles
     </button>
-    <button
-      class="btn btn-success me-4"
-      *ngIf="(userRole === 'Admin' || userRole === 'HR') && showExcelDownload"
-      (click)="downloadCandidateExcel()"
-    >
+    <button class="btn btn-success me-4" *ngIf="(userRole === 'Admin' || userRole === 'HR') && showExcelDownload" (click)="downloadCandidateExcel()">
       <i class="fa fa-download"></i> Excel File
     </button>
-    <a
-      class="nav-link nav-profile d-flex align-items-center pe-0"
-      data-bs-toggle="dropdown"
-    >
-      <img
-        [src]="empImage + loggedEmp.employee.imagePath"
-        alt="User Image"
-        class="rounded-circle border border-1 border-info shadow-sm"
-        width="45"
-      />
+    <a class="nav-link nav-profile d-flex align-items-center pe-0" data-bs-toggle="dropdown">
+      <img [src]="empImage + loggedEmp.employee.imagePath" alt="User Image" class="rounded-circle border border-1 border-info shadow-sm" width="45"/>
     </a>
     <!-- End Profile Image Icon -->
-
-    <ul
-      class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile shadow-lg border-0 rounded-3"
-    >
+    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile shadow-lg border-0 rounded-3">
       <li>
-        <a
-          class="dropdown-item d-flex align-items-center gap-2 py-2 px-3"
-          (click)="employeeProfile(loggedEmp.employee)"
-        >
+        <a class="dropdown-item d-flex align-items-center gap-2 py-2 px-3" (click)="employeeProfile(loggedEmp.employee)">
           <i class="bi bi-person fs-5 text-primary"></i>
           <span class="fw-semibold">My Profile</span>
         </a>
       </li>
-
       <li>
-        <hr class="dropdown-divider my-2" />
+        <hr class="dropdown-divider my-2"/>
       </li>
-
       <li>
-        <a
-          class="dropdown-item d-flex align-items-center gap-2 py-2 px-3 text-danger fw-semibold"
-          (click)="logOut()"
-        >
+        <a class="dropdown-item d-flex align-items-center gap-2 py-2 px-3 text-danger fw-semibold" (click)="logOut()">
           <i class="fas fa-sign-out-alt text-danger"></i>
           Logout
         </a>
       </li>
     </ul>
-
-    <!-- End Profile Dropdown Items -->
-    <!--   
-    <button class="btn btn-secondary" (click)="logOut()">
-      Logout<i class="ms-2 fas fa-sign-out"></i>
-    </button> -->
   </div>
 </nav>
 

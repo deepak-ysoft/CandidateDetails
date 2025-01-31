@@ -38,6 +38,7 @@ body {
 .magical-table-container {
    text-align: center;
    font-family: "Arial", sans-serif;
+   overflow: hidden;
 }
 
 /* Table Styling */
@@ -139,4 +140,4 @@ a {
 input,
 textarea {
    caret-color: auto;
-}  
+}

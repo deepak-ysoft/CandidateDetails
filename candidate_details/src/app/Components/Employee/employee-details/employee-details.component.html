@@ -263,11 +263,11 @@
                           *ngIf="userRole !== 'Employee'"
                         >
                           <i
-                          [ngClass]="
-                          !isReqLeave
-                            ? 'fas fa-edit text-primary me-2 cursorPointer'
-                            : 'fa-solid fa-thumbs-up text-primary me-2 cursorPointer'
-                        "
+                            [ngClass]="
+                              !isReqLeave
+                                ? 'fas fa-edit text-primary me-2 cursorPointer'
+                                : 'fa-solid fa-thumbs-up text-primary me-2 cursorPointer'
+                            "
                             (click)="editLeave(leave)"
                           ></i>
                           <i
@@ -480,6 +480,7 @@
     </div>
   </section>
 </div>
+<br />
 
 <ng-template #leaveModal let-modal>
   <div class="modal-header">
