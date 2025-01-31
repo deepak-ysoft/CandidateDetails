@@ -23,25 +23,22 @@
   <table class="table magical-table">
     <thead>
       <tr class="row">
-        <th class="col d-flex justify-content-end">Profile</th>
-        <th class="col d-flex justify-content-center">Name</th>
-        <th class="col d-flex justify-content-center">Email</th>
-        <th class="col d-flex justify-content-center">Phone</th>
-        <th class="col d-flex justify-content-center">Date of Birth</th>
-        <th class="col d-flex justify-content-center">Gender</th>
-        <th class="col d-flex justify-content-center">Job Title</th>
-        <th class="col d-flex justify-content-center">Experience</th>
-        <th class="col d-flex justify-content-center">Date of Joining</th>
-        <th class="col d-flex justify-content-center">Address</th>
-        <th class="col d-flex justify-content-center">Actions</th>
+        <th class="col ellipsis-cell">Profile</th>
+        <th class="col ellipsis-cell">Name</th>
+        <th class="col ellipsis-cell">Email</th>
+        <th class="col ellipsis-cell">Phone</th>
+        <th class="col ellipsis-cell">Date of Birth</th>
+        <th class="col ellipsis-cell">Gender</th>
+        <th class="col ellipsis-cell">Job Title</th>
+        <th class="col ellipsis-cell">Experience</th>
+        <th class="col ellipsis-cell">Date of Joining</th>
+        <th class="col ellipsis-cell">Address</th>
+        <th class="col ellipsis-cell">Actions</th>
       </tr>
     </thead>
     <tbody class="tbody">
       <tr class="row" *ngFor="let emp of employeeList">
-        <td
-          (click)="employeeDetails(emp)"
-          class="col d-flex justify-content-center"
-        >
+        <td (click)="employeeDetails(emp)" class="col ellipsis-cell">
           <img
             *ngIf="emp?.imagePath != null"
             [src]="empImage + emp?.imagePath"
@@ -62,68 +59,47 @@
             >.</span
           >
         </td>
-        <td
-          (click)="employeeDetails(emp)"
-          class="col d-flex justify-content-center"
-        >
+        <td (click)="employeeDetails(emp)" class="col ellipsis-cell">
           {{ emp.empName }}
         </td>
         <td
           (click)="employeeDetails(emp)"
-          class="col d-flex justify-content-center"
+          class="col ellipsis-cell"
           [matTooltip]="emp.empEmail"
           matTooltipPosition="above"
           [matTooltipClass]="'custom-tooltip'"
         >
           {{ emp.empEmail }}
         </td>
-        <td
-          (click)="employeeDetails(emp)"
-          class="col d-flex justify-content-center"
-        >
+        <td (click)="employeeDetails(emp)" class="col ellipsis-cell">
           {{ emp.empNumber }}
         </td>
-        <td
-          (click)="employeeDetails(emp)"
-          class="col d-flex justify-content-center"
-        >
+        <td (click)="employeeDetails(emp)" class="col ellipsis-cell">
           {{ emp.empDateOfBirth | date : "longDate" }}
         </td>
-        <td
-          (click)="employeeDetails(emp)"
-          class="col d-flex justify-content-center"
-        >
+        <td (click)="employeeDetails(emp)" class="col ellipsis-cell">
           {{ emp.empGender }}
         </td>
-        <td
-          (click)="employeeDetails(emp)"
-          class="col d-flex justify-content-center"
-        >
+        <td (click)="employeeDetails(emp)" class="col ellipsis-cell">
           {{ emp.empJobTitle }}
         </td>
 
-        <td
-          (click)="employeeDetails(emp)"
-          class="col d-flex justify-content-center"
-        >
+        <td (click)="employeeDetails(emp)" class="col ellipsis-cell">
           {{ emp.empExperience }}
         </td>
-        <td
-          (click)="employeeDetails(emp)"
-          class="col d-flex justify-content-center"
-        >
+        <td (click)="employeeDetails(emp)" class="col ellipsis-cell">
           {{ emp.empDateofJoining | date : "longDate" }}
         </td>
         <td
           (click)="employeeDetails(emp)"
-          class="col d-flex justify-content-center ett"
+          class="col ellipsis-cell ett"
           [matTooltip]="emp.empAddress"
           matTooltipPosition="above"
           [matTooltipClass]="'custom-tooltip'"
         >
           {{ emp.empAddress }}
         </td>
-        <td class="col d-flex justify-content-center">
+        <td class="col ellipsis-cell">
           <i
             [ngClass]="
               !isRequestedEmp

@@ -91,14 +91,23 @@ td i {
    background-color: rgb(217, 246, 246);
 }
 
-
-.emp-count{
+.emp-count {
    background-color: rgb(255, 109, 109);
    padding: 2px 6px;
    border-radius: 50%;
    margin-left: 5px;
 }
 
-.emp-dot{
+.emp-dot {
    left: 3%;
+}
+
+.ellipsis-cell {
+   width: 5%;
+   min-width: 5%;
+   max-width: 260px;
+   overflow: hidden; /* Hides content that overflows */
+   text-overflow: ellipsis; /* Adds ellipsis for overflow */
+   white-space: nowrap; /* Prevents wrapping to the next line */
+   /* display: inline-block; Keeps the element inline */
 }
