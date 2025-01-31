@@ -78,3 +78,22 @@ footer.footer {
    left: 95%;
    bottom: 45%;
 }
+
+
+  /* Hover effect for background */
+  .dropdown-item:hover {
+   background-color: #f1f5f9;
+ }
+
+ .text-danger:hover {
+   background-color: #f8d7da;
+ }
+ 
+ .dropdown-menu {
+   background-color: #ffffff;
+   border-radius: 10px;
+ }
+
+ .dropdown-divider {
+   border-color: #e0e0e0;
+ }
