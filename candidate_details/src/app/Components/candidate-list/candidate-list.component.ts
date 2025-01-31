@@ -6,10 +6,10 @@ import { AddCandidateComponent } from '../add-candidate/add-candidate.component'
 import { FormsModule } from '@angular/forms';
 import { CommonServiceService } from '../../Services/common-service.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import Swal from 'sweetalert2';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
 import { AuthService } from '../../Services/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-candidate-list',
