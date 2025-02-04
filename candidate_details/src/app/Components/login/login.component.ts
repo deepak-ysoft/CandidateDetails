@@ -46,6 +46,10 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.showConPassword = false;
     this.show = false;
+    this.employeeForm.reset();
+    this.employeeForm.markAsPristine(); // Reset validation state
+    this.employeeForm.markAsUntouched(); // Remove touched status
+    this.submitted = false;
   }
   constructor(private fb: FormBuilder) {
     this.submitted = false;
@@ -85,9 +89,11 @@ export class LoginComponent implements OnInit {
       next: (response: any) => {
         if (response.success) {
           this.authService.storeToken(response.token.result);
-          debugger
           this.localStorageService.setEmp(response);
-          debugger;
+          this.onLoginForm.reset();
+          this.onLoginForm.markAsPristine();
+          this.onLoginForm.markAsUntouched();
+          this.submitted = false;
           this.userRole = this.authService.getRole();
           if (this.userRole === 'Employee') {
             this.router.navigateByUrl('/calendar');
@@ -149,9 +155,6 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     var formData = new FormData();
-
-    console.log('Form Submitted:', this.employeeForm.value);
-
     if (this.selectedFile) {
       // Append the selected file
       formData.append('photo', this.selectedFile, this.selectedFile.name);
@@ -212,14 +215,14 @@ export class LoginComponent implements OnInit {
 
       formData.append('roleId', role.toString());
 
-      formData.forEach((value, key) => {
-        console.log(`${key}:`, value);
-      });
       this.employeeService.addEmployee(formData).subscribe({
         next: (res: any) => {
           if (res.success) {
             this.isLogin = true;
             this.employeeForm.reset();
+            this.employeeForm.markAsPristine(); // Reset validation state
+            this.employeeForm.markAsUntouched(); // Remove touched status
+            this.submitted = false;
           } else {
             if (res.message == 'Duplicate Email') {
               Swal.fire({

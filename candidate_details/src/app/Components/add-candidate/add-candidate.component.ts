@@ -140,7 +140,6 @@ export class AddCandidateComponent implements OnInit {
       formData.append('file', this.selectedFile);
       this.candidateServices.uploadCV(formData).subscribe((res: any) => {
         if (res.success) {
-          console.log('CV data...', res.data);
           this.candidateForm.patchValue({
             name: res.data.name,
             email_ID: res.data.email,
@@ -168,6 +167,7 @@ export class AddCandidateComponent implements OnInit {
     this.candidateForm.markAsPristine();
     this.candidateForm.markAsUntouched();
     this.candidateForm.updateValueAndValidity();
+    this.submitted = false;
   }
   onSubmit() {
     this.submitted = true;
@@ -238,13 +238,14 @@ export class AddCandidateComponent implements OnInit {
       if (this.selectedFile) {
         formData.append('cv', this.selectedFile, this.selectedFile.name);
       }
-      formData.forEach((value, key) => {
-        console.log(`${key}:`, value);
-      });
       this.candidateServices.AddEditCandidate(formData).subscribe({
         next: (res: any) => {
           if (res.success) {
+            this.candidateForm.reset();
+            this.candidateForm.markAsPristine();
+            this.candidateForm.markAsUntouched();
             this.candidateServices.getCandidates();
+            this.submitted = false;
             this.isclick.emit(true);
           }
         },

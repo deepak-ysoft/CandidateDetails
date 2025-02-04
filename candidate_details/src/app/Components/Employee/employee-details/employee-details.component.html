@@ -60,7 +60,24 @@
                   Details
                 </button>
               </li>
-
+              <li class="nav-item me-2" role="presentation">
+                <button
+                  class="btn border-secondary text-uppercase px-4"
+                  data-bs-toggle="tab"
+                  data-bs-target="#profile-Assets"
+                  aria-selected="false"
+                  tabindex="-1"
+                  role="tab"
+                >
+                  <img
+                    src="assets/icon/assets-icon.png"
+                    class="assets-icon me-1"
+                    width="20"
+                    alt=""
+                  />
+                  Assets
+                </button>
+              </li>
               <li class="nav-item me-2" role="presentation">
                 <button
                   class="btn border-secondary text-uppercase px-4"
@@ -90,25 +107,6 @@
                   role="tab"
                 >
                   <i class="fas fa-key fa-lg me-2"></i>Change
-                </button>
-              </li>
-
-              <li class="nav-item" role="presentation">
-                <button
-                  class="btn border-secondary text-uppercase px-4"
-                  data-bs-toggle="tab"
-                  data-bs-target="#profile-Assets"
-                  aria-selected="false"
-                  tabindex="-1"
-                  role="tab"
-                >
-                  <img
-                    src="assets/icon/assets-icon.png"
-                    class="assets-icon me-1"
-                    width="20"
-                    alt=""
-                  />
-                  Assets
                 </button>
               </li>
             </ul>
@@ -501,6 +499,7 @@
                 <button
                   class="btn btn-primary float-start mb-2"
                   (click)="openAssetsModal()"
+                  *ngIf="userRole !== 'Employee'"
                 >
                   <i class="fa-solid fa-plus me-1"></i> Add Assets
                 </button>

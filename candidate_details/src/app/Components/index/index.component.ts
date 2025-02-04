@@ -45,8 +45,8 @@ export class IndexComponent implements OnInit {
       setInterval(() => {
         this.getLastWeekData();
       }, 5000);
+      this.getWeekData()
     }
-    this.getWeekData()
   }
 
   constructor() {

@@ -17,7 +17,8 @@ export class EmployeeService {
   empRole = 3;
   private baseUrl = environment.apiURL;
   constructor(private http: HttpClient, private fb: FormBuilder) {
-    this.empImage = `${this.baseUrl}` + `uploads/images/employee/`;}
+    this.empImage = `${this.baseUrl}` + `uploads/images/employee/`;
+  }
 
   private empLeaveListSubject = new BehaviorSubject<EmployeeLeave[]>([]);
   private empLeaveRequestListSubject = new BehaviorSubject<EmployeeLeave[]>([]);
@@ -110,7 +111,7 @@ export class EmployeeService {
       empJobTitle: employee.empJobTitle,
       empExperience: employee.empExperience,
       empDateofJoining: employee.empDateofJoining,
-      empAddress: employee.empAddress
+      empAddress: employee.empAddress,
     });
 
     return this.selectedImage;
@@ -156,7 +157,6 @@ export class EmployeeService {
   }
 
   changePassword(changePass: ChangeEmpPassword) {
-    debugger;
     return this.http.post(
       `${this.baseUrl}api/Account/ChangePassword`,
       changePass

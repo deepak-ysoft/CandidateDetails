@@ -90,7 +90,6 @@ export class CandidateListComponent {
       );
   }
   onUploadExcelFileChange(event: any): void {
-    debugger;
     const fileInput = event.target;
     const file = fileInput.files[0];
 

@@ -140,14 +140,17 @@ export class EmployeeDetailsComponent implements OnInit {
     this.showNewPass = false;
     this.showConPassword = false;
     this.isReqLeave = false;
+    
+    this.changePassForm.reset();
+    this.changePassForm.markAsPristine(); // Reset validation state
+    this.changePassForm.markAsUntouched(); // Remove touched status
     this.submitted = false;
     const state = window.history.state as { empId: number };
-    debugger;
     if (state && state.empId) {
       this.getEmployeeById(state.empId);
       this.calculateAge(); // Calculate age after assigning employee details
     }
-    this.GetLeave(); // Trigger data fetch
+    this.EmployeeService.GetLeave(state.empId);
     this.EmployeeService.empLeaveRequestList$.subscribe((empLeave) => {
       this.reqLeave = empLeave;
     });
@@ -189,15 +192,14 @@ export class EmployeeDetailsComponent implements OnInit {
   }
 
   getEmployeeById(empId: number) {
-    debugger;
     this.EmployeeService.getEmployeeById(empId).subscribe((res: any) => {
       if (res.success) {
         this.employee = res.employee;
       }
     });
-
     this.GetEmployeeAssets(empId);
   }
+
   GetLeave() {
     this.EmployeeService.GetLeave(this.employee.empId);
     this.isReqLeave = false;
@@ -295,6 +297,9 @@ export class EmployeeDetailsComponent implements OnInit {
 
   openModal() {
     this.leaveForm.reset(); // Resets all controls to their initial state
+    this.leaveForm.markAsPristine(); // Reset validation state
+    this.leaveForm.markAsUntouched(); // Remove touched status
+    this.submitted = false;
     this.open(this.leaveModal);
     this.LeaveModalHeader = 'Add Leave';
   }
@@ -327,9 +332,13 @@ export class EmployeeDetailsComponent implements OnInit {
         this.leaveForm.value
       ).subscribe({
         next: (res: any) => {
-          this.leaveForm.reset();
           this.isReqLeave = false;
           this.closeModal();
+          this.leaveForm.reset();
+          this.leaveForm.markAsPristine(); // Reset validation state
+          this.leaveForm.markAsUntouched(); // Remove touched status
+          this.submitted = false;
+
           this.EmployeeService.GetLeave(this.employee.empId);
           if (res.success) {
             Swal.fire({
@@ -376,6 +385,9 @@ export class EmployeeDetailsComponent implements OnInit {
               timerProgressBar: true,
             });
             this.changePassForm.reset();
+            this.changePassForm.markAsPristine(); // Reset validation state
+            this.changePassForm.markAsUntouched(); // Remove touched status
+            this.submitted = false;
           } else {
             Swal.fire({
               title: 'Cancelled! &#128078;',
@@ -409,8 +421,6 @@ export class EmployeeDetailsComponent implements OnInit {
   onSubmitEmployee() {
     this.submitted = true;
     var formData = new FormData();
-    debugger;
-    console.log('Form Submitted:', this.employeeForm.value);
 
     if (this.selectedFile) {
       // Append the selected file
@@ -471,17 +481,16 @@ export class EmployeeDetailsComponent implements OnInit {
       );
       formData.append('roleId', this.employeeForm.get('roleId')?.value || '3');
 
-      formData.forEach((value, key) => {
-        console.log(`${key}:`, value);
-      });
       this.EmployeeService.updateEmployee(formData).subscribe({
         next: (res: any) => {
           if (res.success) {
-            this.employeeForm.reset();
             this.employee = res.employee;
-            debugger;
             this.localStorageService.setEmp(res);
             this.closeModal();
+            this.employeeForm.reset();
+            this.employeeForm.markAsPristine(); // Reset validation state
+            this.employeeForm.markAsUntouched(); // Remove touched status
+            this.submitted = false;
             Swal.fire({
               title: 'Done! &#128522;',
               text: 'Employee Updated.',
@@ -624,13 +633,15 @@ export class EmployeeDetailsComponent implements OnInit {
       .subscribe((res: any) => {
         if (res.success) {
           this.employeeAssets = res.employeeAssets;
-          debugger;
         }
       });
   }
 
   openAssetsModal() {
     this.AssetsForm.reset(); // Resets all controls to their initial state
+    this.AssetsForm.markAsPristine(); // Reset validation state
+    this.AssetsForm.markAsUntouched(); // Remove touched status
+    this.submitted = false;
     this.open(this.AssetsModal);
     this.AssetModalHeader = 'Add Asset';
   }
@@ -657,8 +668,11 @@ export class EmployeeDetailsComponent implements OnInit {
         .addUpdateEmployeeAssets(this.AssetsForm.value)
         .subscribe({
           next: (res: any) => {
-            this.AssetsForm.reset();
             this.closeModal();
+            this.AssetsForm.reset();
+            this.AssetsForm.markAsPristine(); // Reset validation state
+            this.AssetsForm.markAsUntouched(); // Remove touched status
+            this.submitted = false;
             this.GetEmployeeAssets(this.employee.empId);
             if (res.success) {
               Swal.fire({
@@ -675,7 +689,7 @@ export class EmployeeDetailsComponent implements OnInit {
             if (err.status === 400) {
               const validationErrors = err.error.errors;
               for (const field in validationErrors) {
-                const formControl = this.leaveForm.get(
+                const formControl = this.AssetsForm.get(
                   field.charAt(0).toLowerCase() + field.slice(1)
                 );
                 if (formControl) {

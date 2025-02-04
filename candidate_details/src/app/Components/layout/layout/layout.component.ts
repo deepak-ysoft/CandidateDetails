@@ -73,7 +73,6 @@ export class LayoutComponent {
         this.currentRouteSubject.next(event.url);
       });
     this.currentRoute$.subscribe((route) => {
-      console.log('Current route:', route);
 
       // Perform actions based on the route
       if (route === '/candidateList') {
@@ -95,11 +94,10 @@ export class LayoutComponent {
           this.commonservice.updateEmployeeList(this.reqEmpCount); // Update the shared service
         }
       });
+      this.getWeekData();
     }
-    this.getWeekData();
   }
   getCurrentEmpData() {
-    debugger;
     this.empLocalstorageService.emp$.subscribe((emp) => {
       this.loggedEmp = emp;
     });
@@ -138,10 +136,14 @@ export class LayoutComponent {
   }
 
   logOut() {
-    this, this.router.navigateByUrl('/login');
-    if (this.isBrowser()) {
-      localStorage.removeItem('authToken');
-      localStorage.clear();
-    }
+    this.commonservice.confirmLogout().then((result) => {
+      if (result.isConfirmed) {
+        this, this.router.navigateByUrl('/login');
+        if (this.isBrowser()) {
+          localStorage.removeItem('authToken');
+          localStorage.clear();
+        }
+      }
+    });
   }
 }

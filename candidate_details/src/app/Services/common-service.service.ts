@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Candidate } from '../Models/candidate.model';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root',
@@ -34,5 +35,16 @@ export class CommonServiceService {
 
   updateTodayData(TodayDataCount: number) {
     this.todayDataCount.next(TodayDataCount);
+  }
+
+  confirmLogout() {
+    return Swal.fire({
+      title: 'Logout?',
+      text: 'Are you sure you want to logout :)',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, logout!',
+      cancelButtonText: 'No',
+    });
   }
 }

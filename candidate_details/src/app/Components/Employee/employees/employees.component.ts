@@ -105,9 +105,7 @@ export class EmployeesComponent implements OnInit {
         this.employeeList = res.res;
         this.reqestedEmployeeList = res.requestres;
         this.reqEmpCount = res.reqEmpCount;
-        this.commonService.updateEmployeeList(
-          this.reqEmpCount
-        ); // Update the shared service
+        this.commonService.updateEmployeeList(this.reqEmpCount); // Update the shared service
       }
     });
   }
@@ -139,6 +137,9 @@ export class EmployeesComponent implements OnInit {
 
   openModal() {
     this.employeeForm.reset(); // Resets all controls to their initial state
+    this.employeeForm.markAsPristine(); // Reset validation state
+    this.employeeForm.markAsUntouched(); // Remove touched status
+    this.submitted = false;
     this.open(this.employeeModal);
     this.EmployeeModelHeader = 'Add Employee';
   }
@@ -161,7 +162,6 @@ export class EmployeesComponent implements OnInit {
     this.submitted = true;
     var formData = new FormData();
 
-    console.log('Form Submitted:', this.employeeForm.value);
     if (this.EmployeeModelHeader == 'Edit Employee') {
       this.employeeForm.get('empPassword')?.setValue('Same@123');
       this.employeeForm.get('empPasswordConfirm')?.setValue('Same@123');
@@ -232,14 +232,14 @@ export class EmployeesComponent implements OnInit {
       );
       formData.append('roleId', this.employeeForm.get('roleId')?.value || '3');
 
-      formData.forEach((value, key) => {
-        console.log(`${key}:`, value);
-      });
       this.employeeService.updateEmployee(formData).subscribe({
         next: (res: any) => {
           if (res.success) {
-            this.employeeForm.reset();
             this.closeModal();
+            this.employeeForm.reset();
+            this.employeeForm.markAsPristine(); // Reset validation state
+            this.employeeForm.markAsUntouched(); // Remove touched status
+            this.submitted = false;
             this.getEmployees();
 
             Swal.fire({

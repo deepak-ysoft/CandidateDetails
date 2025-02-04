@@ -103,6 +103,9 @@ export class CalendarComponent implements OnInit {
     if (this.userRole !== 'Employee') {
       this.open(this.calendarModel);
       this.onSubmitForm.reset();
+      this.onSubmitForm.markAsPristine(); // Reset validation state
+      this.onSubmitForm.markAsUntouched(); // Remove touched status
+      this.submitted = false;
       this.modalPopupAndMsg = 'Add Event';
     }
   }
@@ -123,6 +126,9 @@ export class CalendarComponent implements OnInit {
             this.getEventList(); // Refresh the lists after deletion
             this.updateCalendarOptions(); // Update the calendar options
             this.onSubmitForm.reset();
+            this.onSubmitForm.markAsPristine(); // Reset validation state
+            this.onSubmitForm.markAsUntouched(); // Remove touched status
+            this.submitted = false;
           } else {
             Swal.fire({
               title: 'Error! &#128078;',

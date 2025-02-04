@@ -71,11 +71,14 @@ export class RolesComponent implements OnInit {
       role.rid =
         this.roleForm.get('rid')?.value == null ? 0 : this.roleEdit.rid;
       role.role = this.roleForm.get('role')?.value;
-      console.log('role=', role);
       this.candidateService.AddUpdateRole(role).subscribe({
         next: (res: any) => {
           if (res.success) {
             this.getRoles();
+            this.roleForm.reset();
+            this.roleForm.markAsPristine();
+            this.roleForm.markAsUntouched();
+            this.submitted = false;
             this.onAdd();
           }
         },
@@ -105,6 +108,7 @@ export class RolesComponent implements OnInit {
     this.roleForm.markAsPristine();
     this.roleForm.markAsUntouched();
     this.roleForm.updateValueAndValidity();
+    this.submitted = false;
   }
 
   deleteRole(roleId: number) {
@@ -113,7 +117,6 @@ export class RolesComponent implements OnInit {
         this.candidateService.DeleteRole(roleId).subscribe({
           next: (res: any) => {
             // Handle successful response
-            console.log('Role deleted successfully:', res);
             this.getRoles();
           },
           error: (err: any) => {
