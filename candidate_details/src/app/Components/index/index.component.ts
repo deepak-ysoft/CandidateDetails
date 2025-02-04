@@ -5,6 +5,7 @@ import { Candidate } from '../../Models/candidate.model';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { AuthService } from '../../Services/auth.service';
 import { Router } from '@angular/router';
+import { CommonServiceService } from '../../Services/common-service.service';
 
 @Component({
   selector: 'app-index',
@@ -16,6 +17,7 @@ export class IndexComponent implements OnInit {
   candidateService = inject(CandidateService);
   authService = inject(AuthService);
   router = inject(Router);
+  commonService = inject(CommonServiceService)
   userRole: string | null = null;
   weekData: Candidate[] = [];
   todayData: Candidate[] = [];
@@ -27,6 +29,7 @@ export class IndexComponent implements OnInit {
   totalEmpLeave = 0;
   firstCandidateOfPage = 1;
   lastCandidateOfPage = 10;
+  todayDataCount = 0;
 
   ngOnInit(): void {
     if (this.userRole === 'Employee') {
@@ -38,11 +41,12 @@ export class IndexComponent implements OnInit {
       isLoggedIn = localStorage.getItem('authToken'); // Example check for JWT token
     }, 5000);
 
-    if (isLoggedIn) {
+    if (isLoggedIn && this.userRole !== 'Employee') {
       setInterval(() => {
         this.getLastWeekData();
       }, 5000);
     }
+    this.getWeekData()
   }
 
   constructor() {
@@ -66,5 +70,16 @@ export class IndexComponent implements OnInit {
   CanidtateDetals(candidate: Candidate) {
     this.candidate = candidate;
     this.showCandidate = true;
+  }
+
+  getWeekData() {
+    this.candidateService.getWeekAndTodayData().subscribe((res: any) => {
+      if (res.res) {
+        this.todayDataCount = res.todayDataCount;
+        this.commonService.updateTodayData(
+          this.todayDataCount
+        ); // Update the shared service
+      }
+    });
   }
 }

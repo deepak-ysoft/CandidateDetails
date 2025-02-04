@@ -1,13 +1,13 @@
-li button i {
+li button i, .assets-icon {
    animation: bounce 1.5s infinite alternate;
 }
 
 @keyframes bounce {
    0% {
-      transform: translateY(5px);
+      transform: translateY(3px);
    }
    100% {
-      transform: translateY(-5px);
+      transform: translateY(-3px);
    }
 }
 
@@ -19,6 +19,20 @@ li button i {
    cursor: pointer;
 }
 
-td i{
+.image-container {
+   display: inline-block;
+   position: relative;
+   cursor: pointer;
+}
+
+.profile-photo {
+   width: 150px;
+   height: 150px;
+   border-radius: 50%;
+   object-fit: cover;
+   border: 2px solid #ccc;
+}
+
+td i {
    font-size: larger;
 }

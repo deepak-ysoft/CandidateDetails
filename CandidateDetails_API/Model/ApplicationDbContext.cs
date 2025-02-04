@@ -13,5 +13,6 @@ namespace CandidateDetails_API.Model
         public DbSet<EmployeeBirthday> employeeBirthdays { get; set; } // DbSet for Employee model
         public DbSet<EmployeeLeave> employeesleave { get; set; } // DbSet for EmployeeLeave model
         public DbSet<EmployeeLeaveVM> employeeLeaveVM { get; set; } // DbSet for EmployeeLeave model
+        public DbSet<EmployeeAsset> EmployeeAssets { get; set; } // DbSet for EmployeeAssets model
     }
 }

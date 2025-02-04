@@ -55,45 +55,7 @@ export class LoginComponent implements OnInit {
     //remove localstorage data on load page
     localStorage.removeItem('userEmailForResetPassword');
 
-    this.employeeForm = this.fb.group(
-      {
-        empId: [0],
-        roleId: [3],
-        empName: [
-          '',
-          [
-            Validators.required,
-            Validators.pattern(/^[A-Za-z\s]+(?: [A-Za-z0-9\s]+)*$/),
-          ],
-        ],
-        empEmail: [
-          '',
-          [
-            Validators.required,
-            Validators.pattern(/^[a-zA-Z0-9._%+-]*@[a-zA-Z.-]+\.[a-zA-Z]{2,}$/),
-          ],
-        ],
-        empPassword: [
-          '',
-          [
-            Validators.required,
-            Validators.pattern(
-              /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
-            ), // At least one uppercase, one lowercase, one number, one special character, and minimum 8 characters
-          ],
-        ],
-        empPasswordConfirm: ['', Validators.required],
-        empNumber: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
-        empDateOfBirth: ['', Validators.required],
-        empGender: ['', Validators.required],
-        empJobTitle: ['', Validators.required],
-        empExperience: ['', Validators.required],
-        empDateofJoining: ['', Validators.required],
-        empAddress: ['', [Validators.required]],
-        photo: [null], // Add this line
-      },
-      { validator: passwordMatchValidator() }
-    );
+    this.employeeForm = this.employeeService.createEmployeeForm();
   }
 
   onLoginForm: FormGroup = new FormGroup({
@@ -123,6 +85,7 @@ export class LoginComponent implements OnInit {
       next: (response: any) => {
         if (response.success) {
           this.authService.storeToken(response.token.result);
+          debugger
           this.localStorageService.setEmp(response);
           debugger;
           this.userRole = this.authService.getRole();
@@ -131,7 +94,7 @@ export class LoginComponent implements OnInit {
           } else {
             this.router.navigateByUrl('/index');
           }
-        } else if(response.message=='Your account is not active.'){
+        } else if (response.message == 'Your account is not active.') {
           Swal.fire({
             title: 'Pending activation! &#128522;',
             text: 'Your account is not active :)',
@@ -139,7 +102,7 @@ export class LoginComponent implements OnInit {
             timer: 2000, // Auto-close after 2 seconds
             timerProgressBar: true,
           });
-        }else {
+        } else {
           Swal.fire({
             title: 'Wrong info! &#128544;',
             text: 'Email or password is wrong :)',

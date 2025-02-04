@@ -26,6 +26,8 @@ import { CandidateService } from '../../../Services/candidate.service';
 import { environment } from '../../../../environments/environment';
 import { EmpLocalStorService } from '../../../Services/emp-local-stor.service';
 import { AuthService } from '../../../Services/auth.service';
+import { EmployeeAssetsService } from '../../../Services/employee-assets.service';
+import { EmployeeAssets } from '../../../Models/employeeAssets.model';
 
 @Component({
   selector: 'app-employee-details',
@@ -44,14 +46,26 @@ export class EmployeeDetailsComponent implements OnInit {
   empImage: string;
   private modalRef: NgbModalRef | null = null; // Store the modal reference
   @ViewChild('leaveModal', { static: false }) leaveModal!: ElementRef;
+  @ViewChild('AssetsModal', { static: false }) AssetsModal!: ElementRef;
+  @ViewChild('employeeModal', { static: false }) employeeModal!: ElementRef;
+  defaultImage: string = 'assets/Image/Default.jpg'; // Path to default image
+  selectedImage: string | null = null; // For showing the selected image
+  selectedFile: any = null;
   LeaveModalHeader = 'Add Leave';
+  AssetModalHeader = 'Add Asset';
   closeResult = '';
+  AssetsForm: FormGroup;
   leaveForm: FormGroup;
+  employeeForm: FormGroup;
   changePassForm: FormGroup;
   employee: Employee = new Employee();
   empLeaveList: EmployeeLeave[] = [];
+  employeeAssets: EmployeeAssets[] = [];
+  empAsset: EmployeeAssets = new EmployeeAssets();
   empLeave: EmployeeLeave = new EmployeeLeave();
   empLeaveEdit: EmployeeLeave = new EmployeeLeave();
+  employeeAssetsService = inject(EmployeeAssetsService);
+  localStorageService = inject(EmpLocalStorService);
   EmployeeService = inject(EmployeeService);
   candidateService = inject(CandidateService);
   empLocalstorageService = inject(EmpLocalStorService);
@@ -76,6 +90,8 @@ export class EmployeeDetailsComponent implements OnInit {
     this.userRole = this.authService.getRole();
     this.empImage = `${this.baseUrl}` + `uploads/images/employee/`;
     this.getCurrentEmpData();
+
+    this.employeeForm = this.EmployeeService.createEmployeeForm();
     this.changePassForm = this.fb.group(
       {
         empId: [0],
@@ -103,6 +119,14 @@ export class EmployeeDetailsComponent implements OnInit {
       },
       { validators: [this.dateRangeValidator] }
     );
+    this.AssetsForm = this.fb.group(
+      {
+        assetId: [0],
+        assetName: ['', [Validators.required]],
+        empId: [0],
+      },
+      { validators: [this.dateRangeValidator] }
+    );
   }
 
   getCurrentEmpData() {
@@ -116,11 +140,11 @@ export class EmployeeDetailsComponent implements OnInit {
     this.showNewPass = false;
     this.showConPassword = false;
     this.isReqLeave = false;
-
     this.submitted = false;
-    const state = window.history.state as { emp: Employee };
-    if (state && state.emp) {
-      this.employee = state.emp;
+    const state = window.history.state as { empId: number };
+    debugger;
+    if (state && state.empId) {
+      this.getEmployeeById(state.empId);
       this.calculateAge(); // Calculate age after assigning employee details
     }
     this.GetLeave(); // Trigger data fetch
@@ -141,6 +165,39 @@ export class EmployeeDetailsComponent implements OnInit {
     });
   }
 
+  onFileChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      this.selectedFile = file;
+
+      // Show the selected image
+      const reader = new FileReader();
+      reader.onload = (e: ProgressEvent<FileReader>) => {
+        this.selectedImage = e.target?.result as string;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+  editEmployee(employee: Employee) {
+    this.selectedImage = this.EmployeeService.editEmployee(
+      this.employeeForm,
+      employee
+    );
+
+    this.open(this.employeeModal);
+  }
+
+  getEmployeeById(empId: number) {
+    debugger;
+    this.EmployeeService.getEmployeeById(empId).subscribe((res: any) => {
+      if (res.success) {
+        this.employee = res.employee;
+      }
+    });
+
+    this.GetEmployeeAssets(empId);
+  }
   GetLeave() {
     this.EmployeeService.GetLeave(this.employee.empId);
     this.isReqLeave = false;
@@ -349,6 +406,129 @@ export class EmployeeDetailsComponent implements OnInit {
     }
   }
 
+  onSubmitEmployee() {
+    this.submitted = true;
+    var formData = new FormData();
+    debugger;
+    console.log('Form Submitted:', this.employeeForm.value);
+
+    if (this.selectedFile) {
+      // Append the selected file
+      formData.append('photo', this.selectedFile, this.selectedFile.name);
+    } else {
+      // Create a File object for "Default.jpg"
+      const defaultFile = new File([''], 'Default.jpg', {
+        type: 'image/jpeg',
+        lastModified: Date.now(),
+      });
+      formData.append('photo', defaultFile);
+    }
+    this.employeeForm.get('empPassword')?.setValue('Same@123');
+    this.employeeForm.get('empPasswordConfirm')?.setValue('Same@123');
+    formData.append(
+      'empPassword',
+      this.employeeForm.get('empPassword')?.value || ''
+    );
+    formData.append(
+      'empPasswordConfirm',
+      this.employeeForm.get('empPasswordConfirm')?.value || ''
+    );
+    if (this.employeeForm.valid) {
+      formData.append('empId', this.employeeForm.get('empId')?.value || 0);
+      formData.append('empName', this.employeeForm.get('empName')?.value || '');
+      formData.append(
+        'empEmail',
+        this.employeeForm.get('empEmail')?.value || ''
+      );
+
+      formData.append(
+        'empNumber',
+        this.employeeForm.get('empNumber')?.value || ''
+      );
+      formData.append(
+        'empDateOfBirth',
+        this.employeeForm.get('empDateOfBirth')?.value || ''
+      );
+      formData.append(
+        'empGender',
+        this.employeeForm.get('empGender')?.value || ''
+      );
+      formData.append(
+        'empJobTitle',
+        this.employeeForm.get('empJobTitle')?.value || ''
+      );
+      formData.append(
+        'empExperience',
+        this.employeeForm.get('empExperience')?.value || ''
+      );
+      formData.append(
+        'empDateofJoining',
+        this.employeeForm.get('empDateofJoining')?.value || ''
+      );
+      formData.append(
+        'empAddress',
+        this.employeeForm.get('empAddress')?.value || ''
+      );
+      formData.append('roleId', this.employeeForm.get('roleId')?.value || '3');
+
+      formData.forEach((value, key) => {
+        console.log(`${key}:`, value);
+      });
+      this.EmployeeService.updateEmployee(formData).subscribe({
+        next: (res: any) => {
+          if (res.success) {
+            this.employeeForm.reset();
+            this.employee = res.employee;
+            debugger;
+            this.localStorageService.setEmp(res);
+            this.closeModal();
+            Swal.fire({
+              title: 'Done! &#128522;',
+              text: 'Employee Updated.',
+              icon: 'success',
+              timer: 1000, // Auto-close after 2 seconds
+              timerProgressBar: true,
+            });
+          } else {
+            if (res.message == 'Duplicate Email') {
+              Swal.fire({
+                title: 'Duplicate Email! &#128078;',
+                text: 'Email already exist :)',
+                icon: 'error',
+                timer: 2000, // Auto-close after 2 seconds
+                timerProgressBar: true,
+              });
+            } else {
+              Swal.fire({
+                title: 'Cancelled! &#128078;',
+                text: 'Something is wrong :)',
+                icon: 'error',
+                timer: 2000, // Auto-close after 2 seconds
+                timerProgressBar: true,
+              });
+            }
+          }
+        },
+        error: (err: any) => {
+          // Handle validation errors from the server
+          if (err.status === 400) {
+            const validationErrors = err.error.errors;
+            for (const field in validationErrors) {
+              const formControl = this.employeeForm.get(
+                field.charAt(0).toLowerCase() + field.slice(1)
+              );
+              if (formControl) {
+                formControl.setErrors({
+                  serverError: validationErrors[field].join(' '),
+                });
+              }
+            }
+          }
+        },
+      });
+    }
+  }
+
   DeleteLeave(leaveId: number) {
     this.candidateService.confirmDelete().then((result: any) => {
       if (result.isConfirmed) {
@@ -374,6 +554,7 @@ export class EmployeeDetailsComponent implements OnInit {
   open(content: any) {
     this.modalRef = this.modalService.open(content, {
       ariaLabelledBy: 'modal-basic-title',
+      size: 'lg',
     });
 
     this.modalRef.result.then(
@@ -398,6 +579,11 @@ export class EmployeeDetailsComponent implements OnInit {
   // show server side error if client-side not working
   shouldShowError(controlName: string): boolean {
     const control = this.leaveForm.get(controlName);
+    return (control?.invalid && (control.touched || this.submitted)) ?? false;
+  }
+
+  shouldShowAssetsError(controlName: string): boolean {
+    const control = this.AssetsForm.get(controlName);
     return (control?.invalid && (control.touched || this.submitted)) ?? false;
   }
 
@@ -428,6 +614,102 @@ export class EmployeeDetailsComponent implements OnInit {
       return { dateRangeInvalid: true }; // Return error if invalid
     }
     return null; // No error if valid
+  }
+
+  //  Employee Assets
+
+  GetEmployeeAssets(empId: number) {
+    this.employeeAssetsService
+      .getEmployeeAssets(empId)
+      .subscribe((res: any) => {
+        if (res.success) {
+          this.employeeAssets = res.employeeAssets;
+          debugger;
+        }
+      });
+  }
+
+  openAssetsModal() {
+    this.AssetsForm.reset(); // Resets all controls to their initial state
+    this.open(this.AssetsModal);
+    this.AssetModalHeader = 'Add Asset';
+  }
+
+  editAsset(asset: EmployeeAssets) {
+    this.AssetModalHeader = 'Edit Asset';
+    this.AssetsForm.patchValue({
+      assetId: asset.assetId,
+      assetName: asset.assetName,
+      empId: asset.empId,
+    });
+
+    this.open(this.AssetsModal);
+  }
+
+  onSubmitAssets() {
+    this.submitted = true;
+    if (this.AssetsForm.valid) {
+      if (this.AssetsForm.get('assetId')?.value == null) {
+        this.AssetsForm.get('assetId')?.setValue(0);
+      }
+      this.AssetsForm.get('empId')?.setValue(this.employee.empId);
+      this.employeeAssetsService
+        .addUpdateEmployeeAssets(this.AssetsForm.value)
+        .subscribe({
+          next: (res: any) => {
+            this.AssetsForm.reset();
+            this.closeModal();
+            this.GetEmployeeAssets(this.employee.empId);
+            if (res.success) {
+              Swal.fire({
+                title: 'Done! &#128522;',
+                text: 'Added/Updated successfully :)',
+                icon: 'success',
+                timer: 1000, // Auto-close after 2 seconds
+                timerProgressBar: true,
+              });
+            }
+          },
+          error: (err: any) => {
+            // Handle validation errors from the server
+            if (err.status === 400) {
+              const validationErrors = err.error.errors;
+              for (const field in validationErrors) {
+                const formControl = this.leaveForm.get(
+                  field.charAt(0).toLowerCase() + field.slice(1)
+                );
+                if (formControl) {
+                  formControl.setErrors({
+                    serverError: validationErrors[field].join(' '),
+                  });
+                }
+              }
+            }
+          },
+        });
+    }
+  }
+
+  DeleteAsset(assetId: number) {
+    this.candidateService.confirmDelete().then((result: any) => {
+      if (result.isConfirmed) {
+        this.employeeAssetsService
+          .deleteEmployeeAssets(assetId)
+          .subscribe((res: any) => {
+            if (res.success) {
+              this.GetEmployeeAssets(this.employee.empId); // Trigger data fetch
+            } else {
+              Swal.fire({
+                title: 'Cancelled! &#128078;',
+                text: 'Something is wrong :)',
+                icon: 'error',
+                timer: 2000, // Auto-close after 2 seconds
+                timerProgressBar: true,
+              });
+            }
+          });
+      }
+    });
   }
 }
 // copmare password validation

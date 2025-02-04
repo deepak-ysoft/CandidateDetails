@@ -31,12 +31,12 @@ namespace CandidateDetails_API.Controllers
             {
                 var employees = await _service.GetEmployees(); // Get all employees
                 var requestedEmployees = await _service.GetRequestedEmployees(); // Get all requested employees
-                int requestedEmpCount =  requestedEmployees.Count();
-                return Ok(new { success = true, res = employees,requestres = requestedEmployees ,reqEmpCount = requestedEmpCount });
+                int requestedEmpCount = requestedEmployees.Count();
+                return Ok(new { success = true, res = employees, requestres = requestedEmployees, reqEmpCount = requestedEmpCount });
             }
             catch (Exception ex)
             {
-                throw ex;   
+                throw ex;
             }
         }
 
@@ -55,7 +55,7 @@ namespace CandidateDetails_API.Controllers
             }
             try
             {
-                var emailExists = await _context.Employees.AnyAsync(u => u.empEmail.ToLower() == employee.empEmail.ToLower() ); // To check duplicate emails.
+                var emailExists = await _context.Employees.AnyAsync(u => u.empEmail.ToLower() == employee.empEmail.ToLower()); // To check duplicate emails.
                 if (emailExists)
                 {
                     return Ok(new { success = false, message = "Duplicate Email" });
@@ -78,7 +78,7 @@ namespace CandidateDetails_API.Controllers
         /// </summary>
         /// <param name="employee"> Employee model object</param>
         /// <returns>true if add or update success</returns>
-        [Authorize(Roles = "Admin,HR")]
+        [Authorize]
         [HttpPost("UpdateEmployee")]
         public async Task<IActionResult> UpdateEmployee([FromForm] Employee employee)
         {
@@ -94,9 +94,10 @@ namespace CandidateDetails_API.Controllers
                     return Ok(new { success = false, message = "Duplicate Email" });
                 }
                 var result = await _service.UpdateEmployee(employee); // Add or update an employee
+                var employeeData = await _service.GetEmployeeById(employee.empId);
                 if (result)
                 {
-                    return Ok(new { success = true, message = "Employee updated successfully" });
+                    return Ok(new { success = true, employee = employeeData, message = "Employee updated successfully" });
                 }
                 return Ok(new { success = false, message = "Failed to update employee" });
             }
@@ -105,6 +106,26 @@ namespace CandidateDetails_API.Controllers
                 throw ex;
             }
         }
+
+        [HttpGet("GetEmployeeById/{empId}")]
+        public async Task<IActionResult> GetEmployeeById(int empId)
+        {
+            try
+            {
+                var employee = await _service.GetEmployeeById(empId); // Get an employee by ID
+                if (employee != null)
+                {
+                    return Ok(new { success = true, employee = employee });
+                }
+                return Ok(new { success = false, message = "Employee not found" });
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
 
         /// <summary>
         ///  Delete an employee
@@ -123,6 +144,75 @@ namespace CandidateDetails_API.Controllers
                     return Ok(new { success = true, message = "Employee deleted successfully" });
                 }
                 return Ok(new { success = false, message = "Failed to delete employee" });
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// Get all assets of an employee
+        /// </summary>
+        /// <param name="empId">Employee id to get assets</param>
+        /// <returns>Assets list</returns>
+        [HttpGet("GetEmployeeAssets/{empId}")]
+        public async Task<IActionResult> GetEmployeeAssets(int empId)
+        {
+            try
+            {
+                var employeeAssets = await _service.GetEmployeeAssets(empId); // Get employee assets
+                return Ok(new { success = true, employeeAssets = employeeAssets });
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        ///  To add and update an asset to an employee
+        /// </summary>
+        /// <param name="employeeAsset"> EmployeeAsset model object</param>
+        /// <returns>Return tru if success</returns>
+        [HttpPost("AddUpdateEmployeeAssets")]
+        public async Task<IActionResult> AddUpdateEmployeeAssets([FromBody] EmployeeAsset employeeAsset)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                var result = await _service.AddUpdateEmployeeAssets(employeeAsset); // Add and update an asset to an employee
+                if (result)
+                {
+                    return Ok(new { success = true, message = "Asset added/updated successfully" });
+                }
+                return Ok(new { success = false, message = "Failed to add asset" });
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// Delete assets of an employee
+        /// </summary>
+        /// <param name="assetId">Assets id</param>
+        /// <returns>Return tru if success</returns>
+        [HttpDelete("DeleteEmployeeAssets/{assetId}")]
+        public async Task<IActionResult> DeleteEmployeeAssets(int assetId)
+        {
+            try
+            {
+                var result = await _service.DeleteEmployeeAssets(assetId); // Delete all assets of an employee
+                if (result)
+                {
+                    return Ok(new { success = true, message = "Asset deleted successfully" });
+                }
+                return Ok(new { success = false, message = "Failed to delete asset" });
             }
             catch (Exception ex)
             {

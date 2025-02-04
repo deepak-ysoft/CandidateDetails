@@ -163,6 +163,13 @@ namespace CandidateDetails_API.ServiceContent
             }
         }
 
+        public async Task<Employee> GetEmployeeById(int id) // Get an employee by ID
+        {
+            var employee = await _context.Employees.FirstOrDefaultAsync(x => x.empId == id); // Find the employee by ID
+            return employee; // Return the employee
+        }
+
+
         public async Task<bool> DeleteEmployee(int id) // Delete an employee
         {
             var employee = await _context.Employees.FindAsync(id); // Find the employee by ID
@@ -188,6 +195,37 @@ namespace CandidateDetails_API.ServiceContent
             int result = await _context.SaveChangesAsync();
             if (result > 0)
                 return true;
+            return false;
+        }
+
+        public async Task<List<EmployeeAsset>> GetEmployeeAssets(int empId) // Get all assets of an employee
+        {
+            var data = await _context.EmployeeAssets.Where(x => x.EmpId == empId).ToListAsync(); // Get all assets of an employee
+            return data;
+        }
+
+        public async Task<bool> AddUpdateEmployeeAssets(EmployeeAsset employeeAsset) 
+        {
+            if(employeeAsset.AssetId == 0)
+            {
+                _context.EmployeeAssets.Add(employeeAsset);
+                return await _context.SaveChangesAsync() > 0;
+            }
+            else
+            {
+                _context.EmployeeAssets.Update(employeeAsset);
+                return await _context.SaveChangesAsync() > 0;
+            }
+        }
+
+        public async Task<bool> DeleteEmployeeAssets(int assetId)
+        {
+            var employeeAsset = await _context.EmployeeAssets.FirstOrDefaultAsync(x => x.AssetId == assetId);
+            if (employeeAsset != null)
+            {
+                _context.EmployeeAssets.Remove(employeeAsset);
+                return await _context.SaveChangesAsync() > 0;
+            }
             return false;
         }
     }

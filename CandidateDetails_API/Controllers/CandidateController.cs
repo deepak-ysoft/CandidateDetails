@@ -406,7 +406,7 @@ namespace CandidateDetails_API.Controllers
                     worksheet.Cell(row, 13).Value = candidate?.current_Location;
                     worksheet.Cell(row, 14).Value = candidate?.prefer_Location;
                     worksheet.Cell(row, 15).Value = candidate?.reason_For_Job_Change;
-                    worksheet.Cell(row, 16).Value = candidate?.schedule_Interview?.ToString("yyyy-MM-dd HH:mm");
+                    worksheet.Cell(row, 16).Value = candidate?.schedule_Interview?.ToString("MM/dd/yyyy hh:mm tt");
                     worksheet.Cell(row, 17).Value = candidate?.schedule_Interview_status;
                     worksheet.Cell(row, 18).Value = candidate?.comments;
                     worksheet.Cell(row, 19).Value = candidate?.cvPath;

@@ -14,6 +14,7 @@ import { EmployeeService } from '../../../Services/employee.service';
 import { EmpLocalStorService } from '../../../Services/emp-local-stor.service';
 import { environment } from '../../../../environments/environment';
 import { Employee } from '../../../Models/employee.model';
+import { CommonServiceService } from '../../../Services/common-service.service';
 
 @Component({
   selector: 'app-layout',
@@ -25,6 +26,7 @@ export class LayoutComponent {
   candidateService = inject(CandidateService);
   employeeService = inject(EmployeeService);
   empLocalstorageService = inject(EmpLocalStorService);
+  commonservice = inject(CommonServiceService);
   authService = inject(AuthService);
   userRole: string | null = null;
   private baseUrl = environment.apiURL;
@@ -37,6 +39,7 @@ export class LayoutComponent {
   reqEmpCount = 0;
   loggedEmp: any;
   reqLeaveCount = 0;
+  reqestedEmployeeList: Employee[] = [];
 
   constructor(
     private router: Router,
@@ -44,6 +47,10 @@ export class LayoutComponent {
   ) {
     this.userRole = this.authService.getRole();
     this.empImage = `${this.baseUrl}` + `uploads/images/employee/`;
+
+    this.commonservice.employeeCount$.subscribe((count) => {
+      this.reqEmpCount = count;
+    });
   }
   // Safely access localStorage only in the browser
   private isBrowser(): boolean {
@@ -80,21 +87,16 @@ export class LayoutComponent {
         this.showRoleButton = false;
       }
     });
-
-    this.GetNotification();
-
-    setInterval(() => {
-      if (localStorage.getItem('authToken') != null) {
-        this.GetNotification();
-      }
-    }, 1000);
-
+    if (this.userRole !== 'Employee') {
+      this.employeeService.getEmployee().subscribe((res: any) => {
+        if (res.success) {
+          this.reqestedEmployeeList = res.requestres;
+          this.reqEmpCount = res.reqEmpCount;
+          this.commonservice.updateEmployeeList(this.reqEmpCount); // Update the shared service
+        }
+      });
+    }
     this.getWeekData();
-    setInterval(() => {
-      if (localStorage.getItem('authToken') != null) {
-        this.getWeekData();
-      }
-    }, 5000);
   }
   getCurrentEmpData() {
     debugger;
@@ -102,25 +104,22 @@ export class LayoutComponent {
       this.loggedEmp = emp;
     });
   }
-  GetNotification() {
-    this.employeeService.getEmployee().subscribe((res: any) => {
-      if (res.success) {
-        this.reqEmpCount = res.reqEmpCount;
-      }
-    });
-  }
+
   employeeProfile(emp: Employee) {
     this.router.navigate(['employee-details'], {
-      state: { emp: emp },
+      state: { empId: emp.empId },
     });
   }
+
   getWeekData() {
     this.candidateService.getWeekAndTodayData().subscribe((res: any) => {
       if (res.res) {
         this.todayDataCount = res.todayDataCount;
+        this.commonservice.updateTodayData(this.todayDataCount);
       }
     });
   }
+
   downloadCandidateExcel() {
     this.candidateService.downloadExcel().subscribe({
       next: (response: Blob) => {

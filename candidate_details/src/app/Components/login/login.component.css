@@ -11,8 +11,8 @@
    display: inline-block;
    position: relative;
    cursor: pointer;
-   width: 200px;
-   height: 200px;
+   width: 220px;
+   height: 220px;
 }
 
 .profile-photo {
@@ -21,9 +21,7 @@
    border-radius: 50%;
 }
 
-
 .RegisterPass {
-   margin-left: 3px;
-   max-width: 291px;
+   margin-left: -5px;
+   max-width: 103%;
 }
-

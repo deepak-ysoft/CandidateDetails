@@ -24,24 +24,7 @@ namespace CandidateDetails_API.ServiceContent
                 await _context.employeesleave.AddAsync(employeeLeave); // Add new employee leave
                 int result = await _context.SaveChangesAsync();
                 if (result > 0)
-                {
-                    var employee = await _context.Employees.FindAsync(employeeLeave.empId); // Find the employee
-                    var calendar = new Calendar(); // Create a new calendar
-                    calendar.Subject = employee.empName + " Leave";
-                    calendar.StartDate = employeeLeave.startDate; // Set the start date
-                    calendar.EndDate = employeeLeave.endDate; // Set the end date
-                    calendar.Description = "Leave for " + employeeLeave.LeaveFor; // Set the description
-
-                    await _context.calendar.AddAsync(calendar); // Add the calendar
-                    int res = await _context.SaveChangesAsync(); // Save the changes
-                    if (res > 0)
-                    {
-                        var empLeVM = new EmployeeLeaveVM(); // Create a new employee leave view model
-                        empLeVM.calId = calendar.CalId; // Set the calendar ID
-                        empLeVM.leaveId = employeeLeave.empId; // Set the employee ID
-                    }
                     return true;
-                }
             }
             else
             {
@@ -60,9 +43,29 @@ namespace CandidateDetails_API.ServiceContent
                         {
                             cal.StartDate = employeeLeave.startDate; // update the leave start date
                             cal.EndDate = employeeLeave.endDate; // update the leave end date  
-                            cal.Description = "Leave for " + employeeLeave.LeaveFor; // update the description
+                            cal.Subject = "Leave for " + employeeLeave.LeaveFor; // update the leave subject
 
                             _context.calendar.Update(cal);
+                            return await _context.SaveChangesAsync() > 0;
+                        }
+                    }
+                    else
+                    {
+                        var employee = await _context.Employees.FindAsync(employeeLeave.empId); // Find the employee
+                        var calendar = new Calendar(); // Create a new calendar
+                        calendar.Subject = "Leave for " + employeeLeave.LeaveFor;
+                        calendar.StartDate = employeeLeave.startDate; // Set the start date
+                        calendar.EndDate = employeeLeave.endDate; // Set the end date
+                        calendar.Description = employee.empName + " Leave";// Set the description
+
+                        await _context.calendar.AddAsync(calendar); // Add the calendar
+                        int res = await _context.SaveChangesAsync(); // Save the changes
+                        if (res > 0)
+                        {
+                            var empLeVM = new EmployeeLeaveVM(); // Create a new employee leave view model
+                            empLeVM.calId = calendar.CalId; // Set the calendar ID
+                            empLeVM.leaveId = employeeLeave.empId; // Set the employee ID
+                            await _context.employeeLeaveVM.AddAsync(empLeVM);
                             return await _context.SaveChangesAsync() > 0;
                         }
                     }
@@ -71,7 +74,6 @@ namespace CandidateDetails_API.ServiceContent
             }
             return false;
         }
-
         public async Task<bool> DeleteEmployeeLeave(int id) // Delete an employee leave
         {
             var leave = _context.employeesleave.Find(id); // Find the employee leave

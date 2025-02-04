@@ -27,6 +27,7 @@ import { environment } from '../../../../environments/environment';
 import { AuthService } from '../../../Services/auth.service';
 import { EmpLocalStorService } from '../../../Services/emp-local-stor.service';
 import { EmployeeLeave } from '../../../Models/employeeLeave.model';
+import { CommonServiceService } from '../../../Services/common-service.service';
 
 @Component({
   selector: 'app-employees',
@@ -51,6 +52,7 @@ export class EmployeesComponent implements OnInit {
   employeeService = inject(EmployeeService);
   candidateService = inject(CandidateService);
   authService = inject(AuthService);
+  commonService = inject(CommonServiceService);
   router = inject(Router);
   userRole: string | null = null;
   closeResult = '';
@@ -73,45 +75,7 @@ export class EmployeesComponent implements OnInit {
     this.userRole = this.authService.getRole();
     this.empImage = `${this.baseUrl}` + `uploads/images/employee/`;
     this.submitted = false;
-    this.employeeForm = this.fb.group(
-      {
-        empId: [0],
-        roleId: [3],
-        empName: [
-          '',
-          [
-            Validators.required,
-            Validators.pattern(/^[A-Za-z\s]+(?: [A-Za-z0-9\s]+)*$/),
-          ],
-        ],
-        empEmail: [
-          '',
-          [
-            Validators.required,
-            Validators.pattern(/^[a-zA-Z0-9._%+-]*@[a-zA-Z.-]+\.[a-zA-Z]{2,}$/),
-          ],
-        ],
-        empPassword: [
-          '',
-          [
-            Validators.required,
-            Validators.pattern(
-              /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
-            ), // At least one uppercase, one lowercase, one number, one special character, and minimum 8 characters
-          ],
-        ],
-        empPasswordConfirm: ['', Validators.required],
-        empNumber: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
-        empDateOfBirth: ['', Validators.required],
-        empGender: ['', Validators.required],
-        empJobTitle: ['', Validators.required],
-        empExperience: ['', Validators.required],
-        empDateofJoining: ['', Validators.required],
-        empAddress: ['', [Validators.required]],
-        photo: [null], // Add this line
-      },
-      { validator: passwordMatchValidator() }
-    );
+    this.employeeForm = this.employeeService.createEmployeeForm();
   }
 
   ngOnInit(): void {
@@ -126,7 +90,9 @@ export class EmployeesComponent implements OnInit {
       this.router.navigateByUrl('/calendar');
     }
     this.empImage = `${this.baseUrl}` + `uploads/images/employee/`;
-    this.getEmployees();
+    if (this.userRole !== 'Employee') {
+      this.getEmployees();
+    }
     this.show = false;
     this.showConPassword = false;
     this.isRequestedEmp = false;
@@ -139,7 +105,9 @@ export class EmployeesComponent implements OnInit {
         this.employeeList = res.res;
         this.reqestedEmployeeList = res.requestres;
         this.reqEmpCount = res.reqEmpCount;
-        this.reqestedEmployeeList = res.requestres;
+        this.commonService.updateEmployeeList(
+          this.reqEmpCount
+        ); // Update the shared service
       }
     });
   }
@@ -175,25 +143,13 @@ export class EmployeesComponent implements OnInit {
     this.EmployeeModelHeader = 'Add Employee';
   }
 
-  editEmployee(Employee: Employee) {
-    // Assign the employee's imagePath to selectedImage
-    this.selectedImage =
-      this.empImage + Employee.imagePath || this.empImage + this.defaultImage;
-    this.employeeForm.patchValue({
-      empId: Employee.empId,
-      empName: Employee.empName,
-      empEmail: Employee.empEmail,
-      empPassword: Employee.empPassword,
-      empNumber: Employee.empNumber,
-      empDateOfBirth: Employee.empDateOfBirth,
-      empGender: Employee.empGender,
-      empJobTitle: Employee.empJobTitle,
-      empExperience: Employee.empExperience,
-      empDateofJoining: Employee.empDateofJoining,
-      empAddress: Employee.empAddress,
-      photo: Employee.photo,
-    });
+  editEmployee(employee: Employee) {
+    this.selectedImage = this.employeeService.editEmployee(
+      this.employeeForm,
+      employee
+    );
     this.EmployeeModelHeader = 'Edit Employee';
+
     if (!this.isRequestedEmp) {
       this.open(this.employeeModal);
     } else {
@@ -354,7 +310,7 @@ export class EmployeesComponent implements OnInit {
 
   employeeDetails(emp: Employee) {
     this.router.navigate(['employee-details'], {
-      state: { emp: emp },
+      state: { empId: emp.empId },
     });
   }
 
@@ -394,14 +350,4 @@ export class EmployeesComponent implements OnInit {
   ShowConPassword() {
     this.showConPassword = !this.showConPassword;
   }
-}
-
-// copmare password validation
-export function passwordMatchValidator(): ValidatorFn {
-  return (control: AbstractControl): ValidationErrors | null => {
-    const password = control.get('empPassword')?.value;
-    const cPassword = control.get('empPasswordConfirm')?.value;
-
-    return password === cPassword ? null : { mismatch: true };
-  };
 }

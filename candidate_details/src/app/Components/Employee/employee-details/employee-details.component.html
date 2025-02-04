@@ -8,22 +8,22 @@
           <div
             class="card-body profile-card pt-4 d-flex flex-column align-items-center bg-gradient bg-light rounded"
           >
-            <img
-              *ngIf="employee.imagePath != null"
-              [src]="empImage + employee.imagePath"
-              alt="Profile"
-              class="rounded-circle border border-primary shadow"
-              width="280"
-              height="280"
-            />
-            <img
-              *ngIf="employee.imagePath == null"
-              src="assets/Image/Default.jpg"
-              alt="Profile"
-              class="rounded-circle border border-secondary shadow"
-              width="280"
-              height="280"
-            />
+            <a (click)="editEmployee(employee)">
+              <img
+                *ngIf="employee.imagePath != null"
+                [src]="empImage + employee.imagePath"
+                alt="Profile"
+                class="rounded-circle border border-primary shadow"
+                width="280"
+                height="280" />
+              <img
+                *ngIf="employee.imagePath == null"
+                src="assets/Image/Default.jpg"
+                alt="Profile"
+                class="rounded-circle border border-secondary shadow"
+                width="280"
+                height="280"
+            /></a>
 
             <h2 class="mt-3 text-primary">{{ employee.empName }}</h2>
             <h3 class="text-secondary">{{ employee.empJobTitle }}</h3>
@@ -80,7 +80,7 @@
                 </button>
               </li>
 
-              <li class="nav-item" role="presentation">
+              <li class="nav-item me-2" role="presentation">
                 <button
                   class="btn border-secondary text-uppercase px-4"
                   data-bs-toggle="tab"
@@ -90,6 +90,25 @@
                   role="tab"
                 >
                   <i class="fas fa-key fa-lg me-2"></i>Change
+                </button>
+              </li>
+
+              <li class="nav-item" role="presentation">
+                <button
+                  class="btn border-secondary text-uppercase px-4"
+                  data-bs-toggle="tab"
+                  data-bs-target="#profile-Assets"
+                  aria-selected="false"
+                  tabindex="-1"
+                  role="tab"
+                >
+                  <img
+                    src="assets/icon/assets-icon.png"
+                    class="assets-icon me-1"
+                    width="20"
+                    alt=""
+                  />
+                  Assets
                 </button>
               </li>
             </ul>
@@ -330,7 +349,7 @@
                 </div>
               </div>
 
-              <!-- Leave Tab -->
+              <!-- Change password Tab -->
               <div
                 class="tab-pane fade pt-3 rounded"
                 id="profile-password"
@@ -472,6 +491,65 @@
                   </div>
                 </form>
               </div>
+
+              <!-- Emplouee Assets Tab -->
+              <div
+                class="tab-pane fade pt-3 rounded"
+                id="profile-Assets"
+                role="tabpanel"
+              >
+                <button
+                  class="btn btn-primary float-start mb-2"
+                  (click)="openAssetsModal()"
+                >
+                  <i class="fa-solid fa-plus me-1"></i> Add Assets
+                </button>
+
+                <table class="table magical-table border">
+                  <thead>
+                    <tr class="row">
+                      <th class="col d-flex justify-content-center">
+                        Assets Name
+                      </th>
+
+                      <th
+                        *ngIf="userRole !== 'Employee'"
+                        class="col d-flex justify-content-center"
+                      >
+                        Actions
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      class="row bg-light"
+                      *ngFor="let asstes of employeeAssets"
+                    >
+                      <td class="col d-flex justify-content-center">
+                        {{ asstes.assetName }}
+                      </td>
+
+                      <td
+                        class="col d-flex justify-content-center"
+                        *ngIf="userRole !== 'Employee'"
+                      >
+                        <i
+                          [ngClass]="
+                            !isReqLeave
+                              ? 'fas fa-edit text-primary me-2 cursorPointer'
+                              : 'fa-solid fa-thumbs-up text-primary me-2 cursorPointer'
+                          "
+                          (click)="editAsset(asstes)"
+                        ></i>
+                        <i
+                          class="fa fa-trash text-danger cursorPointer"
+                          (click)="DeleteAsset(asstes.assetId)"
+                        ></i>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
             <!-- End Styled Tabs -->
           </div>
@@ -567,6 +645,380 @@
           End date cannot be earlier than start date.
         </small>
       </div>
+      <hr class="hr" />
+      <div class="row">
+        <div class="col-12 d-flex justify-content-center">
+          <button type="submit" class="btn btn-primary mt-4">
+            <i class="fa-regular fa-thumbs-up me-1"></i>Submit
+          </button>
+
+          <button type="reset" class="btn btn-danger mt-4 ms-4 shadow-sm">
+            <i class="fa-solid fa-arrows-rotate me-2"></i> Reset
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-template>
+<ng-template #employeeModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Edit</h4>
+    <button
+      type="button"
+      class="btn btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <form
+      class="p-3"
+      [formGroup]="employeeForm"
+      (ngSubmit)="onSubmitEmployee()"
+    >
+      <input type="hidden" formControlName="empId" />
+      <input type="hidden" formControlName="empPassword" />
+      <input type="hidden" formControlName="empPasswordConfirm" />
+      <div class="row mb-2">
+        <div class="col-12 d-flex justify-content-center">
+          <input
+            type="file"
+            #fileInput
+            (change)="onFileChange($event)"
+            formControlName="photo"
+            class="d-none"
+            accept="image/*"
+          />
+
+          <!-- Default or selected image -->
+          <div class="image-container">
+            <img
+              [src]="selectedImage || defaultImage"
+              alt="Profile Photo"
+              class="profile-photo"
+              (click)="fileInput.click()"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="row mb-2">
+        <div class="col">
+          <label class="ms-2 label" for="empName">Name</label>
+          <input
+            id="empName"
+            type="text"
+            class="form-control magic-input"
+            formControlName="empName"
+          />
+          <small
+            class="text-danger"
+            *ngIf="
+              !employeeForm.get('empName')?.hasError('serverError') &&
+              shouldShowError('empName') &&
+              !employeeForm.controls['empName'].hasError('pattern')
+            "
+          >
+            Name is required.
+          </small>
+          <small
+            class="text-danger"
+            *ngIf="employeeForm.get('empName')?.hasError('serverError')"
+            >{{ employeeForm.get('empName')?.errors?.['serverError'] }}</small
+          ><small
+            class="text-danger"
+            *ngIf="employeeForm.controls['empName'].hasError('pattern')"
+          >
+            Name must start with letters, followed by a surname (numbers
+            allowed).
+          </small>
+        </div>
+
+        <div class="col">
+          <label class="ms-1 label" for="empEmail">Email</label>
+          <input
+            id="empEmail"
+            type="email"
+            class="form-control magic-input"
+            formControlName="empEmail"
+          />
+          <small
+            class="text-danger"
+            *ngIf="
+              !employeeForm.get('empEmail')?.hasError('serverError') &&
+              shouldShowError('empEmail') &&
+              !employeeForm.controls['empEmail'].hasError('pattern')
+            "
+          >
+            Email is required.
+          </small>
+          <small
+            class="text-danger"
+            *ngIf="employeeForm.get('empEmail')?.hasError('serverError')"
+            >{{ employeeForm.get('empEmail')?.errors?.['serverError'] }}</small
+          >
+          <small
+            class="text-danger"
+            *ngIf="employeeForm.controls['empEmail'].hasError('pattern')"
+          >
+            Email address not valid.
+          </small>
+        </div>
+      </div>
+      <div class="row mb-2">
+        <div class="col">
+          <label class="ms-1 label" for="empNumber">Phone Number</label>
+          <input
+            id="empNumber"
+            type="text"
+            class="form-control magic-input"
+            formControlName="empNumber"
+          />
+          <small
+            class="text-danger"
+            *ngIf="
+              !employeeForm.get('empNumber')?.hasError('serverError') &&
+              shouldShowError('empNumber') &&
+              !employeeForm.controls['empNumber'].hasError('pattern')
+            "
+          >
+            Mobile Number is required.
+          </small>
+          <small
+            class="text-danger"
+            *ngIf="employeeForm.get('empNumber')?.hasError('serverError')"
+            >{{ employeeForm.get('empNumber')?.errors?.['serverError'] }}</small
+          >
+          <small
+            class="text-danger"
+            *ngIf="employeeForm.controls['empNumber'].hasError('pattern')"
+          >
+            Mobile number not valid..
+          </small>
+        </div>
+
+        <div class="col">
+          <label class="ms-1 label" for="empDateOfBirth">Date of Birth</label>
+          <input
+            id="empDateOfBirth"
+            type="date"
+            class="form-control magic-input"
+            formControlName="empDateOfBirth"
+          />
+          <small
+            class="text-danger"
+            *ngIf="
+              !employeeForm.get('empDateOfBirth')?.hasError('serverError') &&
+              shouldShowError('empDateOfBirth')
+            "
+          >
+            Date of birth is required.
+          </small>
+          <small
+            class="text-danger"
+            *ngIf="employeeForm.get('empDateOfBirth')?.hasError('serverError')"
+            >{{ employeeForm.get('empDateOfBirth')?.errors?.['serverError'] }}</small
+          >
+        </div>
+      </div>
+
+      <div class="row mb-2">
+        <div class="col">
+          <label class="ms-1 label" for="empGender">Gender</label>
+          <select
+            id="empGender"
+            class="form-select magic-input"
+            formControlName="empGender"
+          >
+            <option value="" disabled>Select Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+          <small
+            class="text-danger"
+            *ngIf="
+              !employeeForm.get('empGender')?.hasError('serverError') &&
+              shouldShowError('empGender')
+            "
+          >
+            Gender is required.
+          </small>
+          <small
+            class="text-danger"
+            *ngIf="employeeForm.get('empGender')?.hasError('serverError')"
+            >{{ employeeForm.get('empGender')?.errors?.['serverError'] }}</small
+          >
+        </div>
+
+        <div class="col">
+          <label class="ms-1 label" for="empJobTitle">Job Title</label>
+          <input
+            id="empJobTitle"
+            type="text"
+            class="form-control magic-input"
+            formControlName="empJobTitle"
+          />
+          <small
+            class="text-danger"
+            *ngIf="
+              !employeeForm.get('empJobTitle')?.hasError('serverError') &&
+              shouldShowError('empJobTitle')
+            "
+          >
+            Job Title is required.
+          </small>
+          <small
+            class="text-danger"
+            *ngIf="employeeForm.get('empJobTitle')?.hasError('serverError')"
+            >{{ employeeForm.get('empJobTitle')?.errors?.['serverError'] }}</small
+          >
+        </div>
+      </div>
+
+      <div class="row mb-2">
+        <div class="col">
+          <label class="ms-1 label" for="empExperience">Experience</label>
+          <input
+            id="empExperience"
+            type="text"
+            class="form-control magic-input"
+            formControlName="empExperience"
+          />
+          <small
+            class="text-danger"
+            *ngIf="
+              !employeeForm.get('empExperience')?.hasError('serverError') &&
+              shouldShowError('empExperience')
+            "
+          >
+            Experience is required.
+          </small>
+          <small
+            class="text-danger"
+            *ngIf="employeeForm.get('empExperience')?.hasError('serverError')"
+            >{{ employeeForm.get('empExperience')?.errors?.['serverError'] }}</small
+          >
+        </div>
+        <div class="col" *ngIf="this.userRole == 'Admin'">
+          <label class="ms-1 label">Role</label>
+          <select
+            id="empGender"
+            class="form-select magic-input"
+            formControlName="roleId"
+          >
+            <option value="" disabled>Select Role</option>
+            <option value="3">Employee</option>
+            <option value="2">HR</option>
+          </select>
+        </div>
+        <div class="col">
+          <label class="ms-1 label" for="empDateofJoining"
+            >Date of Joining</label
+          >
+          <input
+            id="empDateofJoining"
+            type="date"
+            class="form-control magic-input"
+            formControlName="empDateofJoining"
+          />
+          <small
+            class="text-danger"
+            *ngIf="
+              !employeeForm.get('empDateofJoining')?.hasError('serverError') &&
+              shouldShowError('empDateofJoining')
+            "
+          >
+            Date of Joining is required.
+          </small>
+          <small
+            class="text-danger"
+            *ngIf="
+              employeeForm.get('empDateofJoining')?.hasError('serverError')
+            "
+            >{{ employeeForm.get('empDateofJoining')?.errors?.['serverError'] }}</small
+          >
+        </div>
+      </div>
+
+      <div class="row mb-2">
+        <div class="col">
+          <label class="ms-1 label" for="empAddress">Address</label>
+          <textarea
+            id="empAddress"
+            class="form-control magic-input"
+            formControlName="empAddress"
+          ></textarea>
+          <small
+            class="text-danger"
+            *ngIf="
+              !employeeForm.get('empAddress')?.hasError('serverError') &&
+              shouldShowError('empAddress')
+            "
+          >
+            Address is required.
+          </small>
+          <small
+            class="text-danger"
+            *ngIf="employeeForm.get('empAddress')?.hasError('serverError')"
+            >{{ employeeForm.get('empAddress')?.errors?.['serverError'] }}</small
+          >
+        </div>
+      </div>
+
+      <hr class="hr" />
+      <div class="row">
+        <div class="col-12 d-flex justify-content-center">
+          <button type="submit" class="btn btn-primary mt-4">
+            <i class="fa-regular fa-thumbs-up me-1"></i>Submit
+          </button>
+
+          <button type="reset" class="btn btn-danger mt-4 ms-4 shadow-sm">
+            <i class="fa-solid fa-arrows-rotate me-2"></i> Reset
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-template>
+<ng-template #AssetsModal let-modal>
+  <div class="modal-header">
+    <h4 id="modal-basic-title">{{ AssetModalHeader }}</h4>
+    <button
+      type="button"
+      class="btn btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="AssetsForm" (ngSubmit)="onSubmitAssets()">
+      <!-- Form fields -->
+      <input type="hidden" formControlName="assetId" />
+      <input type="hidden" formControlName="empId" />
+
+      <div class="row mb-4 m-2">
+        <label class="p-0 label" for="assetName">Assets Name</label>
+        <input
+          type="text"
+          class="form-control magic-input"
+          formControlName="assetName"
+        />
+        <small
+          class="text-danger"
+          *ngIf="
+            !AssetsForm.get('assetName')?.hasError('serverError') &&
+            shouldShowAssetsError('assetName')
+          "
+        >
+          Field is required.
+        </small>
+        <small
+          class="text-danger"
+          *ngIf="AssetsForm.get('assetName')?.hasError('serverError')"
+          >{{ AssetsForm.get('assetName')?.errors?.['serverError'] }}</small
+        >
+      </div>
+
       <hr class="hr" />
       <div class="row">
         <div class="col-12 d-flex justify-content-center">

@@ -90,21 +90,27 @@ export class CandidateListComponent {
       );
   }
   onUploadExcelFileChange(event: any): void {
-    const file = event.target.files[0];
+    debugger;
+    const fileInput = event.target;
+    const file = fileInput.files[0];
+
     if (file) {
       this.excelFileUpload = file;
     }
+
     if (!this.excelFileUpload) {
       alert('Please select a file to upload.');
       return;
     }
+
     const formData = new FormData();
     formData.append('file', this.excelFileUpload);
+
     this.candidateService.UploadExcel(formData).subscribe((res: any) => {
       if (res.success) {
         this.candidateService.getCandidates(); // Trigger data fetch
         Swal.fire({
-          title: 'Done! &#128522;',
+          title: 'Done! 🎉',
           text: 'Excel file successfully uploaded.',
           icon: 'success',
           timer: 2000, // Auto-close after 2 seconds
@@ -112,13 +118,16 @@ export class CandidateListComponent {
         });
       } else {
         Swal.fire({
-          title: 'Cancelled! &#128078;',
-          text: 'Something is wrong :)',
+          title: 'Cancelled! ❌',
+          text: 'Something went wrong!',
           icon: 'error',
           timer: 3000, // Auto-close after 3 seconds
           timerProgressBar: true,
         });
       }
+
+      // Reset file input after processing
+      fileInput.value = ''; // This resets the file input field
     });
   }
 
