@@ -74,3 +74,14 @@ td {
 tbody tr {
   height: 40px;
 }
+
+.all-badge {
+  display: inline-block;
+  max-width: 100%; /* Ensures it doesn't overflow */
+  word-wrap: break-word; /* Breaks long words */
+  white-space: normal; /* Allows wrapping */
+}
+
+.bg-color{
+  background-color: rgba(73, 130, 215, 0.97);
+}

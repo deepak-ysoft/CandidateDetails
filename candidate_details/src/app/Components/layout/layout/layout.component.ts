@@ -102,11 +102,8 @@ export class LayoutComponent {
       this.loggedEmp = emp;
     });
   }
-
   employeeProfile(emp: Employee) {
-    this.router.navigate(['employee-details'], {
-      state: { empId: emp.empId },
-    });
+    this.router.navigate(['employee-details'], { queryParams: { empId: emp.empId } });
   }
 
   getWeekData() {

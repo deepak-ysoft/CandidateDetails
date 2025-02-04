@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { Employee } from '../../../Models/employee.model';
 import { CommonModule, DatePipe } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { EmployeeLeave } from '../../../Models/employeeLeave.model';
 import { EmployeeService } from '../../../Services/employee.service';
 import {
@@ -86,7 +86,11 @@ export class EmployeeDetailsComponent implements OnInit {
   isReqLeave = true;
   reqLeave: EmployeeLeave[] = [];
 
-  constructor(private fb: FormBuilder, private modalService: NgbModal) {
+  constructor(
+    private fb: FormBuilder,
+    private modalService: NgbModal,
+    private route: ActivatedRoute
+  ) {
     this.userRole = this.authService.getRole();
     this.empImage = `${this.baseUrl}` + `uploads/images/employee/`;
     this.getCurrentEmpData();
@@ -113,6 +117,7 @@ export class EmployeeDetailsComponent implements OnInit {
       {
         leaveId: [0],
         leaveFor: ['', [Validators.required]],
+        leaveType: [''],
         startDate: ['', [Validators.required]],
         endDate: ['', [Validators.required]],
         empId: [0],
@@ -140,17 +145,24 @@ export class EmployeeDetailsComponent implements OnInit {
     this.showNewPass = false;
     this.showConPassword = false;
     this.isReqLeave = false;
-    
+
     this.changePassForm.reset();
     this.changePassForm.markAsPristine(); // Reset validation state
     this.changePassForm.markAsUntouched(); // Remove touched status
     this.submitted = false;
-    const state = window.history.state as { empId: number };
-    if (state && state.empId) {
-      this.getEmployeeById(state.empId);
-      this.calculateAge(); // Calculate age after assigning employee details
-    }
-    this.EmployeeService.GetLeave(state.empId);
+
+    this.route.queryParams.subscribe((params: any) => {
+      debugger;
+      console.log('Employee ID:', params['empId']);
+      this.getEmployeeById(params['empId']); // Reload employee details when query param changes
+      this.EmployeeService.GetLeave(params['empId']);
+    });
+
+    // const state = window.history.state as { empId: number };
+    // if (state && state.empId) {
+    //   this.getEmployeeById(state.empId);
+    this.calculateAge(); // Calculate age after assigning employee details
+    //}
     this.EmployeeService.empLeaveRequestList$.subscribe((empLeave) => {
       this.reqLeave = empLeave;
     });
@@ -310,6 +322,7 @@ export class EmployeeDetailsComponent implements OnInit {
     this.leaveForm.patchValue({
       leaveId: leave.leaveId,
       leaveFor: leave.leaveFor,
+      leaveType: leave.leaveType,
       startDate: leave.startDate,
       endDate: leave.endDate,
       empId: leave.empId,
@@ -332,13 +345,13 @@ export class EmployeeDetailsComponent implements OnInit {
         this.leaveForm.value
       ).subscribe({
         next: (res: any) => {
-          this.isReqLeave = false;
           this.closeModal();
           this.leaveForm.reset();
           this.leaveForm.markAsPristine(); // Reset validation state
           this.leaveForm.markAsUntouched(); // Remove touched status
           this.submitted = false;
 
+          this.isReqLeave = false;
           this.EmployeeService.GetLeave(this.employee.empId);
           if (res.success) {
             Swal.fire({

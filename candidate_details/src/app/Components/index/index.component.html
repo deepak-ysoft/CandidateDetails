@@ -96,101 +96,165 @@
   </div>
 </div>
 
-<div class="card container" *ngIf="showCandidate">
-  <div class="card-body magical-table-container">
-    <h4 class="card-title">
-      <b><u>Candidate Details</u></b>
+<div
+  class="card container p-0 mt-5 mb-3 shadow-lg border-0"
+  *ngIf="showCandidate"
+>
+  <div class="card-header bg-color text-white text-center">
+    <h4 class="mb-0">
+      <b><i class="fas fa-user"></i> Candidate Details</b>
     </h4>
-    <hr class="hr" />
-    <div class="container-fluid mt-5">
+  </div>
+  <div class="card-body">
+    <div class="container-fluid mt-4">
       <div class="row mb-3">
-        <div class="col-12 col-md-6">
-          <strong class="me-4">Date:</strong>
-          <span>{{ candidate.date }}</span>
+        <div class="col-md-6">
+          <strong class="text-secondary me-2"
+            ><i class="fas fa-calendar-alt"></i> Date:</strong
+          >
+          <span class="fw-bold all-badge">{{ candidate.date }}</span>
         </div>
-        <div class="col-12 col-md-6">
-          <strong class="me-4">Name:</strong>
-          <span>{{ candidate.name }}</span>
+        <div class="col-md-6">
+          <strong class="text-secondary me-2"
+            ><i class="fas fa-user"></i> Name:</strong
+          >
+          <span class="fw-bold all-badge">{{ candidate.name }}</span>
         </div>
       </div>
+
       <div class="row mb-3">
-        <div class="col-12 col-md-6">
-          <strong class="me-4">Contact No:</strong>
-          <span>{{ candidate.contact_No }}</span>
+        <div class="col-md-6">
+          <strong class="text-secondary me-2"
+            ><i class="fas fa-phone"></i> Contact No:</strong
+          >
+          <span class="fw-bold all-badge text-primary">{{
+            candidate.contact_No
+          }}</span>
         </div>
-        <div class="col-12 col-md-6">
-          <strong class="me-4">LinkedIn Profile:</strong>
-          <a [href]="candidate.linkedin_Profile" target="_blank">{{
-            candidate.linkedin_Profile
-          }}</a>
+        <div class="col-md-6">
+          <strong class="text-secondary me-2"
+            ><i class="fab fa-linkedin"></i> LinkedIn:</strong
+          >
+          <a
+            *ngIf="candidate.linkedin_Profile != null"
+            [href]="prepareLinkedInUrl(candidate.linkedin_Profile)"
+            target="_blank"
+            class="btn btn-outline-primary btn-sm"
+          >
+            View Profile <i class="fas fa-external-link-alt"></i>
+          </a>
         </div>
       </div>
+
       <div class="row mb-3">
-        <div class="col-12 col-md-6">
-          <strong class="me-4">Email ID:</strong>
-          <span>{{ candidate.email_ID }}</span>
+        <div class="col-md-6">
+          <strong class="text-secondary me-2"
+            ><i class="fas fa-envelope"></i> Email:</strong
+          >
+          <span class="fw-bold all-badge text-danger">{{
+            candidate.email_ID
+          }}</span>
         </div>
-        <div class="col-12 col-md-6">
-          <strong class="me-4">Role:</strong>
-          <span>{{ candidate.roleName }}</span>
+        <div class="col-md-6">
+          <strong class="text-secondary me-2"
+            ><i class="fas fa-briefcase"></i> Role:</strong
+          >
+          <span class="badge bg-success">{{ candidate.roleName }}</span>
         </div>
       </div>
+
       <div class="row mb-3">
-        <div class="col-12 col-md-6">
-          <strong class="me-4">Experience:</strong>
-          <span>{{ candidate.experience }}</span>
+        <div class="col-md-6">
+          <strong class="text-secondary me-2"
+            ><i class="fas fa-clock"></i> Experience:</strong
+          >
+          <span class="fw-bold all-badge"
+            >{{ candidate.experience }} years</span
+          >
         </div>
-        <div class="col-12 col-md-6">
-          <strong class="me-4">Skills:</strong>
-          <span>{{ candidate.skills }}</span>
+        <div class="col-md-6">
+          <strong class="text-secondary me-2"
+            ><i class="fas fa-tools"></i> Skills:</strong
+          >
+          <span class="fw-bold text-dark all-badge">
+            {{ candidate.skills }}
+          </span>
         </div>
       </div>
+
       <div class="row mb-3">
-        <div class="col-12 col-md-6">
-          <strong class="me-4">CTC:</strong>
-          <span>{{ candidate.ctc }}</span>
+        <div class="col-md-6">
+          <strong class="text-secondary me-2"
+            ><i class="fas fa-money-bill-wave"></i> CTC:</strong
+          >
+          <span class="fw-bold all-badge text-success">{{
+            candidate.ctc
+          }}</span>
         </div>
-        <div class="col-12 col-md-6">
-          <strong class="me-4">ETC:</strong>
-          <span>{{ candidate.etc }}</span>
+        <div class="col-md-6">
+          <strong class="text-secondary me-2"
+            ><i class="fas fa-clock"></i> Notice Period:</strong
+          >
+          <span class="fw-bold all-badge">{{ candidate.notice_Period }}</span>
         </div>
       </div>
+
       <div class="row mb-3">
-        <div class="col-12 col-md-6">
-          <strong class="me-4">Notice Period:</strong>
-          <span>{{ candidate.notice_Period }}</span>
+        <div class="col-md-6">
+          <strong class="text-secondary me-2"
+            ><i class="fas fa-map-marker-alt"></i> Current Location:</strong
+          >
+          <span class="fw-bold all-badge">{{
+            candidate.current_Location
+          }}</span>
         </div>
-        <div class="col-12 col-md-6">
-          <strong class="me-4">Current Location:</strong>
-          <span>{{ candidate.current_Location }}</span>
+        <div class="col-md-6">
+          <strong class="text-secondary me-2"
+            ><i class="fas fa-map-marked-alt"></i> Preferred Location:</strong
+          >
+          <span class="fw-bold all-badge">{{ candidate.prefer_Location }}</span>
         </div>
       </div>
+
       <div class="row mb-3">
-        <div class="col-12 col-md-6">
-          <strong class="me-4">Preferred Location:</strong>
-          <span>{{ candidate.prefer_Location }}</span>
+        <div class="col-md-6">
+          <strong class="text-secondary me-2"
+            ><i class="fas fa-calendar-check"></i> Schedule Interview:</strong
+          >
+          <span class="fw-bold all-badge">{{
+            candidate.schedule_Interview | date : "medium"
+          }}</span>
         </div>
-        <div class="col-12 col-md-6">
-          <strong class="me-4">Reason for Job Change:</strong>
-          <span>{{ candidate.reason_For_Job_Change }}</span>
+        <div class="col-md-6">
+          <strong class="text-secondary me-2"
+            ><i class="fas fa-tasks"></i> Interview Status:</strong
+          >
+          <span
+            class="fw-bold"
+            [ngClass]="{
+              'text-success':
+                candidate.schedule_Interview_status === 'Excellent',
+              'text-danger': candidate.schedule_Interview_status === 'Not Good',
+              'text-warning': candidate.schedule_Interview_status === 'Good '
+            }"
+          >
+            {{ candidate.schedule_Interview_status }}
+          </span>
         </div>
       </div>
+
       <div class="row mb-3">
-        <div class="col-12 col-md-6">
-          <strong class="me-4">Schedule Interview:</strong>
-          <span>{{ candidate.schedule_Interview | date : "medium" }}</span>
-        </div>
-        <div class="col-12 col-md-6">
-          <strong class="me-4">Interview Status:</strong>
-          <span>{{ candidate.schedule_Interview_status }}</span>
-        </div>
-      </div>
-      <div class="row mb-3">
-        <div class="col-12">
-          <strong class="me-4">Comments:</strong>
-          <p>{{ candidate.comments }}</p>
+        <div class="col-md-12">
+          <strong class="text-secondary me-2"
+            ><i class="fas fa-comments"></i> Comments:</strong
+          >
+          <p class="border rounded p-2 bg-light">
+            {{ candidate.comments }}
+          </p>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<br />

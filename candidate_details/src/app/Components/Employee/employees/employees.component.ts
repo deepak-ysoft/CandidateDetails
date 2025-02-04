@@ -310,7 +310,7 @@ export class EmployeesComponent implements OnInit {
 
   employeeDetails(emp: Employee) {
     this.router.navigate(['employee-details'], {
-      state: { empId: emp.empId },
+      queryParams: { empId: emp.empId },
     });
   }
 

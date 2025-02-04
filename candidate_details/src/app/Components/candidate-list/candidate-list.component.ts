@@ -323,4 +323,20 @@ export class CandidateListComponent {
     // Default to ".bin" for unknown MIME types
     return mimeTypeToExtensionMap[mimeType] || '.bin';
   }
+
+  
+
+  prepareLinkedInUrl(url: string | undefined): string {
+    // If url is undefined or empty, return a default URL
+    if (!url) {
+      return 'https://www.linkedin.com';
+    }
+
+    // If the URL doesn't start with 'http' or 'https', prepend 'https://'
+    if (!url.startsWith('http://') && !url.startsWith('https://')) {
+      return 'https://' + url;
+    }
+
+    return url;
+  }
 }

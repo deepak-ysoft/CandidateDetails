@@ -21,6 +21,8 @@ namespace CandidateDetails_API.ServiceContent
                 employeeLeave.isApprove = false;
                 employeeLeave.startDate = employeeLeave.startDate.AddHours(12);
                 employeeLeave.endDate = employeeLeave.endDate.AddHours(12);
+                if (employeeLeave.LeaveType == null)
+                    employeeLeave.LeaveType = "Full Day";
                 await _context.employeesleave.AddAsync(employeeLeave); // Add new employee leave
                 int result = await _context.SaveChangesAsync();
                 if (result > 0)

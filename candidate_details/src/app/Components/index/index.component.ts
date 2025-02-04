@@ -17,7 +17,7 @@ export class IndexComponent implements OnInit {
   candidateService = inject(CandidateService);
   authService = inject(AuthService);
   router = inject(Router);
-  commonService = inject(CommonServiceService)
+  commonService = inject(CommonServiceService);
   userRole: string | null = null;
   weekData: Candidate[] = [];
   todayData: Candidate[] = [];
@@ -45,7 +45,7 @@ export class IndexComponent implements OnInit {
       setInterval(() => {
         this.getLastWeekData();
       }, 5000);
-      this.getWeekData()
+      this.getWeekData();
     }
   }
 
@@ -76,10 +76,22 @@ export class IndexComponent implements OnInit {
     this.candidateService.getWeekAndTodayData().subscribe((res: any) => {
       if (res.res) {
         this.todayDataCount = res.todayDataCount;
-        this.commonService.updateTodayData(
-          this.todayDataCount
-        ); // Update the shared service
+        this.commonService.updateTodayData(this.todayDataCount); // Update the shared service
       }
     });
+  }
+
+  prepareLinkedInUrl(url: string | undefined): string {
+    // If url is undefined or empty, return a default URL
+    if (!url) {
+      return 'https://www.linkedin.com';
+    }
+
+    // If the URL doesn't start with 'http' or 'https', prepend 'https://'
+    if (!url.startsWith('http://') && !url.startsWith('https://')) {
+      return 'https://' + url;
+    }
+
+    return url;
   }
 }

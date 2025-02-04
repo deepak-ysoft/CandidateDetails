@@ -53,6 +53,7 @@ export const routes: Routes = [
         component: EmployeeDetailsComponent,
         canActivate: [authGuard],
         data: { roles: ['Admin', 'HR', 'Employee'] },
+        runGuardsAndResolvers: 'always', // Force reload when navigating to the same route
       },
     ],
   },

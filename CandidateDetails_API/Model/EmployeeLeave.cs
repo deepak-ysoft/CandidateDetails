@@ -8,6 +8,7 @@ namespace CandidateDetails_API.Model
         public int leaveId { get; set; }
         [Required]
         public string LeaveFor { get; set; }
+        public string? LeaveType { get; set; }
         [Required]
         public DateTime startDate { get; set; }
         [Required]
