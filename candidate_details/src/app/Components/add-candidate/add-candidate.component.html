@@ -172,16 +172,12 @@
       <!-- Roles -->
       <div class="col-md-4 mb-3">
         <label for="roles" class="form-label">Role</label>
-        <select
-          id="roles"
-          class="magic-input form-select"
+        <input
+          type="email"
+          id="email"
           formControlName="roles"
-          (change)="onRoleChange($event)"
-        >
-          <option *ngFor="let role of RolesList" [value]="role.rid">
-            {{ role.role }}
-          </option>
-        </select>
+          class="form-control magic-input"
+        />
 
         <small
           class="text-danger"

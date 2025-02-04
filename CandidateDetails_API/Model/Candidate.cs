@@ -22,10 +22,8 @@ namespace CandidateDetails_API.Model
         [RegularExpression("^[a-zA-Z0-9._%+-]+@[a-zA-Z.-]+\\.[a-zA-Z]{2,}$", ErrorMessage = "Please enter a valid email address.")] // Email validation
         public string email_ID { get; set; }
         [Required]
-        [ForeignKey("Roles")]
-        public int roles { get; set; }
-        [NotMapped]
-        public string? roleName { get; set; }
+        public string roles { get; set; }
+     
         [Required]
         public string experience { get; set; }
         [Required]

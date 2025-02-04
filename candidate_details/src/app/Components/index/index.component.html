@@ -32,7 +32,7 @@
               >
                 {{ candidate.email_ID }}
               </td>
-              <td class="col ellipsis-cell">{{ candidate.roleName }}</td>
+              <td class="col ellipsis-cell">{{ candidate.roles }}</td>
               <td class="col ellipsis-cell">{{ candidate.experience }}</td>
               <td class="col-3 me-3">
                 {{ candidate.schedule_Interview | date : "medium" }}
@@ -80,7 +80,7 @@
               >
                 {{ candidate.email_ID }}
               </td>
-              <td class="col ellipsis-cell">{{ candidate.roleName }}</td>
+              <td class="col ellipsis-cell">{{ candidate.roles }}</td>
               <td class="col ellipsis-cell">{{ candidate.experience }}</td>
               <td class="col-3 me-3">
                 {{ candidate.schedule_Interview | date : "medium" }}
@@ -159,7 +159,7 @@
           <strong class="text-secondary me-2"
             ><i class="fas fa-briefcase"></i> Role:</strong
           >
-          <span class="badge bg-success">{{ candidate.roleName }}</span>
+          <span class="badge bg-success">{{ candidate.roles }}</span>
         </div>
       </div>
 

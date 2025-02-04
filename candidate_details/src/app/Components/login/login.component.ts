@@ -63,13 +63,13 @@ export class LoginComponent implements OnInit {
   }
 
   onLoginForm: FormGroup = new FormGroup({
-    email: new FormControl('Deepak@gmail.com', [
+    email: new FormControl('', [
       Validators.required,
       Validators.pattern(
         /^[a-zA-Z]{5,}[a-zA-Z0-9._%+-]*@[a-zA-Z.-]+\.[a-zA-Z]{2,}$/
       ),
     ]),
-    password: new FormControl('Deepak@123', [
+    password: new FormControl('', [
       Validators.required,
       Validators.pattern(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
@@ -211,7 +211,7 @@ export class LoginComponent implements OnInit {
         'empAddress',
         this.employeeForm.get('empAddress')?.value || ''
       );
-      let role = 3;
+      let role = 7;
 
       formData.append('roleId', role.toString());
 

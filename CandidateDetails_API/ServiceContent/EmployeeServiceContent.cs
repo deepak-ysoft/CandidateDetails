@@ -34,7 +34,7 @@ namespace CandidateDetails_API.ServiceContent
                 string fileName = employee.Photo?.FileName != "Default.jpg" ? UploadUserPhoto(employee.Photo) : "Default.jpg";
                 var hasher = new PasswordHasher<Employee>();
                 employee.ImagePath = fileName;
-                if (employee.RoleId == 2)
+                if (employee.RoleId == 6)
                 {
                     employee.isActive = true;
                 }
@@ -71,9 +71,9 @@ namespace CandidateDetails_API.ServiceContent
                 {
                     await DeleteUserImageAsync(previousEmp);
                 }
-                if (previousEmp.RoleId == 1)
+                if (previousEmp.RoleId == 5)
                 {
-                    employee.RoleId = 1;
+                    employee.RoleId = 5;
                 }
                 employee.ImagePath = fileName;
                 employee.empPassword = previousEmp.empPassword;

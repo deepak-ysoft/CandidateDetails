@@ -4,7 +4,6 @@ import { Candidate } from '../Models/candidate.model';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { environment } from '../../environments/environment';
 import Swal from 'sweetalert2';
-import { Roles } from '../Models/Roles.model';
 
 @Injectable({
   providedIn: 'root',
@@ -71,13 +70,6 @@ export class CandidateService {
     return this.http.post(`${this.baseUrl}api/Resume/UploadResume`, cv);
   }
 
-  getRoles() {
-    return this.http.get(`${this.baseUrl}api/Candidate/GetRoles`);
-  }
-
-  AddUpdateRole(role: Roles) {
-    return this.http.post(`${this.baseUrl}api/Candidate/CreateEditRole`, role);
-  }
 
   confirmDelete() {
     return Swal.fire({
@@ -90,9 +82,6 @@ export class CandidateService {
     });
   }
 
-  DeleteRole(roleId: number) {
-    return this.http.delete(`${this.baseUrl}api/Candidate/DeleteRole/${roleId}`);
-  }
 
   AddEditCandidate(data: FormData) {
     this.isCandidateAddOrUpdate = true;

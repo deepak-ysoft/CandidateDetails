@@ -62,27 +62,7 @@ namespace CandidateDetails_API.Controllers
                     .Where(x => x.schedule_Interview <= DateTime.Now.AddHours(+12) && x.schedule_Interview >= DateTime.Now)
                     .ToListAsync(); // Get the  week data
 
-                // Get the Roles data (assuming you have a Roles table in your DbContext)
-                var roles = await _context.Roles.ToListAsync();
-
-                // Loop through the candidates and update the role value
-                foreach (var candidate in weekData)
-                {
-                    var role = roles.FirstOrDefault(r => r.rid == candidate.roles); // Match the role ID
-                    if (role != null)
-                    {
-                        candidate.roleName = role.role; // Replace the role ID with the role name
-                    }
-                }
-                // Loop through the candidates and update the role value
-                foreach (var candidate in todayData)
-                {
-                    var role = roles.FirstOrDefault(r => r.rid == candidate.roles); // Match the role ID
-                    if (role != null)
-                    {
-                        candidate.roleName = role.role; // Replace the role ID with the role name
-                    }
-                }
+              
                 int todayDataCount = todayData.Count(); // Get the count of the  week data
                 return Ok(new { res = true, todayDataCount = todayDataCount, weekData = weekData, todayData }); // Return the data
             }
@@ -105,21 +85,6 @@ namespace CandidateDetails_API.Controllers
                 {
                     Direction = ParameterDirection.Output
                 };
-                if (SearchField == "Roles")
-                {
-                    var Roles = await _context.Roles.ToListAsync(); // Get all roles from database
-
-                    foreach (var r in Roles) // Loop through each role
-                    {
-                        if (r.role.ToLower().Trim() == SearchValue.ToLower()) // If role is found
-                        {
-                            SearchValue = r.rid.ToString(); // Set role id
-                            break;
-                        }
-                    }
-                }
-
-
                 // Define SQL parameters for the stored procedure
                 var parameters = new[]
                 {
@@ -137,19 +102,6 @@ namespace CandidateDetails_API.Controllers
                     .FromSqlRaw("EXEC usp_GetAllcandidate @PageNumber, @PageSize, @SortColumn, @SortOrder,@SearchField,@SearchValue,@TotalRecords OUT", parameters)
                     .ToListAsync();
 
-
-                // Get the Roles data (assuming you have a Roles table in your DbContext)
-                var roles = await _context.Roles.ToListAsync();
-
-                // Loop through the candidates and update the role value
-                foreach (var candidate in candidates)
-                {
-                    var role = roles.FirstOrDefault(r => r.rid == candidate.roles); // Match the role ID
-                    if (role != null)
-                    {
-                        candidate.roleName = role.role; // Replace the role ID with the role name
-                    }
-                }
                 int totalRecords = (int)totalRecordsParam.Value;
 
                 return Ok(new { data = candidates, totalCount = totalRecords });
@@ -320,10 +272,9 @@ namespace CandidateDetails_API.Controllers
             try
             {
                 var candidate = await _context.candidateDetails.FirstOrDefaultAsync(x => x.id == id); // Get the candidate details
-                var roles = await _context.Roles.FirstOrDefaultAsync(x => x.rid == candidate.roles);  // Get all roles from database
 
                 //var role = await
-                return Ok(new { can = candidate, role = roles }); // Return the candidate details
+                return Ok(new { can = candidate }); // Return the candidate details
             }
             catch (Exception ex)
             {
@@ -372,7 +323,7 @@ namespace CandidateDetails_API.Controllers
                         x.contact_No,
                         x.linkedin_Profile,
                         x.email_ID,
-                        Role = _context.Roles.FirstOrDefault(r => r.rid == x.roles).role, // Fetch role name
+                        x.roles,
                         x.experience,
                         x.skills,
                         x.ctc,
@@ -397,7 +348,7 @@ namespace CandidateDetails_API.Controllers
                     worksheet.Cell(row, 4).Value = candidate?.contact_No;
                     worksheet.Cell(row, 5).Value = candidate?.linkedin_Profile;
                     worksheet.Cell(row, 6).Value = candidate?.email_ID;
-                    worksheet.Cell(row, 7).Value = candidate?.Role;
+                    worksheet.Cell(row, 7).Value = candidate?.roles;
                     worksheet.Cell(row, 8).Value = candidate?.experience;
                     worksheet.Cell(row, 9).Value = candidate?.skills;
                     worksheet.Cell(row, 10).Value = candidate?.ctc;
@@ -426,73 +377,8 @@ namespace CandidateDetails_API.Controllers
                     return File(
                         stream.ToArray(),
                         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "CandidateDetails.xlsx"
-
                     );
                 }
-
-
-            }
-        }
-
-        // =========================================== Roles  
-
-        /// <summary>
-        ///  Get role from database
-        /// </summary>
-        /// <returns>Role list</returns>
-        [HttpGet("GetRoles")]
-        public async Task<IActionResult> GetRoles()
-        {
-            try
-            {
-                var roles = await _context.Roles.ToListAsync(); // Get all roles from database
-                return Ok(roles); // Return the roles
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { error = ex.Message });
-            }
-        }
-
-        /// <summary>
-        ///  To create and edit the role
-        /// </summary>
-        /// <param name="role">Role model object</param>
-        /// <returns>boolean</returns>
-        [HttpPost("CreateEditRole")]
-        public async Task<IActionResult> CreateEditRole([FromBody] Roles role)
-        {
-            try
-            {
-                if (!ModelState.IsValid)
-                {
-                    return Ok(ModelState);
-                }
-                var isDone = await _service.CreateEditRoles(role); // Call the service method to create or edit the role
-                return Ok(new { success = isDone });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { error = ex.Message });
-            }
-        }
-
-        /// <summary>
-        /// Delete The Role
-        /// </summary>
-        /// <param name="id">Role id</param>
-        /// <returns>boolean</returns>
-        [HttpDelete("DeleteRole/{id}")]
-        public async Task<IActionResult> DeleteRole(int id)
-        {
-            try
-            {
-                bool res = await _service.deleteRole(id); // Call the service method to delete the role
-                return Ok(new { success = res }); // Return the result
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { error = ex.Message });
             }
         }
     }

@@ -9,7 +9,6 @@ import {
 import { CandidateService } from '../../Services/candidate.service';
 import { CommonServiceService } from '../../Services/common-service.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Roles } from '../../Models/Roles.model';
 import { AuthService } from '../../Services/auth.service';
 import { Router } from '@angular/router';
 
@@ -31,7 +30,6 @@ export class AddCandidateComponent implements OnInit {
   @Input() candidateEdit?: any;
   @Input() addClicked?: any;
   isclick = output<boolean>();
-  RolesList: Roles[] = [];
   selectedRoleId = '';
   
   ngOnInit(): void {
@@ -39,7 +37,6 @@ export class AddCandidateComponent implements OnInit {
       this.router.navigateByUrl('/calendar');
     }
     this.candidateServices.resetForm$.subscribe(() => this.onAdd());
-    this.getRoles();
     if (this.candidateEdit?.id && !this.addClicked) {
       this.candidateForm.patchValue({
         id: this.candidateEdit?.id,
@@ -151,11 +148,6 @@ export class AddCandidateComponent implements OnInit {
     }
   }
 
-  getRoles() {
-    this.candidateServices.getRoles().subscribe((res: any) => {
-      this.RolesList = res;
-    });
-  }
 
   onRoleChange(event: Event): void {
     this.selectedRoleId = (event.target as HTMLSelectElement).value;
