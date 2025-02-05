@@ -256,7 +256,9 @@
           id="ctc"
           formControlName="ctc"
           class="form-control magic-input"
+          step="any"
         />
+
         <small
           class="text-danger"
           *ngIf="
@@ -284,11 +286,13 @@
           id="etc"
           formControlName="etc"
           class="form-control magic-input"
+          step="any"
         />
+
         <small
           class="text-danger"
           *ngIf="
-            !candidateForm.get('etc')?.hasError('serverError') &&
+            !candidateForm.get('etc')?.hasError('pattern') &&
             shouldShowError('etc')
           "
         >

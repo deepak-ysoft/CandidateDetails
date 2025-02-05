@@ -8,6 +8,7 @@ import { LoginComponent } from './Components/login/login.component';
 import { authGuard } from './Services/auth.guard';
 import { IndexComponent } from './Components/index/index.component';
 import { UnauthorizedComponent } from './Components/unauthorized/unauthorized.component';
+import { ForgotPasswordComponent } from './Components/forgot-password/forgot-password.component';
 
 export const routes: Routes = [
   {
@@ -21,7 +22,7 @@ export const routes: Routes = [
         path: 'index',
         component: IndexComponent,
         canActivate: [authGuard],
-         data: { roles: ['Admin', 'HR'] },
+        data: { roles: ['Admin', 'HR'] },
       },
       {
         path: 'candidateList',
@@ -29,7 +30,7 @@ export const routes: Routes = [
         canActivate: [authGuard],
         data: { roles: ['Admin', 'HR'] },
       },
-    
+
       {
         path: 'calendar',
         component: CalendarComponent,
@@ -40,7 +41,7 @@ export const routes: Routes = [
         path: 'employees',
         component: EmployeesComponent,
         canActivate: [authGuard],
-         data: { roles: ['Admin', 'HR', 'Employee'] },
+        data: { roles: ['Admin', 'HR', 'Employee'] },
       },
       {
         path: 'employee-details',
@@ -51,6 +52,7 @@ export const routes: Routes = [
       },
     ],
   },
+  { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'login', component: LoginComponent }, // Ensure login is separate & not protected
   { path: 'unauthorized', component: UnauthorizedComponent }, // Unauthorized page
   { path: '**', redirectTo: 'index' }, // Catch-all for unknown routes

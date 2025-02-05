@@ -612,7 +612,8 @@
         <label class="p-0 label" for="leaveType">Leave For</label>
         <select class="form-select magic-input" formControlName="leaveType">
           <option value="Full day">Full day</option>
-          <option value="Half day">Half day</option>
+          <option value="First half">First Half</option>
+          <option value="Second half">Second Half</option>
         </select>
       </div>
       <div class="row mb-4 m-2">
@@ -696,6 +697,7 @@
       <input type="hidden" formControlName="empId" />
       <input type="hidden" formControlName="empPassword" />
       <input type="hidden" formControlName="empPasswordConfirm" />
+      <input type="hidden" formControlName="roleId" />
       <div class="row mb-2">
         <div class="col-12 d-flex justify-content-center">
           <input

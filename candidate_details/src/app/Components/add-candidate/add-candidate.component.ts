@@ -31,7 +31,7 @@ export class AddCandidateComponent implements OnInit {
   @Input() addClicked?: any;
   isclick = output<boolean>();
   selectedRoleId = '';
-  
+
   ngOnInit(): void {
     if (this.userRole === 'Employee') {
       this.router.navigateByUrl('/calendar');
@@ -57,7 +57,7 @@ export class AddCandidateComponent implements OnInit {
         schedule_Interview: this.candidateEdit.schedule_Interview,
         schedule_Interview_status: this.candidateEdit.schedule_Interview_status,
         comments: this.candidateEdit.comments,
-        cv: this.candidateEdit.cvPath,
+        cv: null,
       });
     } else {
       this.onAdd();
@@ -148,7 +148,6 @@ export class AddCandidateComponent implements OnInit {
     }
   }
 
-
   onRoleChange(event: Event): void {
     this.selectedRoleId = (event.target as HTMLSelectElement).value;
   }
@@ -196,8 +195,19 @@ export class AddCandidateComponent implements OnInit {
         this.candidateForm.get('experience')?.value || ''
       );
       formData.append('skills', this.candidateForm.get('skills')?.value || '');
-      formData.append('ctc', this.candidateForm.get('ctc')?.value || '');
-      formData.append('etc', this.candidateForm.get('etc')?.value || '');
+      formData.append(
+        'ctc',
+        this.candidateForm.get('ctc')?.value
+          ? String(parseFloat(this.candidateForm.get('ctc')?.value))
+          : ''
+      );
+
+      formData.append(
+        'etc',
+        this.candidateForm.get('etc')?.value
+          ? String(parseFloat(this.candidateForm.get('etc')?.value))
+          : ''
+      );
       formData.append(
         'notice_Period',
         this.candidateForm.get('notice_Period')?.value || ''

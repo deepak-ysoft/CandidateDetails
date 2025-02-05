@@ -23,7 +23,6 @@ namespace CandidateDetails_API.Model
         public string email_ID { get; set; }
         [Required]
         public string roles { get; set; }
-     
         [Required]
         public string experience { get; set; }
         [Required]

@@ -492,7 +492,7 @@ export class EmployeeDetailsComponent implements OnInit {
         'empAddress',
         this.employeeForm.get('empAddress')?.value || ''
       );
-      formData.append('roleId', this.employeeForm.get('roleId')?.value || '7');
+      formData.append('roleId', this.employeeForm.get('roleId')?.value || '');
 
       this.EmployeeService.updateEmployee(formData).subscribe({
         next: (res: any) => {

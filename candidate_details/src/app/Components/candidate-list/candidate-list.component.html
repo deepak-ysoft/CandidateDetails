@@ -493,9 +493,7 @@
           <strong class="text-secondary me-2"
             ><i class="fas fa-briefcase"></i> Role:</strong
           >
-          <span class="badge bg-success">{{
-            candidateForDetails.roles
-          }}</span>
+          <span class="badge bg-success">{{ candidateForDetails.roles }}</span>
         </div>
       </div>
 
@@ -525,6 +523,26 @@
           >
           <span class="fw-bold all-badge text-success">{{
             candidateForDetails.ctc
+          }}</span>
+        </div>
+        <div class="col-md-6">
+          <strong class="text-secondary me-2"
+            ><i class="fas fa-money-bill-wave"></i> ETC:</strong
+          >
+          <span class="fw-bold all-badge text-success">{{
+            candidateForDetails.etc
+          }}</span>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <strong class="text-secondary me-2"
+            ><i class="fa fa-question-circle"></i> Reason For Job
+            Change:</strong
+          >
+          <span class="fw-bold all-badge">{{
+            candidateForDetails.reason_For_Job_Change
           }}</span>
         </div>
         <div class="col-md-6">
@@ -584,7 +602,6 @@
           </span>
         </div>
       </div>
-
       <div class="row mb-3">
         <div class="col-md-12">
           <strong class="text-secondary me-2"

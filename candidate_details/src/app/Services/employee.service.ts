@@ -112,6 +112,7 @@ export class EmployeeService {
       empExperience: employee.empExperience,
       empDateofJoining: employee.empDateofJoining,
       empAddress: employee.empAddress,
+      roleId:employee.roleId
     });
 
     return this.selectedImage;

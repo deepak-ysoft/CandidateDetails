@@ -12,5 +12,6 @@ export class Employee {
   empDateofJoining?: Date;
   empAddress: string = '';
   imagePath?: string;
+  roleId?: number;
   photo?: File; // Using File for handling file uploads
 }

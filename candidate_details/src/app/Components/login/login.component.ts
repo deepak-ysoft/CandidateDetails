@@ -11,7 +11,7 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Login } from '../../Models/login.model';
 import { BehaviorSubject } from 'rxjs';
 import { EmployeeService } from '../../Services/employee.service';
@@ -21,7 +21,7 @@ import { AuthService } from '../../Services/auth.service';
 
 @Component({
   selector: 'app-login',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterLink],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })

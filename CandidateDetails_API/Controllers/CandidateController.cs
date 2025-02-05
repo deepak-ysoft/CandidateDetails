@@ -180,6 +180,10 @@ namespace CandidateDetails_API.Controllers
                         // Save the file path in the database
                         candidate.cvPath = fileName;
                     }
+                    else if(can.cvPath!=null)
+                    {
+                        candidate.cvPath = can.cvPath;
+                    }
                 }
                 // Save candidate details
                 res = await _service.AddEditCandidate(candidate);
