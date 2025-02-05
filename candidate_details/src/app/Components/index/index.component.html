@@ -22,7 +22,7 @@
               (click)="CanidtateDetals(candidate)"
               class="row"
             >
-              <td class="col ellipsis-cell">{{ candidate.name }}</td>
+              <td class="col ellipsis-cell ms-3">{{ candidate.name }}</td>
               <td class="col ellipsis-cell">{{ candidate.contact_No }}</td>
               <td
                 class="col ellipsis-cell"
@@ -70,7 +70,7 @@
               (click)="CanidtateDetals(candidate)"
               class="row"
             >
-              <td class="col ellipsis-cell">{{ candidate.name }}</td>
+              <td class="col ellipsis-cell ms-3">{{ candidate.name }}</td>
               <td class="col ellipsis-cell">{{ candidate.contact_No }}</td>
               <td
                 class="col ellipsis-cell"
@@ -82,7 +82,7 @@
               </td>
               <td class="col ellipsis-cell">{{ candidate.roles }}</td>
               <td class="col ellipsis-cell">{{ candidate.experience }}</td>
-              <td class="col-3 me-3">
+              <td class="col-3 ">
                 {{ candidate.schedule_Interview | date : "medium" }}
               </td>
             </tr>
@@ -204,9 +204,12 @@
       <div class="row mb-3">
         <div class="col-md-6">
           <strong class="text-secondary me-2"
-            ><i class="fa fa-question-circle"></i> Reason For Job Change:</strong
+            ><i class="fa fa-question-circle"></i> Reason For Job
+            Change:</strong
           >
-          <span class="fw-bold all-badge">{{ candidate.reason_For_Job_Change }}</span>
+          <span class="fw-bold all-badge">{{
+            candidate.reason_For_Job_Change
+          }}</span>
         </div>
         <div class="col-md-6">
           <strong class="text-secondary me-2"

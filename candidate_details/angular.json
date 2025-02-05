@@ -28,11 +28,11 @@
                 "output": "assets"
               },
               "src/web.config"
-            
             ],
             "styles": [
               "@angular/material/prebuilt-themes/azure-blue.css",
-              "src/styles.css"
+              "src/styles.css",
+              "node_modules/ngx-spinner/animations/ball-atom.css"
             ],
             "scripts": []
           },

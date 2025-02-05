@@ -55,7 +55,7 @@ namespace CandidateDetails_API.Controllers
             try
             {
                 var weekData = await _context.candidateDetails.OrderBy(x => x.schedule_Interview)
-                    .Where(x => x.schedule_Interview <= DateTime.Now.AddDays(+8) && x.schedule_Interview >= DateTime.Now.AddDays(+1))
+                    .Where(x => x.schedule_Interview <= DateTime.Now.AddDays(+8) && x.schedule_Interview >= DateTime.Now.AddHours(+12))
                     .ToListAsync(); // Get the  week data
 
                 var todayData = await _context.candidateDetails.OrderBy(x => x.schedule_Interview)
