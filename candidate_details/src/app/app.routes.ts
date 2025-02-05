@@ -9,6 +9,7 @@ import { authGuard } from './Services/auth.guard';
 import { IndexComponent } from './Components/index/index.component';
 import { UnauthorizedComponent } from './Components/unauthorized/unauthorized.component';
 import { ForgotPasswordComponent } from './Components/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './Components/reset-password/reset-password.component';
 
 export const routes: Routes = [
   {
@@ -53,6 +54,7 @@ export const routes: Routes = [
     ],
   },
   { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: 'reset-password', component: ResetPasswordComponent },
   { path: 'login', component: LoginComponent }, // Ensure login is separate & not protected
   { path: 'unauthorized', component: UnauthorizedComponent }, // Unauthorized page
   { path: '**', redirectTo: 'index' }, // Catch-all for unknown routes

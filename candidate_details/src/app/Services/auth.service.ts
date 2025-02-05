@@ -4,7 +4,6 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { jwtDecode } from 'jwt-decode';
 
-
 @Injectable({
   providedIn: 'root',
 })
@@ -23,6 +22,19 @@ export class AuthService {
 
   getToken() {
     return localStorage.getItem('authToken');
+  }
+
+  forgotPassword(email: string) {
+    return this.http.post(`${this.baseUrl}api/Account/ForgotPassword`, {
+      email,
+    });
+  }
+
+  ResetPassword(resetForm: FormData) {
+    return this.http.post(
+      `${this.baseUrl}api/Account/ResetPassword`,
+      resetForm
+    );
   }
 
   // Decode token and get role
@@ -49,6 +61,4 @@ export class AuthService {
   isLoggedIn(): boolean {
     return !!this.getToken();
   }
-
-
 }

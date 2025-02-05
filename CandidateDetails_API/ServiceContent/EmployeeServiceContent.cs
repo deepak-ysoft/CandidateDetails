@@ -1,6 +1,7 @@
 ﻿using CandidateDetails_API.IServices;
 using CandidateDetails_API.Model;
 using CandidateDetails_API.Models;
+using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,6 +27,25 @@ namespace CandidateDetails_API.ServiceContent
             var list = await _context.Employees.Where(x => x.isDelete == false && x.isActive == false).ToListAsync(); // Get all employees from the database
             return list;
         }
+
+
+        public async Task<Employee> GetUserByEmailAsync(string email) // Get user by email
+        {
+            var user = await _context.Employees.FirstOrDefaultAsync(x => x.empEmail == email); // Find the user by email
+            return user;
+        }
+        public async Task<Employee> GetUserByResetTokenAsync(string token)
+        {
+            // Fetch the user based on the reset token and check if the token is still valid
+            return await _context.Employees.FirstOrDefaultAsync(u => u.ResetToken == token && u.ResetTokenExpiration > DateTime.Now);
+        }
+
+        public async Task UpdateUserAsync(Employee user)
+        {
+            _context.Employees.Update(user);
+            await _context.SaveChangesAsync();
+        }
+
 
         public async Task<bool> AddEmployee(Employee employee) // Add an employee
         {
@@ -86,7 +106,7 @@ namespace CandidateDetails_API.ServiceContent
                 if (result > 0)
                 {
                     var empBirth = await _context.employeeBirthdays.FirstOrDefaultAsync(x => x.empId == employee.empId);
-                    if (empBirth!=null)
+                    if (empBirth != null)
                     {
                         var cal = await _context.calendar.FirstOrDefaultAsync(x => x.CalId == empBirth.calId);
                         if (cal != null)
@@ -204,9 +224,9 @@ namespace CandidateDetails_API.ServiceContent
             return data;
         }
 
-        public async Task<bool> AddUpdateEmployeeAssets(EmployeeAsset employeeAsset) 
+        public async Task<bool> AddUpdateEmployeeAssets(EmployeeAsset employeeAsset)
         {
-            if(employeeAsset.AssetId == 0)
+            if (employeeAsset.AssetId == 0)
             {
                 _context.EmployeeAssets.Add(employeeAsset);
                 return await _context.SaveChangesAsync() > 0;

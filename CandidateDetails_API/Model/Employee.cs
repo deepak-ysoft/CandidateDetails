@@ -44,5 +44,10 @@ namespace CandidateDetails_API.Model
         public int RoleId { get; set; }
         public bool? isActive { get; set; }
         public UserRoles? Role { get; set; }
+
+        // Fields for managing password reset
+        public string? ResetToken { get; set; }
+        public DateTime? ResetTokenExpiration { get; set; } // The expiration time for the reset token
+        public bool ResetTokenIsValid => ResetTokenExpiration > DateTime.Now; // Automatically checks if the token is still valid
     }
 }

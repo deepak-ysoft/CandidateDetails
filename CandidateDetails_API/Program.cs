@@ -27,6 +27,9 @@ builder.Services.AddScoped<IEmployee, EmployeeServiceContent>(); // Register the
 builder.Services.AddScoped<IEmployeeLeave, EmployeeLeaveServiceContent>(); // Register the service
 builder.Services.AddScoped<IAccount, AccountServiceContent>(); // Register the service
 builder.Services.AddScoped<IAuthService, AuthServiceContent>(); // Register the service
+builder.Services.AddScoped<IEmailService, EmailService>(); // Register the service
+builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SmtpSettings"));
+builder.Services.AddTransient<EmailService>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
