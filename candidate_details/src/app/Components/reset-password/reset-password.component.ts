@@ -83,24 +83,44 @@ export class ResetPasswordComponent implements OnInit {
               icon: 'success',
               timer: 2000, // Auto-close after 2 seconds
               timerProgressBar: true,
+            }).then(() => {
+              this.router.navigate(['/login']); // Redirect to login page after success
             });
-            this.router.navigate(['/login']); // Redirect to login page
           }
         },
         error: (err: any) => {
-          // Handle validation errors from the server
           if (err.status === 400) {
-            const validationErrors = err.error.errors;
-            for (const field in validationErrors) {
-              const formControl = this.resetPasswordForm.get(
-                field.charAt(0).toLowerCase() + field.slice(1)
-              );
-              if (formControl) {
-                formControl.setErrors({
-                  serverError: validationErrors[field].join(' '),
-                });
+            const errorMessage = err.error; // API returns plain text "Invalid or expired token."
+
+            if (typeof errorMessage === 'string') {
+              // If error message is plain text, show it in a popup
+              Swal.fire({
+                title: 'Error! ❌',
+                text: errorMessage,
+                icon: 'error',
+                confirmButtonText: 'OK',
+              });
+            } else if (errorMessage.errors) {
+              // Handle validation errors
+              const validationErrors = errorMessage.errors;
+              for (const field in validationErrors) {
+                const formControl = this.resetPasswordForm.get(
+                  field.charAt(0).toLowerCase() + field.slice(1)
+                );
+                if (formControl) {
+                  formControl.setErrors({
+                    serverError: validationErrors[field].join(' '),
+                  });
+                }
               }
             }
+          } else {
+            Swal.fire({
+              title: 'Error! ❌',
+              text: 'Something went wrong. Please try again later.',
+              icon: 'error',
+              confirmButtonText: 'OK',
+            });
           }
         },
       });
