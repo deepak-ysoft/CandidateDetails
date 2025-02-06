@@ -34,6 +34,11 @@ body {
    transform: translateY(-2px);
 }
 
+.btn-color{
+   background-color: hwb(189 9% 31%);
+   color: white;
+}
+
 /* Magical Table Container */
 .magical-table-container {
    text-align: center;
@@ -48,6 +53,7 @@ body {
    box-shadow:
       0 4px 6px rgba(0, 0, 0, 0.1),
       0 1px 3px rgba(0, 0, 0, 0.2);
+   border-top:1px solid #b3c9f5;
 }
 
 .magical-table thead tr th {
@@ -56,7 +62,7 @@ body {
 
 /* Header Styling */
 .magical-table thead {
-   background: linear-gradient(135deg, #e3cbfc 0%, #c1d8ff 100%);
+   background: linear-gradient(135deg, #f0e1ff 0%, #d1e0fa 100%);
    color: black;
    font-weight: bold;
 }

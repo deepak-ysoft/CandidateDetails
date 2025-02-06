@@ -56,6 +56,7 @@ main.main {
    max-height: 88%;
    overflow-y: auto;
    overflow-x: auto;
+   background-color:#efebeb9d;
 }
 
 footer.footer {
@@ -79,21 +80,24 @@ footer.footer {
    bottom: 45%;
 }
 
-
-  /* Hover effect for background */
-  .dropdown-item:hover {
+/* Hover effect for background */
+.dropdown-item:hover {
    background-color: #f1f5f9;
- }
+}
 
- .text-danger:hover {
+.text-danger:hover {
    background-color: #f8d7da;
- }
- 
- .dropdown-menu {
+}
+
+.dropdown-menu {
    background-color: #ffffff;
    border-radius: 10px;
- }
+}
 
- .dropdown-divider {
+.dropdown-divider {
    border-color: #e0e0e0;
- }
+}
+
+.navbar-bg {
+   background: linear-gradient(135deg, #e3cbfc 0%, #c1d8ff 100%);
+}

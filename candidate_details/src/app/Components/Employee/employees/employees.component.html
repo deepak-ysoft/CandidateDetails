@@ -1,26 +1,28 @@
 <div class="container-fluid mt-3 magical-table-container">
-  <div class="float-start mb-1">
-    <h2><b>Ysoft Employees</b></h2>
+  <div class="p-1">
+    <div class="float-start mb-1">
+      <h2><b>Ysoft Employees</b></h2>
+    </div>
+    <button
+      class="btn btn-primary float-end pe-4 ps-4"
+      *ngIf="!isRequestedEmp"
+      (click)="GetRequestedEmployee()"
+    >
+      <b>
+        <i class="fa-solid fa-user-plus me-2"></i>Requests
+        <span class="emp-count" *ngIf="reqEmpCount != 0"> {{ reqEmpCount }}</span>
+      </b>
+    </button>
+    <button
+      class="btn btn-primary float-end pe-4 ps-4"
+      *ngIf="isRequestedEmp"
+      (click)="getEmployees()"
+    >
+      <b> <i class="fa-solid fa-rotate-left me-2"></i>Get Back </b>
+    </button>
   </div>
-  <button
-    class="btn btn-primary float-end pe-4 ps-4"
-    *ngIf="!isRequestedEmp"
-    (click)="GetRequestedEmployee()"
-  >
-    <b>
-      <i class="fa-solid fa-user-plus me-2"></i>Requests
-      <span class="emp-count" *ngIf="reqEmpCount != 0"> {{ reqEmpCount }}</span>
-    </b>
-  </button>
-  <button
-    class="btn btn-primary float-end pe-4 ps-4"
-    *ngIf="isRequestedEmp"
-    (click)="getEmployees()"
-  >
-    <b> <i class="fa-solid fa-rotate-left me-2"></i>Get Back </b>
-  </button>
 
-  <table class="table magical-table">
+  <table class="table magical-table ">
     <thead>
       <tr class="row">
         <th class="col ellipsis-cell">Profile</th>
@@ -37,7 +39,7 @@
       </tr>
     </thead>
     <tbody class="tbody">
-      <tr class="row" *ngFor="let emp of employeeList">
+      <tr class="row bg-light" *ngFor="let emp of employeeList">
         <td (click)="employeeDetails(emp)" class="col ellipsis-cell">
           <img
             *ngIf="emp?.imagePath != null"

@@ -16,11 +16,11 @@
               <th class="col-3">Interview Date</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody class="bg-light">
             <tr
               *ngFor="let candidate of todayData"
               (click)="CanidtateDetals(candidate)"
-              class="row"
+              class="row bg-light"
             >
               <td class="col ellipsis-cell ms-3">{{ candidate.name }}</td>
               <td class="col ellipsis-cell">{{ candidate.contact_No }}</td>
@@ -64,11 +64,11 @@
               <th class="col-3 me-3">Interview Date</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody class="bg-light">
             <tr
               *ngFor="let candidate of weekData"
               (click)="CanidtateDetals(candidate)"
-              class="row"
+              class="row bg-light"
             >
               <td class="col ellipsis-cell ms-3">{{ candidate.name }}</td>
               <td class="col ellipsis-cell">{{ candidate.contact_No }}</td>

@@ -8,21 +8,23 @@
         >
       </div>
       <div class="col" *ngIf="userRole === 'Admin' || userRole === 'HR'">
-        <a class="btn btn-success float-end" (click)="ShowEventList()"
+        <a class="btn btn-color float-end" (click)="ShowEventList()"
           ><i class="fa-regular fa-calendar me-2"></i>Events</a
         >
       </div>
       <div class="col" *ngIf="userRole === 'Employee'">
-        <a class="btn btn-success float-start" (click)="ShowEventList()"
+        <a class="btn btn-color float-start" (click)="ShowEventList()"
           ><i class="fa-regular fa-calendar me-2"></i>Events</a
         >
       </div>
     </div>
-    <full-calendar
-      #calendar
-      [options]="calendarOptions"
-      class="pb-5 pt-2"
-    ></full-calendar>
+    <div class="pt-2 pb-4">
+      <full-calendar
+        #calendar
+        [options]="calendarOptions"
+        class="bg-white border"
+      ></full-calendar>
+    </div>
   </div>
 </div>
 
@@ -224,7 +226,7 @@
 <div *ngIf="!showCalendar">
   <div class="container">
     <a
-      class="btn btn-success shadow-sm border rounded-pill"
+      class="btn btn-color shadow-sm border rounded-pill"
       (click)="ShowCalendar()"
     >
       <i class="fa-solid fa-calendar-days me-1"></i>Calendar

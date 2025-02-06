@@ -2,7 +2,7 @@
 <div class="container-fluid mt-4">
   <div class="row mb-1">
     <div class="col-12 col-md-4 d-flex justify-content-start mb-3 mb-md-0">
-      <div class="btn btn-success align-items-center h-75 me-3 uploadDiv">
+      <div class="btn btn-color align-items-center h-75 me-3 uploadDiv">
         <i class="fa-solid fa-upload"></i>
         Upload Excel
         <input
@@ -26,7 +26,7 @@
       <select
         [(ngModel)]="SearchField"
         (change)="onSearchFieldChange($event)"
-        class="form-select h-100 me-2 w-100 w-md-25 magic-input"
+        class="form-select h-100 me-2 w-100 w-md-25 magic-input bg-light"
       >
         <option value="">Select field...</option>
         <option value="Name">Name</option>
@@ -43,7 +43,7 @@
       <input
         type="text"
         placeholder="Search..."
-        class="form-control rounded-pill w-100 w-md-75 magic-input"
+        class="form-control rounded-pill w-100 w-md-75 magic-input bg-light"
         id="searchTerm"
         [(ngModel)]="searchTerms"
         (input)="clickToSearchCandidate()"
@@ -52,7 +52,7 @@
   </div>
 
   <div class="magical-table-container">
-    <table class="table magical-table border">
+    <table class="table magical-table">
       <thead class="thead-dark bg-light">
         <tr class="row">
           <th class="col ellipsis-cell">
@@ -236,7 +236,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let candidate of candidateList" class="row">
+        <tr *ngFor="let candidate of candidateList" class="row bg-light">
           <td
             (click)="ShowCandidateDetails(candidate)"
             class="ellipsis-cell col"
@@ -361,7 +361,7 @@
     aria-label="Page navigation example"
     *ngIf="totalpages > 1"
   >
-    <ul class="pagination">
+    <ul class="pagination bg-light">
       <li class="page-item cursorPointer" [class.disabled]="currentPage === 1">
         <a class="page-link" (click)="loadPage(currentPage - 1)">Previous</a>
       </li>
@@ -396,7 +396,7 @@
     <select
       [(ngModel)]="pageSize"
       (change)="onPageSizeChange($event)"
-      class="form-select"
+      class="form-select bg-light"
     >
       <option value="15">15</option>
       <option value="20">20</option>
