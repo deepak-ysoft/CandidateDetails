@@ -117,7 +117,7 @@ namespace CandidateDetails_API.Controllers
 
             // Create the reset link with the token
             //var resetLink = $"http://localhost:4200/reset-password?token={resetToken}";
-            var resetLink = $"http://192.168.29.166:2002/reset-password?token={resetToken}";
+            var resetLink = $"{request.frontendUrl}/reset-password?token={resetToken}";
 
 
             // Send the reset link via email

@@ -19,25 +19,46 @@ export class ForgotPasswordComponent {
 
   onSubmit() {
     if (this.email) {
-      this.authService.forgotPassword(this.email).subscribe((response: any) => {
-        if (response.success) {
+      this.authService.forgotPassword(this.email).subscribe({
+        next: (response: any) => {
           Swal.fire({
             title: 'Done! 🎉',
             text: 'Password reset link sent to your email!',
             icon: 'success',
             timer: 2000, // Auto-close after 2 seconds
             timerProgressBar: true,
+            showConfirmButton: false,
           });
-        } else {
+        },
+        error: (error) => {
+          let errorMessage = 'Failed to send reset link. Please try again.';
+  
+          if (error.status === 400) {
+            errorMessage = error.error; // API message, e.g., "Email not found"
+          } else if (error.status === 500) {
+            errorMessage = 'Server error. Please try again later.';
+          }
+  
           Swal.fire({
-            title: 'Error! &#128078;',
-            text: 'Failed to send reset link. Please try again.',
+            title: 'Error! ❌',
+            text: errorMessage,
             icon: 'error',
-            timer: 2000, // Auto close after 2000 milliseconds
+            timer: 2000,
+            timerProgressBar: true,
             showConfirmButton: false,
           });
         }
       });
+    } else {
+      Swal.fire({
+        title: 'Warning! ⚠️',
+        text: 'Please enter a valid email address.',
+        icon: 'warning',
+        timer: 2000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+      });
     }
   }
+  
 }

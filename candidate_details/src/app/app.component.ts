@@ -18,6 +18,6 @@ export class AppComponent {
     this.spinner.show();
     setTimeout(() => {
       this.spinner.hide();
-    }, 2000); // Auto-hide after 2 sec
+    }, 200); // Auto-hide after 2 sec
   }
 }

@@ -25,8 +25,10 @@ export class AuthService {
   }
 
   forgotPassword(email: string) {
+    const frontendUrl = window.location.origin;
     return this.http.post(`${this.baseUrl}api/Account/ForgotPassword`, {
       email,
+      frontendUrl,
     });
   }
 
