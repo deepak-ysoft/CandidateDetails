@@ -52,15 +52,8 @@ td {
   overflow: hidden; /* Hides content that overflows */
   text-overflow: ellipsis; /* Adds ellipsis for overflow */
   white-space: nowrap; /* Prevents wrapping to the next line */
-  /* display: inline-block; Keeps the element inline */
+  display: inline-block;
 }
-
-/* Global style */
-/* ::ng-deep .custom-tooltip {
-  background-color: #ff5733 !important; 
-  color: white !important; 
-  font-size: 16px !important; 
-} */
 
 .modal-header {
   background-color: rgb(217, 246, 246);
@@ -82,6 +75,6 @@ tbody tr {
   white-space: normal; /* Allows wrapping */
 }
 
-.bg-color{
+.bg-color {
   background-color: rgba(73, 130, 215, 0.97);
 }

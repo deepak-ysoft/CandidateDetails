@@ -26,4 +26,11 @@
    max-width: 103%;
 }
 
+.login-card-size {
+   max-width: 830px;
+   max-height: 600px;
+}
 
+.register-card-size {
+   max-width: 1100px;
+}

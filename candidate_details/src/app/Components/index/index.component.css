@@ -30,16 +30,13 @@ tbody {
 }
 
 .ellipsis-cell {
-   width: 5%;
-   min-width: 5%;
-   max-width: 140px;
+   max-width: 145px;
    overflow: hidden; /* Hides content that overflows */
    text-overflow: ellipsis; /* Adds ellipsis for overflow */
    white-space: nowrap; /* Prevents wrapping to the next line */
-   /* display: inline-block; Keeps the element inline */
+   display: inline-block; /* Keeps the element inline */
 }
 
-
-.bg-color{
+.bg-color {
    background-color: rgba(73, 130, 215, 0.97);
- }
+}

@@ -53,7 +53,7 @@ namespace CandidateDetails_API.Controllers
 
                     var token = _authService.GenerateJwtToken(employeeData.empId.ToString(), employeeData.Role.URole); // GenerateJwtToken returns a token
 
-                    return Ok(new 
+                    return Ok(new
                     {
                         success = true,
                         employee = employeeData,
@@ -64,7 +64,7 @@ namespace CandidateDetails_API.Controllers
                 {
                     if (result.Message == "Your account is not active.") // Login returns a result with Message property
                         return Ok(new { success = false, message = result.Message });
-                    return Ok(new { success = false, message = result.Message }); 
+                    return Ok(new { success = false, message = result.Message });
                 }
             }
             catch (Exception ex)
@@ -97,7 +97,7 @@ namespace CandidateDetails_API.Controllers
         /// <returns></returns>
         [AllowAnonymous]
         [HttpPost("ForgotPassword")]
-        public async Task<IActionResult> ForgotPassword([FromBody]ForgotPassRequest request)
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPassRequest request)
         {
             var user = await _employeeservice.GetUserByEmailAsync(request.email);
             if (user == null)
@@ -121,7 +121,7 @@ namespace CandidateDetails_API.Controllers
 
 
             // Send the reset link via email
-           var isSend = await _emailservice.SendEmailAsync(request.email, "Reset your password", $"Click <a href='{resetLink}'>here</a> to reset your password.");
+            var isSend = await _emailservice.SendEmailAsync(request.email, "Reset your password", $"Click <a href='{resetLink}'>here</a> to reset your password.");
 
             return Ok(new { success = isSend, message = "Password reset email sent" });
         }
@@ -153,7 +153,7 @@ namespace CandidateDetails_API.Controllers
             // Save the updated user data with the new password
             await _employeeservice.UpdateUserAsync(user);
 
-            return Ok(new {success=true,message= "Password reset successfully." });
+            return Ok(new { success = true, message = "Password reset successfully." });
         }
 
     }

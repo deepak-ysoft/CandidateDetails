@@ -25,7 +25,7 @@
 
         <div class="card p-3 mb-3 border-0 shadow">
           <div class="card-body">
-            <div *ngIf="isLogin">
+            <div *ngIf="isLogin" class="login-card-size">
               <div class="pt-4 pb-2">
                 <h5 class="card-title text-center pb-0 fs-4">
                   Login to Your Account
@@ -49,15 +49,33 @@
                       class="form-control magic-input"
                       required
                     />
-                    <div class="invalid-feedback">
-                      Please enter your username.
-                    </div>
+                    <small
+                      class="text-danger"
+                      *ngIf="
+                        !onLoginForm.get('email')?.hasError('serverError') &&
+                        shouldShowError('email') &&
+                        !onLoginForm.controls['email'].hasError('pattern')
+                      "
+                    >
+                      Email is required.
+                    </small>
+                    <small
+                      class="text-danger"
+                      *ngIf="onLoginForm.get('email')?.hasError('serverError')"
+                      >{{ onLoginForm.get('email')?.errors?.['serverError'] }}</small
+                    >
+                    <small
+                      class="text-danger"
+                      *ngIf="onLoginForm.controls['email'].hasError('pattern')"
+                    >
+                      Email address not valid.
+                    </small>
                   </div>
                 </div>
 
                 <div class="col-12 mb-3">
                   <label for="password" class="form-label">Password</label>
-                  <div class="input-group has-validation">
+                  <div class="input-group">
                     <input
                       [type]="show ? 'text' : 'password'"
                       formControlName="password"
@@ -70,10 +88,28 @@
                     >
                       <i [class]="show ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
                     </span>
-                    <div class="invalid-feedback">
-                      Please enter your password!
-                    </div>
                   </div>
+
+                  <small
+                    class="text-danger"
+                    *ngIf="onLoginForm.get('password')?.hasError('serverError')"
+                    >{{ onLoginForm.get('password')?.errors?.['serverError'] }}</small
+                  ><small
+                    *ngIf="
+                      shouldShowError('password') &&
+                      !onLoginForm.controls['password'].hasError('pattern') &&
+                      !onLoginForm.get('password')?.hasError('serverError')
+                    "
+                    class="text-danger"
+                    >Please enter Password.</small
+                  >
+                  <small
+                    class="text-danger"
+                    *ngIf="onLoginForm.controls['password'].hasError('pattern')"
+                  >
+                    Password must be at least 8 characters long, with an
+                    uppercase, lowercase, number, and special character.
+                  </small>
                   <div class="pt-2">
                     <a routerLink="/forgot-password" class="cursorPointer"
                       >Forgot password ?</a
@@ -113,7 +149,7 @@
                 </p>
               </div>
             </div>
-            <div *ngIf="!isLogin">
+            <div *ngIf="!isLogin" class="register-card-size">
               <div class="pt-3 pb-2">
                 <h5 class="card-title text-center pb-0 fs-4">
                   Register to Your Account

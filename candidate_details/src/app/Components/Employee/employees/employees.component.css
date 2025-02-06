@@ -109,5 +109,5 @@ td i {
    overflow: hidden; /* Hides content that overflows */
    text-overflow: ellipsis; /* Adds ellipsis for overflow */
    white-space: nowrap; /* Prevents wrapping to the next line */
-   /* display: inline-block; Keeps the element inline */
+    display: inline-block; /*Keeps the element inline */
 }

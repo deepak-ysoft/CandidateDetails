@@ -32,6 +32,7 @@ export class LoginComponent implements OnInit {
   employeeForm: FormGroup;
   login: Login;
   submitted = false;
+  submittedRegister = false;
   private tokenSubject = new BehaviorSubject<string | null>(null);
   token$ = this.tokenSubject.asObservable();
   localStorageService = inject(EmpLocalStorService);
@@ -50,9 +51,11 @@ export class LoginComponent implements OnInit {
     this.employeeForm.markAsPristine(); // Reset validation state
     this.employeeForm.markAsUntouched(); // Remove touched status
     this.submitted = false;
+    this.submittedRegister = false;
   }
   constructor(private fb: FormBuilder) {
     this.submitted = false;
+    this.submittedRegister = false;
     this.isLogin = true;
     this.login = new Login();
     this.userRole = this.authService.getRole();
@@ -153,7 +156,7 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    this.submitted = true;
+    this.submittedRegister = true;
     var formData = new FormData();
     if (this.selectedFile) {
       // Append the selected file
@@ -222,7 +225,7 @@ export class LoginComponent implements OnInit {
             this.employeeForm.reset();
             this.employeeForm.markAsPristine(); // Reset validation state
             this.employeeForm.markAsUntouched(); // Remove touched status
-            this.submitted = false;
+            this.submittedRegister = false;
           } else {
             if (res.message == 'Duplicate Email') {
               Swal.fire({
@@ -276,7 +279,9 @@ export class LoginComponent implements OnInit {
   }
   shouldShowRegisterError(controlName: string): boolean {
     const control = this.employeeForm.get(controlName);
-    return (control?.invalid && (control.touched || this.submitted)) ?? false;
+    return (
+      (control?.invalid && (control.touched || this.submittedRegister)) ?? false
+    );
   }
 }
 
