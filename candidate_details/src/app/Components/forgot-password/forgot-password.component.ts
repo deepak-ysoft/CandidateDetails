@@ -3,10 +3,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../Services/auth.service';
 import Swal from 'sweetalert2';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-forgot-password',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule,RouterLink],
   templateUrl: './forgot-password.component.html',
   styleUrl: './forgot-password.component.css',
 })

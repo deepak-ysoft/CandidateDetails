@@ -14,29 +14,36 @@ namespace CandidateDetails_API.ServiceContent
         {
             _smtpSettings = smtpSettings.Value;
         }
-        public async Task SendEmailAsync(string toEmail, string subject, string body)
+        public async Task<bool> SendEmailAsync(string toEmail, string subject, string body)
         {
-            using (var smtpClient = new SmtpClient(_smtpSettings.Host, _smtpSettings.Port))
+            try
             {
-                smtpClient.Credentials = new NetworkCredential(_smtpSettings.Username, _smtpSettings.Password);
-
-                // Disable SSL if the server does not support secure connections
-                smtpClient.EnableSsl = false;
-
-                // Explicitly set the delivery method
-                smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
-
-                var mailMessage = new MailMessage
+                using (var smtpClient = new SmtpClient(_smtpSettings.Host, _smtpSettings.Port))
                 {
-                    From = new MailAddress(_smtpSettings.FromEmail),
-                    Subject = subject,
-                    Body = body,
-                    IsBodyHtml = true
-                };
-                mailMessage.To.Add(toEmail);
+                    smtpClient.Credentials = new NetworkCredential(_smtpSettings.Username, _smtpSettings.Password);
+                    smtpClient.EnableSsl = false; // Ensure this is correct based on your SMTP server requirements
+                    smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
 
-                await smtpClient.SendMailAsync(mailMessage);
+                    var mailMessage = new MailMessage
+                    {
+                        From = new MailAddress(_smtpSettings.FromEmail),
+                        Subject = subject,
+                        Body = body,
+                        IsBodyHtml = true
+                    };
+                    mailMessage.To.Add(toEmail);
+
+                    await smtpClient.SendMailAsync(mailMessage);
+                    return true; // Email sent successfully
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log the exception (if logging is set up)
+                Console.WriteLine($"Error sending email: {ex.Message}");
+                return false; // Return false if email sending fails
             }
         }
+
     }
 }

@@ -116,12 +116,14 @@ namespace CandidateDetails_API.Controllers
             await _employeeservice.UpdateUserAsync(user);
 
             // Create the reset link with the token
-            var resetLink = $"http://localhost:4200/reset-password?token={resetToken}";
+            //var resetLink = $"http://localhost:4200/reset-password?token={resetToken}";
+            var resetLink = $"http://192.168.29.166:2002/reset-password?token={resetToken}";
+
 
             // Send the reset link via email
-            await _emailservice.SendEmailAsync(request.email, "Reset your password", $"Click <a href='{resetLink}'>here</a> to reset your password.");
+           var isSend = await _emailservice.SendEmailAsync(request.email, "Reset your password", $"Click <a href='{resetLink}'>here</a> to reset your password.");
 
-            return Ok(new { success = true, message = "Password reset email sent" });
+            return Ok(new { success = isSend, message = "Password reset email sent" });
         }
 
         /// <summary>
