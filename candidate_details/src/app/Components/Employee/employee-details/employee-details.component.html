@@ -3,10 +3,10 @@
     <div class="row">
       <!-- Profile Image and Info -->
       <div class="col-xl-4">
-        <h1 class="text-center magical-header py-2">PROFILE</h1>
+        <h1 class="text-center magical-header mb-0 py-2">PROFILE</h1>
         <div class="card border-0 shadow-lg rounded">
           <div
-            class="card-body profile-card pt-4 d-flex flex-column align-items-center bg-gradient bg-light rounded"
+            class="card-body profile-card pt-4 d-flex flex-column align-items-center profile-details-bg-color rounded"
           >
             <a (click)="editEmployee(employee)">
               <img
@@ -32,7 +32,7 @@
         </div>
         <button
           *ngIf="userRole === 'Admin' || userRole === 'HR'"
-          class="btn btn-color px-4 mb-2 mt-5"
+          class="btn btn-info-color px-4 mb-2 mt-5"
           routerLink="/employees"
         >
           <i class="fa-solid fa-rotate-left"></i> Employees
@@ -41,7 +41,7 @@
 
       <!-- Profile Details and Leave -->
       <div class="col-xl-8">
-        <div class="card border-0 shadow-lg rounded bg-light">
+        <div class="card border-0 shadow-lg rounded details-bg-color">
           <div class="card-body pt-4">
             <!-- Styled Tabs -->
             <ul
@@ -50,7 +50,7 @@
             >
               <li class="nav-item me-2" role="presentation">
                 <button
-                  class="btn border-secondary px-4 text-uppercase"
+                  class="btn border-secondary btn-style px-4 text-uppercase"
                   data-bs-toggle="tab"
                   data-bs-target="#profile-Details"
                   aria-selected="true"
@@ -62,7 +62,7 @@
               </li>
               <li class="nav-item me-2" role="presentation">
                 <button
-                  class="btn border-secondary text-uppercase px-4"
+                  class="btn border-secondary btn-style text-uppercase px-4"
                   data-bs-toggle="tab"
                   data-bs-target="#profile-Assets"
                   aria-selected="false"
@@ -80,7 +80,7 @@
               </li>
               <li class="nav-item me-2" role="presentation">
                 <button
-                  class="btn border-secondary text-uppercase px-4"
+                  class="btn border-secondary btn-style text-uppercase px-4"
                   data-bs-toggle="tab"
                   data-bs-target="#profile-Leave"
                   aria-selected="false"
@@ -103,7 +103,7 @@
                 *ngIf="employee.empId == loggedEmp.employee.empId"
               >
                 <button
-                  class="btn border-secondary text-uppercase px-4"
+                  class="btn border-secondary btn-style text-uppercase px-4"
                   data-bs-toggle="tab"
                   data-bs-target="#profile-password"
                   aria-selected="false"
@@ -220,7 +220,7 @@
                 <div>
                   <button
                     *ngIf="!isReqLeave"
-                    class="btn btn-primary float-start mb-2"
+                    class="btn btn-primary-color float-start mb-2"
                     (click)="openModal()"
                   >
                     <i class="fa-solid fa-plus me-1"></i> Leave Request
@@ -228,7 +228,7 @@
 
                   <button
                     *ngIf="userRole != 'Employee' && !isReqLeave"
-                    class="btn btn-primary float-end mb-2"
+                    class="btn btn-primary-color float-end mb-2"
                     (click)="GetRequestLeave(employee.empId)"
                   >
                     <i class="fa-solid fa-info-circle me-1"></i> Requests
@@ -240,7 +240,7 @@
                     ></button
                   ><button
                     *ngIf="userRole != 'Employee' && isReqLeave"
-                    class="btn btn-primary float-end mb-2"
+                    class="btn btn-primary-color float-end mb-2"
                     (click)="GetLeave()"
                   >
                     <i class="fa-solid fa-rotate-left me-2"></i>Get Back
@@ -269,10 +269,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr
-                        class="row bg-light"
-                        *ngFor="let leave of empLeaveList"
-                      >
+                      <tr class="row" *ngFor="let leave of empLeaveList">
                         <td class="col d-flex justify-content-center">
                           {{ leave.leaveFor }}
                         </td>
@@ -486,13 +483,13 @@
                   <hr class="hr" />
                   <div class="row">
                     <div class="col-12 d-flex justify-content-center">
-                      <button type="submit" class="btn btn-primary mt-4">
+                      <button type="submit" class="btn btn-primary-color mt-4">
                         <i class="fa-regular fa-thumbs-up me-1"></i>Change
                       </button>
 
                       <button
                         type="reset"
-                        class="btn btn-danger mt-4 ms-4 shadow-sm"
+                        class="btn btn-danger-color mt-4 ms-4 shadow-sm"
                       >
                         <i class="fa-solid fa-arrows-rotate me-2"></i> Cancel
                       </button>
@@ -508,7 +505,7 @@
                 role="tabpanel"
               >
                 <button
-                  class="btn btn-primary float-start mb-2"
+                  class="btn btn-primary-color float-start mb-2"
                   (click)="openAssetsModal()"
                   *ngIf="userRole !== 'Employee'"
                 >
@@ -531,10 +528,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr
-                      class="row bg-light"
-                      *ngFor="let asstes of employeeAssets"
-                    >
+                    <tr class="row" *ngFor="let asstes of employeeAssets">
                       <td class="col d-flex justify-content-center">
                         {{ asstes.assetName }}
                       </td>
@@ -666,11 +660,11 @@
       <hr class="hr" />
       <div class="row">
         <div class="col-12 d-flex justify-content-center">
-          <button type="submit" class="btn btn-primary mt-4">
+          <button type="submit" class="btn btn-primary-color mt-4">
             <i class="fa-regular fa-thumbs-up me-1"></i>Submit
           </button>
 
-          <button type="reset" class="btn btn-danger mt-4 ms-4 shadow-sm">
+          <button type="reset" class="btn btn-danger-color mt-4 ms-4 shadow-sm">
             <i class="fa-solid fa-arrows-rotate me-2"></i> Reset
           </button>
         </div>
@@ -987,11 +981,11 @@
       <hr class="hr" />
       <div class="row">
         <div class="col-12 d-flex justify-content-center">
-          <button type="submit" class="btn btn-primary mt-4">
+          <button type="submit" class="btn btn-primary-color mt-4">
             <i class="fa-regular fa-thumbs-up me-1"></i>Submit
           </button>
 
-          <button type="reset" class="btn btn-danger mt-4 ms-4 shadow-sm">
+          <button type="reset" class="btn btn-danger-color mt-4 ms-4 shadow-sm">
             <i class="fa-solid fa-arrows-rotate me-2"></i> Reset
           </button>
         </div>
@@ -1041,11 +1035,11 @@
       <hr class="hr" />
       <div class="row">
         <div class="col-12 d-flex justify-content-center">
-          <button type="submit" class="btn btn-primary mt-4">
+          <button type="submit" class="btn btn-primary-color mt-4">
             <i class="fa-regular fa-thumbs-up me-1"></i>Submit
           </button>
 
-          <button type="reset" class="btn btn-danger mt-4 ms-4 shadow-sm">
+          <button type="reset" class="btn btn-danger-color mt-4 ms-4 shadow-sm">
             <i class="fa-solid fa-arrows-rotate me-2"></i> Reset
           </button>
         </div>

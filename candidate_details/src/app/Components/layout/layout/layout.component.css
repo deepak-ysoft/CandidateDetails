@@ -3,36 +3,66 @@ li {
    font-size: larger;
 }
 
-.li {
-   font-weight: 400;
-}
-
-/* navbar-style.css */
-
+/* Navbar Background with Gradient */
 .navbar {
-   background-color: #f8f9fa;
-   padding: 10px 0;
+   background: linear-gradient(90deg, #73d0ff 5%, #006fb4 50%, #0095ff 100%);
+   color: #ffffff;
+   padding: 10px 20px;
 }
 
-.navbar-brand img {
-   width: 100px;
-   height: auto;
-}
-
-.navbar-nav .nav-item .nav-link {
-   color: #343a40;
-   margin-right: 15px;
-   font-size: 16px;
-}
-
-.navbar-nav .nav-item .nav-link:hover {
-   color: #007bff;
-   text-decoration: none;
-}
-
-.navbar-nav .nav-item .nav-link.active {
-   color: #007bff;
+/* Navbar Brand (Logo or Title) */
+.navbar-brand {
+   color: #ffffff;
+   font-size: 22px;
    font-weight: bold;
+}
+/* Navbar Links (Default) */
+.navbar-nav .nav-item .nav-link {
+   color: #ffffff; /* White text for high contrast */
+   margin-right: 15px;
+   font-size: 20px;
+   font-weight: 500;
+   transition:
+      color 0.3s ease-in-out,
+      transform 0.2s ease-in-out;
+}
+
+/* 🔥 Hover Effect (Lighter Blue) */
+.navbar-nav .nav-item .nav-link:hover {
+   color: #7e7a60; /* Bright Gold for visibility */
+   text-decoration: none;
+   transform: scale(1.05);
+}
+
+/* ✅ Active Link (Electric Blue) */
+.navbar-nav .nav-item .nav-link.active {
+   color: #0d5e76; /* Electric Blue */
+   font-weight: bold;
+   border-bottom: 3px solid #ffc184;
+}
+
+/* Responsive Navbar Toggler */
+.navbar-toggler {
+   border: none;
+   background-color: transparent;
+}
+
+.navbar-toggler-icon {
+   filter: brightness(0) invert(1);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+   .navbar-nav {
+      background: linear-gradient(180deg, #005f99, #2095d1);
+      padding: 10px;
+      border-radius: 5px;
+   }
+
+   .navbar-nav .nav-item {
+      text-align: center;
+      margin-bottom: 10px;
+   }
 }
 
 .text-primary:hover {
@@ -45,8 +75,8 @@ li {
 .page-container {
    display: flex;
    flex-direction: column;
-   min-height: calc(100vh - 85px); /* Ensures the container takes full height of the viewport */
-   max-height: calc(100vh - 82px);
+   min-height: calc(100vh - 81px); /* Ensures the container takes full height of the viewport */
+   max-height: calc(100vh - 81px);
    overflow-y: hidden;
    overflow-x: hidden;
 }
@@ -56,33 +86,36 @@ main.main {
    max-height: 88%;
    overflow-y: auto;
    overflow-x: auto;
-   background-color:#efebeb9d;
+   background: linear-gradient(180deg, #fff9f9 0%, #d1e2ee 50%, #fcf4f4 100%);
+   color: #333333;
 }
 
 footer.footer {
-   background: #f8f9fa;
+   background: linear-gradient(180deg, #74bce9 0%, #0f78bf 50%, #5595de 100%);
+   color: #ffffff;
+
    text-align: center;
    padding: 10px 0;
    position: relative;
    width: 100%;
 }
+
 .all-rights {
    margin: 0;
    font-size: 14px;
    font-weight: 400; /* Adjust weight as needed */
-   color: #6c757d; /* Optional: Muted text color */
    width: 100%; /* Ensures it spans the full width */
    display: block; /* Ensures it behaves as a full-width block */
 }
 
 .emp-dot {
-   left: 95%;
+   left: 98%;
    bottom: 45%;
 }
 
 /* Hover effect for background */
 .dropdown-item:hover {
-   background-color: #f1f5f9;
+   background-color: #c6e3ff;
 }
 
 .text-danger:hover {
@@ -96,8 +129,4 @@ footer.footer {
 
 .dropdown-divider {
    border-color: #e0e0e0;
-}
-
-.navbar-bg {
-   background: linear-gradient(135deg, #e3cbfc 0%, #c1d8ff 100%);
 }

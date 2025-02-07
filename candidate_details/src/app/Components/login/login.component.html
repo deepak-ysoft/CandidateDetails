@@ -1,4 +1,4 @@
-<div class="container-fluid bg-light">
+<div class="container-fluid bg">
   <section
     class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center"
   >
@@ -6,31 +6,33 @@
       <div
         [ngClass]="
           isLogin
-            ? 'col-lg-6 col-md-8 col-sm-10 d-flex flex-column align-items-center justify-content-center'
-            : 'col-md-12 d-flex flex-column align-items-center justify-content-center'
-        "
+            ? 'col-lg-6 col-md-6 col-sm-8 col-10 d-flex flex-column align-items-center justify-content-center'
+            : 'col-lg-12 col-md-12 col-sm-8 col-10 d-flex flex-column align-items-center justify-content-center mt-5'
+        " 
       >
-        <div class="d-flex justify-content-center py-4">
-          <a class="logo d-flex text-decoration-none align-items-center w-auto">
-            <img
-              src="https://www.ysoftsolution.com/wp-content/uploads/2024/02/final-logo-1024x505.png"
-              alt="Y Soft Solution Logo"
-              width="150"
-              height="75"
-              class="d-inline-block align-text-top"
-            />
-          </a>
-        </div>
         <!-- End Logo -->
 
-        <div class="card p-3 mb-3 border-0 shadow">
+        <div class="card p-3 mb-3 border-0">
           <div class="card-body">
             <div *ngIf="isLogin" class="login-card-size">
+              <div class="ysoft-logo d-flex justify-content-center">
+                <a>
+                  <img
+                    src="https://www.ysoftsolution.com/wp-content/uploads/2024/02/final-logo-1024x505.png"
+                    alt="Y Soft Solution Logo"
+                    width="90"
+                    height="45"
+                    class="d-inline-block align-text-top"
+                  />
+                </a>
+              </div>
               <div class="pt-4 pb-2">
-                <h5 class="card-title text-center pb-0 fs-4">
+                <h5
+                  class="card-title text-center pb-0 fs-4 d-flex justify-content-center"
+                >
                   Login to Your Account
                 </h5>
-                <p class="text-center small">
+                <p class="text-center small d-flex justify-content-center">
                   Enter your email & password to login
                 </p>
               </div>
@@ -133,7 +135,7 @@
                   </div>
                 </div>
                 <div class="col-12 d-flex justify-content-center">
-                  <button class="btn btn-primary" type="submit">
+                  <button class="btn btn-primary-color" type="submit">
                     <i class="fa-solid fa-arrow-right-to-bracket me-2"></i>
                     Login
                   </button>
@@ -150,6 +152,17 @@
               </div>
             </div>
             <div *ngIf="!isLogin" class="register-card-size">
+              <div class="ysoft-logo-register d-flex justify-content-center">
+                <a>
+                  <img
+                    src="https://www.ysoftsolution.com/wp-content/uploads/2024/02/final-logo-1024x505.png"
+                    alt="Y Soft Solution Logo"
+                    width="75"
+                    height="38"
+                    class="d-inline-block align-text-top"
+                  />
+                </a>
+              </div>
               <div class="pt-3 pb-2">
                 <h5 class="card-title text-center pb-0 fs-4">
                   Register to Your Account
@@ -594,13 +607,13 @@
                     </p>
                   </div>
                   <div class="col-12 col-md-8 d-flex justify-content-start">
-                    <button type="submit" class="btn btn-primary mt-2">
+                    <button type="submit" class="btn btn-primary-color mt-2">
                       <i class="fa-regular fa-thumbs-up me-1"></i>Submit
                     </button>
 
                     <button
                       type="reset"
-                      class="btn btn-danger mt-2 ms-4 shadow-sm"
+                      class="btn btn-danger-color mt-2 ms-4 shadow-sm"
                     >
                       <i class="fa-solid fa-arrows-rotate me-2"></i> Reset
                     </button>

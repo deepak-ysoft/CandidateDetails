@@ -1,4 +1,5 @@
-li button i, .assets-icon {
+li button i,
+.assets-icon {
    animation: bounce 1.5s infinite alternate;
 }
 
@@ -35,4 +36,22 @@ li button i, .assets-icon {
 
 td i {
    font-size: larger;
+}
+
+/* Header Styling */
+.magical-header {
+   background: linear-gradient(90deg, #73d0ff 5%, #006fb4 50%, #0095ff 100%);
+   color: #ffffff;
+}
+
+.details-bg-color {
+   background: linear-gradient(90deg, #d9edf7 5%, #ffffff 50%, #fef1f1 100%);
+}
+.profile-details-bg-color {
+   background: linear-gradient(90deg, #fcf1f1 5%, #ffffff 50%, #dff1fa 100%);
+}
+
+.btn-style {
+   background: linear-gradient(90deg, hsl(200, 91%, 91%) 5%, #ffffff 50%, #ffe2e2 100%);
+   font-weight: 500;
 }

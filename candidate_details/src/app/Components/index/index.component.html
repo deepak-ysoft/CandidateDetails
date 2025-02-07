@@ -1,5 +1,5 @@
 <div class="row m-4">
-  <div class="col-12 col-md-6 mb-4">
+  <div class="col-xl-12 col-xxl-6">
     <div class="card">
       <div class="card-body magical-table-container">
         <h4 class="card-title">
@@ -16,11 +16,11 @@
               <th class="col-3">Interview Date</th>
             </tr>
           </thead>
-          <tbody class="bg-light">
+          <tbody *ngIf="todayDataLength != 0">
             <tr
               *ngFor="let candidate of todayData"
               (click)="CanidtateDetals(candidate)"
-              class="row bg-light"
+              class="row"
             >
               <td class="col ellipsis-cell ms-3">{{ candidate.name }}</td>
               <td class="col ellipsis-cell">{{ candidate.contact_No }}</td>
@@ -38,8 +38,12 @@
                 {{ candidate.schedule_Interview | date : "medium" }}
               </td>
             </tr>
-            <tr *ngIf="todayDataLength == 0" class="row p-5">
-              <h1><b>Today No Interview</b></h1>
+          </tbody>
+          <tbody *ngIf="todayDataLength == 0">
+            <tr>
+              <td colspan="20" class="text-center null-table1-size">
+                <h1><b>Today No Interview</b></h1>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -47,7 +51,7 @@
     </div>
   </div>
 
-  <div class="col-12 col-md-6 mb-4">
+  <div class="col-xl-12 col-xxl-6">
     <div class="card">
       <div class="card-body magical-table-container">
         <h4 class="card-title">
@@ -64,11 +68,11 @@
               <th class="col-3 me-3">Interview Date</th>
             </tr>
           </thead>
-          <tbody class="bg-light">
+          <tbody *ngIf="weekDataLength != 0">
             <tr
               *ngFor="let candidate of weekData"
               (click)="CanidtateDetals(candidate)"
-              class="row bg-light"
+              class="row"
             >
               <td class="col ellipsis-cell ms-3">{{ candidate.name }}</td>
               <td class="col ellipsis-cell">{{ candidate.contact_No }}</td>
@@ -86,8 +90,12 @@
                 {{ candidate.schedule_Interview | date : "medium" }}
               </td>
             </tr>
-            <tr *ngIf="weekDataLength == 0" class="row p-5">
-              <h1><b>This Week No Interview</b></h1>
+          </tbody>
+          <tbody *ngIf="weekDataLength == 0">
+            <tr>
+              <td colspan="20" class="text-center null-table2-size">
+                <h1><b>This Week No Interview</b></h1>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -100,7 +108,7 @@
   class="card container p-0 mt-5 mb-3 shadow-lg border-0"
   *ngIf="showCandidate"
 >
-  <div class="card-header bg-color text-white text-center">
+  <div class="card-header bg-color  text-center">
     <h4 class="mb-0">
       <b><i class="fas fa-user"></i> Candidate Details</b>
     </h4>

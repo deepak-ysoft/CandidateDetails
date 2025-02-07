@@ -14,7 +14,7 @@ body {
 }
 
 .mat-mdc-tooltip-surface {
-   background-color: #ffdcd4 !important;
+   background-color: #ffb2a0da !important;
    color: rgb(0, 0, 0) !important;
    font-size: 18px !important;
    z-index: 1000 !important; /* Ensure it appears above other elements */
@@ -23,18 +23,48 @@ body {
 }
 
 .btn {
-   border-radius: 25px !important;
-   padding: 5px 20px;
-   transition:
-      box-shadow 0.3s ease,
-      transform 0.3s ease;
-}
-.btn:hover {
-   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-   transform: translateY(-2px);
+   border-radius: 12px !important;
+   padding: 5px 15px;
 }
 
-.btn-color{
+.btn-primary-color {
+   background-color: #14b1ff;
+   color: white;
+   border: 1px solid #0287c9;
+}
+.btn-primary-color:hover {
+   color: white;
+   opacity: 0.9;
+   transform: scale(1.04);
+   transition: all 0s ease-in-out;
+}
+
+.btn-info-color {
+   background-color: #01cbea;
+   color: white;
+   border: 1px solid #009fb8;
+}
+.btn-info-color:hover {
+   color: white;
+   opacity: 0.9;
+   transform: scale(1.04);
+   transition: all 0s ease-in-out;
+}
+
+.btn-danger-color {
+   background-color: #dc3545;
+   border: 1px solid #920f1c;
+   color: white;
+}
+
+.btn-danger-color:hover {
+   color: white;
+   opacity: 0.9;
+   transform: scale(1.04);
+   transition: all 0s ease-in-out;
+}
+
+.btn-color {
    background-color: hwb(189 9% 31%);
    color: white;
 }
@@ -53,7 +83,7 @@ body {
    box-shadow:
       0 4px 6px rgba(0, 0, 0, 0.1),
       0 1px 3px rgba(0, 0, 0, 0.2);
-   border-top:1px solid #b3c9f5;
+   border-top: 1px solid #b3c9f5;
 }
 
 .magical-table thead tr th {
@@ -62,20 +92,27 @@ body {
 
 /* Header Styling */
 .magical-table thead {
-   background: linear-gradient(135deg, #f0e1ff 0%, #d1e0fa 100%);
-   color: black;
+   background: linear-gradient(90deg, #2095d1 0%, #005f99 50%, #67aad7 100%);
+   color: #ffffff;
    font-weight: bold;
 }
 
 /* Body Styling */
 .magical-table tbody {
-   background: #ffffff;
+   background: linear-gradient(180deg, #fef6f6 0%, #f5f5f5 50%, #d2e9f9 100%);
+   color: #333333;
 }
 /* Rows */
 .magical-table tbody tr {
+   background: linear-gradient(90deg, #faeded 0%, #ffffff 50%, #def1fe 100%);
+   color: #333333;
    transition:
       transform 0.2s ease,
       background-color 0.3s ease;
+}
+
+.modal-body {
+   background: linear-gradient(90deg, #fff7f7 0%, #ffffff 50%, hsl(205, 100%, 96%) 100%);
 }
 
 /* Hover Effect */
@@ -85,7 +122,6 @@ body {
    cursor: pointer;
 }
 
-/* Magical input box */
 /* General Input Field Style */
 .magic-input {
    box-shadow:
@@ -95,13 +131,14 @@ body {
    color: rgb(0, 0, 0);
    font-size: 18px;
    padding: 8px 16px;
+   background-color: #e9f6ff;
 }
 
 /* Glowing Effect on Focus */
 .magic-input:focus {
    box-shadow:
-      0 0 8px rgba(49, 155, 255, 0.7),
-      0 0 20px rgba(49, 155, 255, 0.5);
+      0 0 8px rgb(0, 98, 255),
+      0 0 20px rgb(49, 155, 255);
    transform: scale(1.02);
 }
 
@@ -109,25 +146,20 @@ body {
 .magic-input:hover {
    cursor: pointer;
    box-shadow:
-      0 0 6px rgba(0, 255, 255, 0.5),
-      0 0 12px rgba(0, 255, 255, 0.3);
+      0 0 6px rgb(4, 69, 234),
+      0 0 12px rgba(0, 255, 255, 0.727);
 }
 
 .magic-inputFile[type="file"]::file-selector-button {
-   border: 2px solid #95edeb;
+   border: 2px solid #0095ff;
    padding: 0.2em 0.4em;
    border-radius: 0.6em;
-   background-color: #cbfffe;
+   background-color: #9dd6ff;
 }
 
 .magic-inputFile[type="file"]::file-selector-button:hover {
    background-color: rgba(49, 155, 255, 0.7);
    border: 2px solid rgba(10, 76, 139, 0.7);
-}
-
-/* Header Styling */
-.magical-header {
-   background: linear-gradient(135deg, #e3cbfc 0%, #c1d8ff 100%);
 }
 
 a {
@@ -152,4 +184,9 @@ textarea {
 }
 .shadow-lg {
    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+}
+
+.modal-header {
+   background: linear-gradient(90deg, #73d0ff 5%, #006fb4 50%, #0095ff 100%);
+   color: #ffffff;
 }

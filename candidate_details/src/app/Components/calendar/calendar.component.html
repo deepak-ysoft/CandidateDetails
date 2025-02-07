@@ -3,17 +3,17 @@
     <!-- Trigger Button -->
     <div class="row">
       <div class="col" *ngIf="userRole === 'Admin' || userRole === 'HR'">
-        <a class="btn btn-primary" (click)="onAdd()"
+        <a class="btn btn-primary-color" (click)="onAdd()"
           ><i class="fa-solid fa-plus me-2"></i>Add Event</a
         >
       </div>
       <div class="col" *ngIf="userRole === 'Admin' || userRole === 'HR'">
-        <a class="btn btn-color float-end" (click)="ShowEventList()"
+        <a class="btn btn-info-color float-end" (click)="ShowEventList()"
           ><i class="fa-regular fa-calendar me-2"></i>Events</a
         >
       </div>
       <div class="col" *ngIf="userRole === 'Employee'">
-        <a class="btn btn-color float-start" (click)="ShowEventList()"
+        <a class="btn btn-info-color float-start" (click)="ShowEventList()"
           ><i class="fa-regular fa-calendar me-2"></i>Events</a
         >
       </div>
@@ -22,7 +22,7 @@
       <full-calendar
         #calendar
         [options]="calendarOptions"
-        class="bg-white border"
+        class="calendar-style"
       ></full-calendar>
     </div>
   </div>
@@ -158,12 +158,12 @@
       <div class="modal-footer">
         <button
           type="submit"
-          class="btn btn-primary"
+          class="btn btn-primary-color"
           aria-label="Close"
           (click)="modal.dismiss('Cross click')"
         >
           <i class="fa-regular fa-circle-check me-2"></i>Save Event</button
-        ><button type="reset" class="btn btn-danger ms-5 shadow-sm">
+        ><button type="reset" class="btn btn-danger-color ms-5 shadow-sm">
           <i class="fa-solid fa-arrows-rotate me-2"></i> Reset
         </button>
       </div>
@@ -203,14 +203,14 @@
       <div *ngIf="userRole === 'Admin' || userRole === 'HR'">
         <hr class="hr" *ngIf="!isUsed" />
         <button
-          class="btn btn-primary"
+          class="btn btn-primary-color"
           *ngIf="!isUsed"
           (click)="editcalendar(fullcalendar)"
         >
           <i class="fas fa-edit me-2"></i>Edit
         </button>
         <button
-          class="btn btn-danger ms-3"
+          class="btn btn-danger-color ms-3"
           *ngIf="!isUsed"
           aria-label="Close"
           (click)="modal.dismiss('Cross click')"
@@ -226,7 +226,7 @@
 <div *ngIf="!showCalendar">
   <div class="container">
     <a
-      class="btn btn-color shadow-sm border rounded-pill"
+      class="btn btn-info-color shadow-sm border rounded-pill"
       (click)="ShowCalendar()"
     >
       <i class="fa-solid fa-calendar-days me-1"></i>Calendar
@@ -236,7 +236,8 @@
         <div class="card mt-2 shadow magic-card">
           <div class="card-body holiday-card">
             <h5 class="card-title">
-              Company Holidays <i class="fa-solid fa-mug-hot ms-2"></i>
+              Company Holidays
+              <i class="fa-solid colo fa-mug-hot text-primary ms-2"></i>
             </h5>
             <div class="scroll-list p-3">
               <ul class="list-group" *ngFor="let Holiday of holidayList">
@@ -280,7 +281,7 @@
         <div class="card mt-2 shadow magic-card">
           <div class="card-body birthday-card">
             <h5 class="card-title">
-              Birthday <i class="fas fa-birthday-cake ms-2"></i>
+              Birthday <i class="fas fa-birthday-cake text-primary ms-2"></i>
             </h5>
             <div class="scroll-list p-3">
               <ul class="list-group" *ngFor="let birthday of birthdayList">

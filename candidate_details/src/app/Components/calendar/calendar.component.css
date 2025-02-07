@@ -7,15 +7,15 @@
 }
 
 .holiday-card {
-   background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+   background: linear-gradient(90deg, #fde3e3 5%, #ffffff 50%, #bee9fe 100%);
    animation: gradientShift 3s ease-in-out infinite;
-   color: #fff;
+   color: #0f95f5;
 }
 
 .birthday-card {
-   background: linear-gradient(45deg, #a18cd1, #fbc2eb);
+   background: linear-gradient(90deg, #fde3e3 5%, #ffffff 50%, #bee9fe 100%);
    animation: gradientShift 3s ease-in-out infinite;
-   color: #fff;
+   color: #0f95f5;
 }
 
 .magic-card .card-title {
@@ -58,7 +58,6 @@
    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
    background: rgba(255, 255, 255, 1);
 }
-
 
 /* Gradient Animation */
 @keyframes gradientShift {
@@ -105,7 +104,10 @@
    padding-bottom: 3px;
 }
 
-.modal-header {
-   background-color: rgb(217, 246, 246);
+.calendar-style {
+   border: 2px solid #76c6ff;
+   border-radius: 10px;
+   box-shadow: 0px 5px 15px 2px #72c4ff;
+   background-color: white;
+   padding: 15px;
 }
-

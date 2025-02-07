@@ -1,7 +1,7 @@
-<nav class="navbar navbar-expand-lg navbar-light navbar-bg">
+<nav class="navbar navbar-expand-md navbar-bg">
   <div class="container-fluid">
     <a
-      class="navbar-brand"
+      class="bg-white me-3"
       *ngIf="userRole === 'Employee'"
       routerLink="/calendar"
     >
@@ -9,17 +9,21 @@
         src="https://www.ysoftsolution.com/wp-content/uploads/2024/02/final-logo-1024x505.png"
         alt="Y Soft Solution Logo"
         width="100"
-        height="50"
-        class="d-inline-block align-text-top"
+        height="55"
+        class="d-inline-block align-text-top p-2 pe-0"
       />
     </a>
-    <a class="navbar-brand" *ngIf="userRole !== 'Employee'" routerLink="/index">
+    <a
+      class="bg-white me-3 rounded"
+      *ngIf="userRole !== 'Employee'"
+      routerLink="/index"
+    >
       <img
         src="https://www.ysoftsolution.com/wp-content/uploads/2024/02/final-logo-1024x505.png"
         alt="Y Soft Solution Logo"
         width="100"
-        height="50"
-        class="d-inline-block align-text-top"
+        height="55"
+        class="d-inline-block align-text-top p-2 pe-0"
       />
     </a>
     <!-- Navbar Content -->
@@ -69,7 +73,7 @@
             <i class="fa-regular fa-user me-1"></i> Employee
             <span
               *ngIf="reqEmpCount != 0 || reqLeaveCount != 0"
-              class="badge bg-danger rounded-circle position-absolute emp-dot translate-middle"
+              class="badge bg-danger text-primary rounded-circle position-absolute emp-dot translate-middle"
               style="width: 8px; height: 8px; padding: 0"
               >.</span
             >
@@ -83,7 +87,7 @@
       *ngIf="userRole === 'Admin' || userRole === 'HR'"
     >
       <a routerLink="/index">
-        <i class="fa-solid fa-bell fa-xl text-primary"></i>
+        <i class="fa-solid fa-bell fa-xl text-light"></i>
         <span
           *ngIf="todayDataCount != 0"
           class="badge bg-danger badge-number position-absolute top-0 start-100 translate-middle"
@@ -94,7 +98,7 @@
     </div>
 
     <button
-      class="btn btn-color me-4"
+      class="btn btn-info-color me-4"
       *ngIf="(userRole === 'Admin' || userRole === 'HR') && showExcelDownload"
       (click)="downloadCandidateExcel()"
     >
@@ -120,12 +124,12 @@
           class="dropdown-item d-flex align-items-center gap-2 py-2 px-3 hover:bg-light rounded-2"
           (click)="employeeProfile(loggedEmp.employee)"
         >
-          <i class="bi bi-person fs-5 text-primary"></i>
+          <i class="fas fa-user fs-5 text-primary"></i>
           <span class="fw-semibold">My Profile</span>
         </a>
       </li>
       <li>
-        <hr class="dropdown-divider my-2" />
+        <hr class="dropdown-divider m-0" />
       </li>
       <li>
         <a

@@ -55,9 +55,6 @@ td {
   display: inline-block;
 }
 
-.modal-header {
-  background-color: rgb(217, 246, 246);
-}
 
 .details-shadow {
   box-shadow: 0 5px 5px rgb(127, 127, 127);
@@ -76,5 +73,6 @@ tbody tr {
 }
 
 .bg-color {
-  background-color: rgba(73, 130, 215, 0.97);
+  background: linear-gradient(90deg, #73d0ff 5%, #006fb4 50%, #0095ff 100%);
+  color: #ffffff;
 }

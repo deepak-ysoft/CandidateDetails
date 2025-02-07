@@ -4,7 +4,7 @@
       <h2><b>Ysoft Employees</b></h2>
     </div>
     <button
-      class="btn btn-primary float-end pe-4 ps-4"
+      class="btn btn-primary-color float-end pe-4 ps-4"
       *ngIf="!isRequestedEmp"
       (click)="GetRequestedEmployee()"
     >
@@ -14,7 +14,7 @@
       </b>
     </button>
     <button
-      class="btn btn-primary float-end pe-4 ps-4"
+      class="btn btn-primary-color float-end pe-4 ps-4"
       *ngIf="isRequestedEmp"
       (click)="getEmployees()"
     >
@@ -39,7 +39,7 @@
       </tr>
     </thead>
     <tbody class="tbody">
-      <tr class="row bg-light" *ngFor="let emp of employeeList">
+      <tr class="row  " *ngFor="let emp of employeeList">
         <td (click)="employeeDetails(emp)" class="col ellipsis-cell">
           <img
             *ngIf="emp?.imagePath != null"
@@ -56,7 +56,7 @@
 
           <span
             *ngIf="hasLeave(emp.empId)"
-            class="badge bg-danger rounded-circle position-absolute emp-dot translate-middle"
+            class="badge   rounded-circle position-absolute emp-dot translate-middle"
             style="width: 8px; height: 8px; padding: 0"
             >.</span
           >
@@ -495,11 +495,11 @@
       <hr class="hr" />
       <div class="row">
         <div class="col-12 d-flex justify-content-center">
-          <button type="submit" class="btn btn-primary mt-4">
+          <button type="submit" class="btn btn-primary-color mt-4">
             <i class="fa-regular fa-thumbs-up me-1"></i>Submit
           </button>
 
-          <button type="reset" class="btn btn-danger mt-4 ms-4 shadow-sm">
+          <button type="reset" class="btn btn-danger-color mt-4 ms-4 shadow-sm">
             <i class="fa-solid fa-arrows-rotate me-2"></i> Reset
           </button>
         </div>

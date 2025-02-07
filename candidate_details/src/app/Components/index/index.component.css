@@ -14,7 +14,8 @@ thead th {
 
 tbody {
    display: block;
-   max-height: 663px; /* Set the height of the scrollable area */
+   max-height: 639px; /* Set the height of the scrollable area */
+   min-height: 639px; /* Set the height of the scrollable area */
    overflow-y: auto; /* Add vertical scrolling */
    overflow-x: hidden;
 }
@@ -28,7 +29,12 @@ tbody {
    width: 100%;
    border-collapse: collapse;
 }
-
+.null-table1-size {
+   padding: 292px 257px;
+}
+.null-table2-size {
+   padding: 267px 216px;
+}
 .ellipsis-cell {
    max-width: 145px;
    overflow: hidden; /* Hides content that overflows */
@@ -38,5 +44,6 @@ tbody {
 }
 
 .bg-color {
-   background-color: rgba(73, 130, 215, 0.97);
+   background: linear-gradient(90deg, #73d0ff 5%, #006fb4 50%, #0095ff 100%);
+   color: #ffffff;
 }
