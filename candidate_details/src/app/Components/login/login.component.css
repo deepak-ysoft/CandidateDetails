@@ -32,7 +32,6 @@
 }
 .card {
    box-shadow: 0 5px 20px 10px #65a9da;
-   
    background: linear-gradient(135deg,rgb(255, 246, 246) 5%, #e1f5ff 30%, #a4d9ff 170%);
 }
 
@@ -64,6 +63,5 @@
 
 .bg {
    background: linear-gradient(135deg,rgb(255, 246, 246) 5%, #e1f5ff 30%, #60bdff 170%);
-   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.927);
    color: #333333;
 }
