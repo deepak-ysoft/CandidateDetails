@@ -287,30 +287,15 @@
               <ul class="list-group" *ngFor="let birthday of birthdayList">
                 <li class="list-group-item magic-list">
                   <div class="row">
-                    <div class="col-5">
+                    <div class="col-6 d-flex justify-content-center">
                       <img
                         class="holiday-icon"
                         src="assets/icon/birthday-cake-line-icon.png"
                       />
                       <b>{{ birthday.description }}</b>
                     </div>
-                    <div class="col-5">
+                    <div class="col-6 d-flex justify-content-center">
                       {{ birthday.startDate | date : "dd/MMM/yyyy" }}
-                    </div>
-                    <div
-                      class="col-2"
-                      *ngIf="userRole === 'Admin' || userRole === 'HR'"
-                    >
-                      <span class="float-end">
-                        <i
-                          class="fas fa-edit text-primary me-3 hover-scale"
-                          (click)="editcalendar(birthday)"
-                        ></i>
-                        <i
-                          class="fa fa-trash text-danger hover-scale"
-                          (click)="DeleteCalendar(birthday.calId)"
-                        ></i
-                      ></span>
                     </div>
                   </div>
                 </li>

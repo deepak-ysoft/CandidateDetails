@@ -43,9 +43,10 @@ namespace CandidateDetails_API.ServiceContent
             var emp = await _context.Employees.FirstOrDefaultAsync(u => u.empEmail == model.email);
             if (emp != null)
             {
-                if(emp.isActive == false)
-                    return (false, "Your account is not active.");
                 var passwordVerificationResult = hasher.VerifyHashedPassword(emp, emp.empPassword, model.password); // To verify password
+
+                if (emp.isActive == false && passwordVerificationResult == PasswordVerificationResult.Success)
+                    return (false, "Your account is not active.");
                 if (passwordVerificationResult == PasswordVerificationResult.Success)
                     return (true, "Login successfully.");
             }

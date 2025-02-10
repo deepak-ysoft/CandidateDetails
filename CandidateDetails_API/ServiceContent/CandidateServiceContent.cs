@@ -72,9 +72,9 @@ namespace CandidateDetails_API.ServiceContent
                 }
                 for (int row = 2; row <= filledRowCount; row++) // Headers are in the first row
                 {
-                 
                     var candidate = new Candidate // Create a new candidate object
                     {
+
                         //id = int.Parse(worksheet.Cells[row, 1].Text),
                         date = DateTime.Parse(worksheet.Cells[row, 2].Text),
                         name = worksheet.Cells[row, 3].Text,
@@ -95,7 +95,6 @@ namespace CandidateDetails_API.ServiceContent
                         comments = worksheet.Cells[row, 18].Text,
                         cvPath = worksheet.Cells[row, 19].Text,
                         isDelete = false
-
                     };
                     if (double.TryParse(candidate.contact_No, out double number)) // Check if contact number is a number
                     {
