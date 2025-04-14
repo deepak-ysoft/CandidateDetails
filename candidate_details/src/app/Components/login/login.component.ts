@@ -66,13 +66,13 @@ export class LoginComponent implements OnInit {
   }
 
   onLoginForm: FormGroup = new FormGroup({
-    email: new FormControl('', [
+    email: new FormControl('krupa123@gmail.com', [
       Validators.required,
       Validators.pattern(
         /^[a-zA-Z]{5,}[a-zA-Z0-9._%+-]*@[a-zA-Z.-]+\.[a-zA-Z]{2,}$/
       ),
     ]),
-    password: new FormControl('', [
+    password: new FormControl('Krupa123@', [
       Validators.required,
       Validators.pattern(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/

@@ -1,0 +1,77 @@
+.card {
+   border-radius: 10px;
+}
+
+.bg-primary {
+   font-size: 24px;
+   font-weight: bold;
+}
+
+.list-group-item {
+   border: none;
+   padding: 0.5rem 0;
+}
+
+.card-footer {
+   background-color: #f8f9fa;
+}
+th span {
+   cursor: pointer;
+}
+
+tr th,
+td {
+   align-content: center;
+   text-align: center;
+}
+.cursorPointer {
+   cursor: pointer !important;
+}
+
+.cursornotallowed {
+   cursor: not-allowed;
+}
+
+.uploadDiv {
+   position: relative;
+   overflow: hidden;
+}
+
+.uploadinput {
+   position: absolute;
+   font-size: 50px;
+   opacity: 0;
+   right: 0;
+   top: 0;
+}
+
+.ellipsis-cell {
+   width: 5%;
+   min-width: 5%;
+   max-width: 400px;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+   display: inline-block;
+}
+
+.details-shadow {
+   box-shadow: 0 5px 5px rgb(127, 127, 127);
+   background-color: aliceblue;
+}
+
+tbody tr {
+   height: 40px;
+}
+
+.all-badge {
+   display: inline-block;
+   max-width: 100%; /* Ensures it doesn't overflow */
+   word-wrap: break-word; /* Breaks long words */
+   white-space: normal; /* Allows wrapping */
+}
+
+.bg-color {
+   background: linear-gradient(90deg, #73d0ff 5%, #006fb4 50%, #0095ff 100%);
+   color: #ffffff;
+}

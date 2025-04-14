@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-md navbar-bg">
   <div class="container-fluid">
     <a
-      class="bg-white me-3"
+      class="bg-white me-3 rounded"
       *ngIf="userRole === 'Employee'"
       routerLink="/calendar"
     >
@@ -77,6 +77,15 @@
               style="width: 8px; height: 8px; padding: 0"
               >.</span
             >
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="userRole === 'Admin' || userRole === 'HR'">
+          <a
+            class="nav-link position-relative"
+            routerLink="/leads"
+            routerLinkActive="active"
+          >
+            <i class="fa-regular fa-user me-1"></i> Leads
           </a>
         </li>
       </ul>

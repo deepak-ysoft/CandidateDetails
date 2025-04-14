@@ -1,0 +1,282 @@
+<!-- Add this in your component HTML file -->
+<div class="container-fluid mt-4">
+  <div class="row mb-1">
+    <div class="col-12 col-md-4 d-flex justify-content-start mb-3 mb-md-0">
+      <div
+        class="btn btn-info-color align-items-center cursorPointer h-75 me-3 uploadDiv"
+      >
+        <i class="fa-solid fa-upload"></i>
+        Upload Excel
+        <input
+          type="file"
+          accept=".xlsx, .xls"
+          (change)="onUploadExcelFileChange($event)"
+          class="uploadinput"
+        />
+      </div>
+      <div
+        class="btn btn-primary-color align-items-center h-75"
+        (click)="openAccLeadsModel()"
+      >
+        <i class="fa-solid fa-plus me-2"></i> Add Leads
+      </div>
+    </div>
+    <div class="col-12 col-md-4 d-flex justify-content-center mb-3 mb-md-0">
+      <h2>Leads</h2>
+    </div>
+    <div class="col-12 col-md-4 d-flex justify-content-end d-none d-md-flex">
+      <select
+        [(ngModel)]="SearchField"
+        (change)="onSearchFieldChange($event)"
+        class="form-select h-100 me-2 w-100 w-md-25 magic-input"
+      >
+        <option value="">Select field...</option>
+        <option value="linkedInProfile">LinkedIn</option>
+        <option value="email">Email</option>
+        <option value="number">Contact No</option>
+      </select>
+      <input
+        type="text"
+        placeholder="Search..."
+        class="form-control rounded-pill w-100 w-md-75 magic-input"
+        id="searchTerm"
+        [(ngModel)]="searchTerms"
+        (input)="clickToSearchLeads()"
+      />
+    </div>
+  </div>
+
+  <div class="magical-table-container">
+    <table class="table magical-table">
+      <thead class="thead-dark">
+        <tr class="row">
+          <th class="col ellipsis-cell">
+            <span
+              (click)="
+                clickToSortLeads(PageNumber, pageSize, 'Date', SearchField)
+              "
+            >
+              Date
+            </span>
+          </th>
+          <th class="ellipsis-cell col">
+            <span
+              (click)="
+                clickToSortLeads(PageNumber, pageSize, 'Name', SearchField)
+              "
+            >
+              LinkedIn Profile
+            </span>
+          </th>
+          <th class="ellipsis-cell col">
+            <span
+              (click)="
+                clickToSortLeads(
+                  PageNumber,
+                  pageSize,
+                  'Contact_No',
+                  SearchField
+                )
+              "
+            >
+              Email
+            </span>
+          </th>
+          <th class="ellipsis-cell col">
+            <span
+              (click)="
+                clickToSortLeads(
+                  PageNumber,
+                  pageSize,
+                  'LinkedIn_Profile',
+                  SearchField
+                )
+              "
+            >
+              Number
+            </span>
+          </th>
+
+          <th class="ellipsis-cell col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let Leads of LeadsList" class="row">
+          <td (click)="ShowLeadsDetails(Leads)" class="ellipsis-cell col">
+            {{ Leads.dateTime | date : "shortDate" }}
+          </td>
+
+          <td
+            (click)="ShowLeadsDetails(Leads)"
+            class="ellipsis-cell col"
+            [matTooltip]="Leads.linkedInProfile"
+            matTooltipPosition="above"
+            [matTooltipClass]="'custom-tooltip'"
+          >
+            {{ Leads.linkedInProfile }}
+          </td>
+          <td (click)="ShowLeadsDetails(Leads)" class="ellipsis-cell col">
+            {{ Leads.email }}
+          </td>
+          <td (click)="ShowLeadsDetails(Leads)" class="ellipsis-cell col">
+            {{ Leads.number }}
+          </td>
+
+          <td class="ellipsis-cell col">
+            <i
+              class="fas fa-edit text-primary fa-lg me-2 cursorPointer"
+              (click)="EditLeads(Leads)"
+            ></i>
+            <i
+              class="fa fa-trash text-danger fa-lg cursorPointer"
+              (click)="deleteLeads(Leads.leadsId)"
+            ></i>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <span
+    >Showing {{ firstLeadsOfPage }} to {{ lastLeadsOfPage }} of
+    {{ totalLeads }} Leads.</span
+  >
+
+  <!-- Pagination Controls -->
+  <nav
+    class="float-end me-4 mt-3"
+    aria-label="Page navigation example"
+    *ngIf="totalpages > 1"
+  >
+    <ul class="pagination">
+      <li class="page-item cursorPointer" [class.disabled]="currentPage === 1">
+        <a class="page-link" (click)="loadPage(currentPage - 1)">Previous</a>
+      </li>
+      <li
+        *ngFor="let page of getDisplayedPages()"
+        class="page-item cursorPointer"
+        [class.active]="page === currentPage"
+        [class.disabled]="page === '...'"
+      >
+        <a
+          *ngIf="page !== '...'; else ellipsis"
+          class="page-link cursor-pointer"
+          (click)="loadPage(page)"
+          >{{ page }}</a
+        >
+        <ng-template #ellipsis>
+          <span class="page-link">...</span>
+        </ng-template>
+      </li>
+      <li
+        class="page-item cursorPointer"
+        [class.disabled]="currentPage === totalpages"
+      >
+        <a class="page-link cursor-pointer" (click)="loadPage(currentPage + 1)"
+          >Next</a
+        >
+      </li>
+    </ul>
+  </nav>
+
+  <nav class="float-end me-4 mt-3">
+    <select
+      [(ngModel)]="pageSize"
+      (change)="onPageSizeChange($event)"
+      class="form-select bg-light"
+    >
+      <option value="10">10</option>
+      <option value="20">20</option>
+      <option value="50">50</option>
+      <option value="100">100</option>
+    </select>
+  </nav>
+
+  <span class="float-end me-2 mt-4">Select page size </span>
+
+  <ng-template class="ng-template" #addLeads let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">
+        {{ LeadsModalHeader }}
+      </h4>
+      <button
+        type="button"
+        class="btn btn-close"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      ></button>
+    </div>
+    <div class="modal-body">
+      <app-add-leads
+        [LeadEdit]="clickedLeadsForEdit"
+        [addClicked]="addClicked"
+        (isclick)="modal.close('Save click')"
+      />
+    </div>
+  </ng-template>
+</div>
+
+<!-- Leads Details -->
+<div
+  class="card container p-0 mt-5 mb-3 shadow-lg border-0"
+  *ngIf="clickedLeads"
+>
+  <div class="card-header bg-color text-center">
+    <h4 class="mb-0">
+      <b><i class="fas fa-user"></i> Leads Details</b>
+    </h4>
+  </div>
+  <div class="card-body">
+    <div class="container-fluid mt-4">
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <strong class="text-secondary me-2"
+            ><i class="fas fa-calendar-alt"></i> Date:</strong
+          >
+          <span class="fw-bold all-badge">{{ LeadsForDetails.dateTime }}</span>
+        </div>
+        <div class="col-md-6">
+          <strong class="text-secondary me-2"
+            ><i class="fab fa-linkedin"></i> LinkedIn:</strong
+          >
+          <a
+            *ngIf="LeadsForDetails.linkedInProfile != null"
+            [href]="prepareLinkedInUrl(LeadsForDetails.linkedInProfile)"
+            target="_blank"
+            class="btn btn-outline-primary btn-sm"
+          >
+            View Profile <i class="fas fa-external-link-alt"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <strong class="text-secondary me-2"
+            ><i class="fas fa-briefcase"></i> Email:</strong
+          >
+          <span class="badge bg-success">{{ LeadsForDetails.email }}</span>
+        </div>
+        <div class="col-md-6">
+          <strong class="text-secondary me-2"
+            ><i class="fas fa-clock"></i> Number:</strong
+          >
+          <span class="fw-bold all-badge">{{ LeadsForDetails.number }}</span>
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <strong class="text-secondary me-2"
+            ><i class="fas fa-envelope"></i> Post:</strong
+          >
+          <span class="fw-bold all-badge text-danger">{{
+            LeadsForDetails.post
+          }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<br />

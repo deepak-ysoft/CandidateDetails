@@ -1,0 +1,175 @@
+<div class="container">
+  <form [formGroup]="leadForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+      <!-- Date -->
+      <div class="col-md-4 mb-2">
+        <label for="dateTime" class="form-label m-0">Date</label>
+        <input type="hidden" formControlName="leadsId" />
+        <input
+          type="date"
+          formControlName="dateTime"
+          class="form-control magic-input"
+        />
+        <small
+          class="text-danger"
+          *ngIf="
+            !leadForm.get('dateTime')?.hasError('serverError') &&
+            shouldShowError('dateTime')
+          "
+        >
+          Date is required.
+        </small>
+        <small
+          class="text-danger"
+          *ngIf="leadForm.get('dateTime')?.hasError('serverError')"
+          >{{ leadForm.get('dateTime')?.errors?.['serverError'] }}</small
+        >
+      </div>
+
+      <!-- Name -->
+      <div class="col-md-4 mb-2">
+        <label for="linkedInProfile" class="form-label m-0"
+          >linkedIn Profile</label
+        >
+        <input
+          type="text"
+          formControlName="linkedInProfile"
+          class="form-control magic-input"
+        />
+        <small
+          class="text-danger"
+          *ngIf="leadForm.get('linkedInProfile')?.hasError('serverError')"
+          >{{ leadForm.get('linkedInProfile')?.errors?.['serverError'] }}</small
+        >
+      </div>
+      <!-- Contact No -->
+      <div class="col-md-4 mb-2">
+        <label for="contactNo" class="form-label m-0">Contact Number</label>
+        <input
+          type="text"
+          formControlName="number"
+          class="form-control magic-input"
+        /><small
+          class="text-danger"
+          *ngIf="leadForm.get('number')?.hasError('serverError')"
+        >
+          {{ leadForm.get('number')?.errors?.['serverError'] }}
+        </small>
+
+        <small
+          class="text-danger"
+          *ngIf="
+            leadForm.get('number')?.hasError('pattern') &&
+            !leadForm.get('number')?.hasError('serverError')
+          "
+        >
+          Only numbers, '+' sign, and one space are allowed.
+        </small>
+
+        <small
+          class="text-danger"
+          *ngIf="
+            leadForm.get('number')?.hasError('minlength') &&
+            !leadForm.get('number')?.hasError('serverError')
+          "
+        >
+          Phone number must have at least 10 digits.
+        </small>
+
+        <small
+          class="text-danger"
+          *ngIf="
+            leadForm.get('number')?.hasError('maxlength') &&
+            !leadForm.get('number')?.hasError('serverError')
+          "
+        >
+          Phone number cannot exceed 14 characters.
+        </small>
+
+        <small
+          class="text-danger"
+          *ngIf="
+           !leadForm.get('number')?.hasError('serverError') &&
+           shouldShowError('number') &&
+           !leadForm.get('number')?.errors?.['pattern'] &&
+           !leadForm.get('number')?.errors?.['minlength'] &&
+           !leadForm.get('number')?.errors?.['maxlength']
+         "
+        >
+          Please enter a phone number!
+        </small>
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- LinkedIn Profile -->
+
+      <!-- Email -->
+      <div class="col-md-4 mb-2">
+        <label for="email" class="form-label m-0">Email</label>
+        <input
+          type="email"
+          formControlName="email"
+          class="form-control magic-input"
+        />
+        <small
+          class="text-danger"
+          *ngIf="
+            !leadForm.get('email')?.hasError('serverError') &&
+            shouldShowError('email')
+          "
+        >
+          Valid email is required.
+        </small>
+
+        <small
+          class="text-danger"
+          *ngIf="leadForm.get('email')?.hasError('serverError')"
+          >{{ leadForm.get('email')?.errors?.['serverError'] }}</small
+        ><small
+          class="text-danger"
+          *ngIf="leadForm.controls['email'].hasError('pattern')"
+        >
+          Email address not valid.
+        </small>
+      </div>
+
+      <!-- Roles -->
+      <div class="col-md-4 mb-2">
+        <label for="post" class="form-label m-0">Post</label>
+        <input
+          type="text"
+          formControlName="post"
+          class="form-control magic-input"
+        />
+
+        <small
+          class="text-danger"
+          *ngIf="
+            !leadForm.get('post')?.hasError('serverError') &&
+            shouldShowError('post')
+          "
+        >
+          post is required.
+        </small>
+        <small
+          class="text-danger"
+          *ngIf="leadForm.get('post')?.hasError('serverError')"
+          >{{ leadForm.get('post')?.errors?.['serverError'] }}</small
+        >
+      </div>
+    </div>
+
+    <hr class="hr" />
+    <div class="row">
+      <div class="col-12 d-flex justify-content-center">
+        <button type="submit" class="btn btn-primary-color">
+          <i class="fa-regular fa-thumbs-up me-1"></i>Submit
+        </button>
+        <button type="reset" class="btn btn-danger-color ms-3 shadow-sm">
+          <i class="fa-solid fa-arrows-rotate me-2"></i> Reset
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

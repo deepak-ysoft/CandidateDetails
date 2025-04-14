@@ -10,6 +10,7 @@ import { IndexComponent } from './Components/index/index.component';
 import { UnauthorizedComponent } from './Components/unauthorized/unauthorized.component';
 import { ForgotPasswordComponent } from './Components/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './Components/reset-password/reset-password.component';
+import { LeadsComponent } from './Components/leads/leads.component';
 
 export const routes: Routes = [
   {
@@ -28,6 +29,12 @@ export const routes: Routes = [
       {
         path: 'candidateList',
         component: CandidateListComponent,
+        canActivate: [authGuard],
+        data: { roles: ['Admin', 'HR'] },
+      },
+      {
+        path: 'leads',
+        component: LeadsComponent,
         canActivate: [authGuard],
         data: { roles: ['Admin', 'HR'] },
       },

@@ -77,7 +77,7 @@ namespace CandidateDetails_API.Controllers
         /// </summary>
         /// <returns>List of candidates and count of candidates</returns>
         [HttpGet("GetCandidates")]
-        public async Task<IActionResult> GetCandidates(int page, int pageSize, string sortColumn, string sortDirection, string SearchField = "", string SearchValue = "")
+        public async Task<IActionResult> GetCandidates(int page=1, int pageSize=10, string sortColumn="", string sortDirection="", string SearchField = "", string SearchValue = "")
         {
             try
             {   // Define the SQL output parameter
