@@ -117,7 +117,7 @@ body {
 
 /* Hover Effect */
 .magical-table tbody tr:hover {
-   transform: scale(1.01);
+   font-weight: 600;
    color: black;
    cursor: pointer;
 }

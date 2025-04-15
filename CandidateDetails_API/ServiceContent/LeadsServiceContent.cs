@@ -51,13 +51,13 @@ namespace CandidateDetails_API.ServiceContent
 
                         //id = int.Parse(worksheet.Cells[row, 1].Text),
 
-                        DateTime = DateTime.ParseExact(worksheet.Cells[row, 1].Text, "dd/MM/yyyy", CultureInfo.InvariantCulture), // Parse date from excel
+                        DateTime = DateTime.ParseExact(worksheet.Cells[row, 1].Text, "MM/dd/yyyy", CultureInfo.InvariantCulture), // Parse date from excel
                         LinkedInProfile = worksheet.Cells[row, 3].Text,
                         Post = worksheet.Cells[row, 4].Text,
                         Email = worksheet.Cells[row, 5].Text,
                         Number = worksheet.Cells[row, 6].Text,
+                        Remarks = worksheet.Cells[row, 7].Text,
                         isDelete = false
-                        // schedule_Interview = ConvertExcelDate((double)worksheet.Cells[row, 16].Value),
                     };
                     if (double.TryParse(lead.Number, out double number)) // Check if contact number is a number
                     {

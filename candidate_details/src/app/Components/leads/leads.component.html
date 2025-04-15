@@ -34,6 +34,7 @@
         <option value="linkedInProfile">LinkedIn</option>
         <option value="email">Email</option>
         <option value="number">Contact No</option>
+        <option value="remarks">Remarks</option>
       </select>
       <input
         type="text"
@@ -51,50 +52,19 @@
       <thead class="thead-dark">
         <tr class="row">
           <th class="col ellipsis-cell">
-            <span
-              (click)="
-                clickToSortLeads(PageNumber, pageSize, 'Date', SearchField)
-              "
-            >
-              Date
-            </span>
+            <span> Date </span>
           </th>
           <th class="ellipsis-cell col">
-            <span
-              (click)="
-                clickToSortLeads(PageNumber, pageSize, 'Name', SearchField)
-              "
-            >
-              LinkedIn Profile
-            </span>
+            <span> LinkedIn Profile </span>
           </th>
           <th class="ellipsis-cell col">
-            <span
-              (click)="
-                clickToSortLeads(
-                  PageNumber,
-                  pageSize,
-                  'Contact_No',
-                  SearchField
-                )
-              "
-            >
-              Email
-            </span>
+            <span> Email </span>
           </th>
           <th class="ellipsis-cell col">
-            <span
-              (click)="
-                clickToSortLeads(
-                  PageNumber,
-                  pageSize,
-                  'LinkedIn_Profile',
-                  SearchField
-                )
-              "
-            >
-              Number
-            </span>
+            <span> Number </span>
+          </th>
+          <th class="ellipsis-cell col">
+            <span> Remarks </span>
           </th>
 
           <th class="ellipsis-cell col">Actions</th>
@@ -120,6 +90,15 @@
           </td>
           <td (click)="ShowLeadsDetails(Leads)" class="ellipsis-cell col">
             {{ Leads.number }}
+          </td>
+          <td
+            (click)="ShowLeadsDetails(Leads)"
+            class="ellipsis-cell col"
+            [matTooltip]="Leads.remarks"
+            matTooltipPosition="above"
+            [matTooltipClass]="'custom-tooltip'"
+          >
+            {{ Leads.remarks }}
           </td>
 
           <td class="ellipsis-cell col">
@@ -259,7 +238,7 @@
         </div>
         <div class="col-md-6">
           <strong class="text-secondary me-2"
-            ><i class="fas fa-clock"></i> Number:</strong
+            ><i class="fas fa-mobile-alt"></i> Number:</strong
           >
           <span class="fw-bold all-badge">{{ LeadsForDetails.number }}</span>
         </div>
@@ -273,6 +252,12 @@
           <span class="fw-bold all-badge text-danger">{{
             LeadsForDetails.post
           }}</span>
+        </div>
+        <div class="col-md-6">
+          <strong class="text-secondary me-2"
+            ><i class="fas fa-comment"></i> Remarks</strong
+          >
+          <span class="fw-bold all-badge">{{ LeadsForDetails.remarks }}</span>
         </div>
       </div>
     </div>

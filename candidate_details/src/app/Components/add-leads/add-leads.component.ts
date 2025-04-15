@@ -47,6 +47,7 @@ export class AddLeadsComponent implements OnInit {
         number: this.LeadEdit.number,
         linkedInProfile: this.LeadEdit.linkedInProfile,
         email: this.LeadEdit.email,
+        remarks: this.LeadEdit.remarks,
       });
     } else {
       this.onAdd();
@@ -76,6 +77,7 @@ export class AddLeadsComponent implements OnInit {
           Validators.pattern(/^[a-zA-Z0-9._%+-]*@[a-zA-Z.-]+\.[a-zA-Z]{2,}$/),
         ],
       ],
+      remarks: ['', Validators.required],
     });
     this.commonService.addLeadForm(this.leadForm);
   }
@@ -113,15 +115,15 @@ export class AddLeadsComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     if (this.leadForm.valid) {
+      debugger;
       const formData = new FormData();
-      formData.append(
-        'id',
-        this.leadForm.get('leadsId')?.value ||
-          this.LeadEdit?.id != undefined ||
-          this.LeadEdit?.id != null
+      let leadsIdValue =
+        this.leadForm.get('leadsId')?.value ??
+        (this.LeadEdit?.id != undefined && this.LeadEdit?.id != null
           ? this.LeadEdit.id
-          : 0
-      );
+          : 0);
+
+      formData.append('leadsId', leadsIdValue.toString());
       formData.append('dateTime', this.leadForm.get('dateTime')?.value || '');
       formData.append('post', this.leadForm.get('post')?.value || '');
       formData.append('number', this.leadForm.get('number')?.value || '');
@@ -130,6 +132,7 @@ export class AddLeadsComponent implements OnInit {
         this.leadForm.get('linkedInProfile')?.value || ''
       );
       formData.append('email', this.leadForm.get('email')?.value || '');
+      formData.append('remarks', this.leadForm.get('remarks')?.value || '');
 
       this.leadServices.AddEditLeads(formData).subscribe({
         next: (res: any) => {

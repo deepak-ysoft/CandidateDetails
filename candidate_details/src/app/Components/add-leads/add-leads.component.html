@@ -2,7 +2,7 @@
   <form [formGroup]="leadForm" (ngSubmit)="onSubmit()">
     <div class="row">
       <!-- Date -->
-      <div class="col-md-4 mb-2">
+      <div class="col-md-6 mb-2">
         <label for="dateTime" class="form-label m-0">Date</label>
         <input type="hidden" formControlName="leadsId" />
         <input
@@ -27,7 +27,7 @@
       </div>
 
       <!-- Name -->
-      <div class="col-md-4 mb-2">
+      <div class="col-md-6 mb-2">
         <label for="linkedInProfile" class="form-label m-0"
           >linkedIn Profile</label
         >
@@ -42,8 +42,11 @@
           >{{ leadForm.get('linkedInProfile')?.errors?.['serverError'] }}</small
         >
       </div>
+    </div>
+
+    <div class="row">
       <!-- Contact No -->
-      <div class="col-md-4 mb-2">
+      <div class="col-md-6 mb-2">
         <label for="contactNo" class="form-label m-0">Contact Number</label>
         <input
           type="text"
@@ -89,23 +92,18 @@
         <small
           class="text-danger"
           *ngIf="
-           !leadForm.get('number')?.hasError('serverError') &&
-           shouldShowError('number') &&
-           !leadForm.get('number')?.errors?.['pattern'] &&
-           !leadForm.get('number')?.errors?.['minlength'] &&
-           !leadForm.get('number')?.errors?.['maxlength']
-         "
+     !leadForm.get('number')?.hasError('serverError') &&
+     shouldShowError('number') &&
+     !leadForm.get('number')?.errors?.['pattern'] &&
+     !leadForm.get('number')?.errors?.['minlength'] &&
+     !leadForm.get('number')?.errors?.['maxlength']
+   "
         >
           Please enter a phone number!
         </small>
       </div>
-    </div>
-
-    <div class="row">
-      <!-- LinkedIn Profile -->
-
       <!-- Email -->
-      <div class="col-md-4 mb-2">
+      <div class="col-md-6 mb-2">
         <label for="email" class="form-label m-0">Email</label>
         <input
           type="email"
@@ -133,15 +131,19 @@
           Email address not valid.
         </small>
       </div>
+    </div>
 
+    <div class="row">
       <!-- Roles -->
-      <div class="col-md-4 mb-2">
+      <div class="col-md-6 mb-2">
         <label for="post" class="form-label m-0">Post</label>
-        <input
+        <textarea
           type="text"
           formControlName="post"
           class="form-control magic-input"
-        />
+          rows="3"
+        >
+        </textarea>
 
         <small
           class="text-danger"
@@ -150,12 +152,38 @@
             shouldShowError('post')
           "
         >
-          post is required.
+          Post is required.
         </small>
         <small
           class="text-danger"
           *ngIf="leadForm.get('post')?.hasError('serverError')"
           >{{ leadForm.get('post')?.errors?.['serverError'] }}</small
+        >
+      </div>
+      <!-- Roles -->
+      <div class="col-md-6 mb-2">
+        <label for="remarks" class="form-label m-0">Remarks</label>
+        <textarea
+          type="text"
+          formControlName="remarks"
+          class="form-control magic-input"
+          rows="3"
+        >
+        </textarea>
+
+        <small
+          class="text-danger"
+          *ngIf="
+            !leadForm.get('remarks')?.hasError('serverError') &&
+            shouldShowError('remarks')
+          "
+        >
+          Remarks is required.
+        </small>
+        <small
+          class="text-danger"
+          *ngIf="leadForm.get('remarks')?.hasError('serverError')"
+          >{{ leadForm.get('remarks')?.errors?.['serverError'] }}</small
         >
       </div>
     </div>

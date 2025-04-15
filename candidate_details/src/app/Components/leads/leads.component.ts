@@ -81,7 +81,7 @@ export class LeadsComponent {
 
   open(content: any) {
     this.modalService
-      .open(content, { ariaLabelledBy: 'modal-basic-title', size: 'xl' })
+      .open(content, { ariaLabelledBy: 'modal-basic-title', size: 'lg' })
       .result.then(
         (result) => {
           this.closeResult = `Closed with: ${result}`;
@@ -130,27 +130,6 @@ export class LeadsComponent {
       // Reset file input after processing
       fileInput.value = ''; // This resets the file input field
     });
-  }
-
-  clickToSortLeads(
-    PageNumber: number,
-    pageSize: number,
-    SearchField: string,
-    SearchValue: string
-  ): void {
-    // Update class variables
-    this.PageNumber = PageNumber;
-    this.pageSize = pageSize;
-    this.searchTerm = SearchValue;
-    this.SearchField = SearchField;
-
-    // Fetch Leads
-    this.LeadsService.getLeads(
-      this.PageNumber,
-      this.pageSize,
-      this.SearchField,
-      this.searchTerm
-    );
   }
 
   onSearchFieldChange(event: Event) {
