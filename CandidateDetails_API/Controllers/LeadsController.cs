@@ -1,5 +1,6 @@
 ﻿using CandidateDetails_API.IServices;
 using CandidateDetails_API.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
@@ -9,6 +10,7 @@ using System.Data;
 namespace CandidateDetails_API.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize(Roles = "Admin,HR")]
     [ApiController]
     public class LeadsController : ControllerBase
     {
