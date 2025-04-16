@@ -25,54 +25,64 @@ namespace CandidateDetails_API.ServiceContent
             {
                 var worksheet = package.Workbook.Worksheets[0]; // First sheet
                 int filledRowCount = 0;
-                // Loop through each row
+
+                // Count filled rows
                 for (int row = worksheet.Dimension.Start.Row; row <= worksheet.Dimension.End.Row; row++)
                 {
                     bool isRowFilled = false;
-                    // Check each cell in the row
                     for (int col = worksheet.Dimension.Start.Column; col <= worksheet.Dimension.End.Column; col++)
                     {
                         var cellValue = worksheet.Cells[row, col].Value;
-                        if (cellValue != null && !string.IsNullOrWhiteSpace(cellValue.ToString())) // If cell is not empty
+                        if (cellValue != null && !string.IsNullOrWhiteSpace(cellValue.ToString()))
                         {
                             isRowFilled = true;
-                            break; // Exit the column loop once a filled cell is found
+                            break;
                         }
                     }
                     if (isRowFilled)
                     {
-                        filledRowCount++; // Increment filled row count
+                        filledRowCount++;
                     }
                 }
-                for (int row = 2; row <= filledRowCount; row++) // Headers are in the first row
+
+                // Define acceptable date formats
+                string[] dateFormats = { "MM/dd/yyyy", "dd-MM-yyyy", "yyyy-MM-dd", "M/d/yyyy", "d-M-yyyy" };
+
+                // Loop through rows starting from row 2
+                for (int row = 2; row <= filledRowCount; row++)
                 {
-                    var lead = new Leads // Create a new lead object
-                    {
+                    var lead = new Leads();
 
-                        //id = int.Parse(worksheet.Cells[row, 1].Text),
-
-                        DateTime = DateTime.ParseExact(worksheet.Cells[row, 1].Text, "MM/dd/yyyy", CultureInfo.InvariantCulture), // Parse date from excel
-                        LinkedInProfile = worksheet.Cells[row, 3].Text,
-                        Post = worksheet.Cells[row, 4].Text,
-                        Email = worksheet.Cells[row, 5].Text,
-                        Number = worksheet.Cells[row, 6].Text,
-                        Remarks = worksheet.Cells[row, 7].Text,
-                        isDelete = false
-                    };
-                    if (double.TryParse(lead.Number, out double number)) // Check if contact number is a number
+                    // Try parsing date safely
+                    string rawDate = worksheet.Cells[row, 1].Text.Trim();
+                    if (!DateTime.TryParseExact(rawDate, dateFormats, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime parsedDate))
                     {
-                        // Convert to plain text without scientific notation
+                        throw new Exception($"Invalid date format in row {row}: '{rawDate}'");
+                    }
+
+                    lead.DateTime = parsedDate;
+                    lead.LinkedInProfile = worksheet.Cells[row, 3].Text;
+                    lead.Post = worksheet.Cells[row, 4].Text;
+                    lead.Email = worksheet.Cells[row, 5].Text;
+                    lead.Number = worksheet.Cells[row, 6].Text;
+                    lead.Remarks = worksheet.Cells[row, 7].Text;
+                    lead.isDelete = false;
+
+                    // Clean up number format if needed
+                    if (double.TryParse(lead.Number, out double number))
+                    {
                         lead.Number = number.ToString("F0", CultureInfo.InvariantCulture);
                     }
+
                     leads.Add(lead);
                 }
             }
-            await _context.leads.AddRangeAsync(leads); // Add leads to database
+
+            await _context.leads.AddRangeAsync(leads); // Save to DB
             n = await _context.SaveChangesAsync();
-            if (n == 0)   // If no record is updated
-                return false;
-            return true;
+            return n > 0;
         }
+
 
         public async Task<bool> AddEditLeads(Leads lead)
         {

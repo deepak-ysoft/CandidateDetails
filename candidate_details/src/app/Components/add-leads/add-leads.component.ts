@@ -38,7 +38,6 @@ export class AddLeadsComponent implements OnInit {
     }
     this.leadServices.resetForm$.subscribe(() => this.onAdd());
 
-    debugger;
     if (this.LeadEdit?.leadsId && !this.addClicked) {
       this.leadForm.patchValue({
         leadsId: this.LeadEdit?.leadsId,
@@ -115,7 +114,6 @@ export class AddLeadsComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     if (this.leadForm.valid) {
-      debugger;
       const formData = new FormData();
       let leadsIdValue =
         this.leadForm.get('leadsId')?.value ??

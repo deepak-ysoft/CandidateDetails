@@ -58,7 +58,6 @@ export class LeadsComponent {
   }
 
   ngOnInit(): void {
-    debugger;
     if (this.userRole === 'Employee') {
       this.router.navigateByUrl('/calendar');
     }

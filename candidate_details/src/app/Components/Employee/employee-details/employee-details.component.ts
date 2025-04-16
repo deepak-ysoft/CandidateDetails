@@ -152,7 +152,6 @@ export class EmployeeDetailsComponent implements OnInit {
     this.submitted = false;
 
     this.route.queryParams.subscribe((params: any) => {
-      debugger;
       console.log('Employee ID:', params['empId']);
       this.getEmployeeById(params['empId']); // Reload employee details when query param changes
       this.EmployeeService.GetLeave(params['empId']);

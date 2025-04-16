@@ -67,14 +67,19 @@ namespace CandidateDetails_API.Controllers
                 {
                     return BadRequest("File not found");
                 }
-                // read a file which will be upload from a form.
-                var stream = file.OpenReadStream();
-                var Leads = await _service.AddLeads(stream);// Call the service method to add leads
-                return Ok(new { success = Leads });
+
+                using var stream = file.OpenReadStream();
+                var success = await _service.AddLeads(stream);
+
+                if (success)
+                    return Ok(new { success = true });
+                else
+                    return StatusCode(500, "Failed to save leads to the database.");
             }
             catch (Exception ex)
             {
-                throw ex;
+                // Return detailed error for debugging (only for development)
+                return StatusCode(500, new { error = ex.Message, stackTrace = ex.StackTrace });
             }
         }
 

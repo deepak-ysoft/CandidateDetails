@@ -41,75 +41,98 @@ namespace CandidateDetails_API.ServiceContent
             return true;
         }
 
-        public async Task<bool> AddCandidates(Stream fileStream) // AddCandidates method to add candidates from excel file
+        public async Task<bool> AddCandidates(Stream fileStream)
         {
             var Candidates = new List<Candidate>();
             int n = 0;
-            ExcelPackage.LicenseContext = LicenseContext.NonCommercial; // Required for EPPlus
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
-            using (var package = new ExcelPackage(fileStream)) // Open the excel file
+            using (var package = new ExcelPackage(fileStream))
             {
-                var worksheet = package.Workbook.Worksheets[0]; // First sheet
+                var worksheet = package.Workbook.Worksheets[0];
                 int filledRowCount = 0;
-                // Loop through each row
+
                 for (int row = worksheet.Dimension.Start.Row; row <= worksheet.Dimension.End.Row; row++)
                 {
                     bool isRowFilled = false;
-                    // Check each cell in the row
                     for (int col = worksheet.Dimension.Start.Column; col <= worksheet.Dimension.End.Column; col++)
                     {
                         var cellValue = worksheet.Cells[row, col].Value;
-                        if (cellValue != null && !string.IsNullOrWhiteSpace(cellValue.ToString())) // If cell is not empty
+                        if (cellValue != null && !string.IsNullOrWhiteSpace(cellValue.ToString()))
                         {
                             isRowFilled = true;
-                            break; // Exit the column loop once a filled cell is found
+                            break;
                         }
                     }
                     if (isRowFilled)
                     {
-                        filledRowCount++; // Increment filled row count
+                        filledRowCount++;
                     }
                 }
-                for (int row = 2; row <= filledRowCount; row++) // Headers are in the first row
-                {
-                    var candidate = new Candidate // Create a new candidate object
-                    {
 
-                        //id = int.Parse(worksheet.Cells[row, 1].Text),
-                        date = DateTime.Parse(worksheet.Cells[row, 2].Text),
-                        name = worksheet.Cells[row, 3].Text,
-                        contact_No = worksheet.Cells[row, 4].Text,
-                        linkedin_Profile = worksheet.Cells[row, 5].Text,
-                        email_ID = worksheet.Cells[row, 6].Text,
-                        roles = worksheet.Cells[row, 7].Text,
-                        experience = worksheet.Cells[row, 8].Text,
-                        skills = worksheet.Cells[row, 9].Text,
-                        ctc = decimal.Parse(worksheet.Cells[row, 10].Text),
-                        etc = decimal.Parse(worksheet.Cells[row, 11].Text),
-                        notice_Period = worksheet.Cells[row, 12].Text,
-                        current_Location = worksheet.Cells[row, 13].Text,
-                        prefer_Location = worksheet.Cells[row, 14].Text,
-                        reason_For_Job_Change = worksheet.Cells[row, 15].Text,
-                        schedule_Interview = ConvertExcelDate((double)worksheet.Cells[row, 16].Value),
-                        schedule_Interview_status = worksheet.Cells[row, 17].Text,
-                        comments = worksheet.Cells[row, 18].Text,
-                        cvPath = worksheet.Cells[row, 19].Text,
-                        isDelete = false
-                    };
-                    if (double.TryParse(candidate.contact_No, out double number)) // Check if contact number is a number
+                string[] dateFormats = { "MM/dd/yyyy", "dd-MM-yyyy", "yyyy-MM-dd", "M/d/yyyy", "d-M-yyyy" };
+
+                for (int row = 2; row <= filledRowCount; row++)
+                {
+                    var candidate = new Candidate();
+
+                    // Parse `date` (column 2)
+                    string rawDate = worksheet.Cells[row, 2].Text.Trim();
+                    if (!DateTime.TryParseExact(rawDate, dateFormats, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime parsedDate))
                     {
-                        // Convert to plain text without scientific notation
+                        throw new Exception($"Invalid date format in row {row} (column 2): '{rawDate}'");
+                    }
+                    candidate.date = parsedDate;
+
+                    // Parse `schedule_Interview` (column 16)
+                    try
+                    {
+                        candidate.schedule_Interview = ConvertExcelDate((double)worksheet.Cells[row, 16].Value);
+                    }
+                    catch
+                    {
+                        throw new Exception($"Invalid Excel date format in row {row} (column 16): '{worksheet.Cells[row, 16].Text}'");
+                    }
+
+                    candidate.name = worksheet.Cells[row, 3].Text;
+                    candidate.contact_No = worksheet.Cells[row, 4].Text;
+                    candidate.linkedin_Profile = worksheet.Cells[row, 5].Text;
+                    candidate.email_ID = worksheet.Cells[row, 6].Text;
+                    candidate.roles = worksheet.Cells[row, 7].Text;
+                    candidate.experience = worksheet.Cells[row, 8].Text;
+                    candidate.skills = worksheet.Cells[row, 9].Text;
+
+                    if (!decimal.TryParse(worksheet.Cells[row, 10].Text, out decimal ctc))
+                        throw new Exception($"Invalid decimal format for CTC in row {row}: '{worksheet.Cells[row, 10].Text}'");
+                    candidate.ctc = ctc;
+
+                    if (!decimal.TryParse(worksheet.Cells[row, 11].Text, out decimal etc))
+                        throw new Exception($"Invalid decimal format for ETC in row {row}: '{worksheet.Cells[row, 11].Text}'");
+                    candidate.etc = etc;
+
+                    candidate.notice_Period = worksheet.Cells[row, 12].Text;
+                    candidate.current_Location = worksheet.Cells[row, 13].Text;
+                    candidate.prefer_Location = worksheet.Cells[row, 14].Text;
+                    candidate.reason_For_Job_Change = worksheet.Cells[row, 15].Text;
+                    candidate.schedule_Interview_status = worksheet.Cells[row, 17].Text;
+                    candidate.comments = worksheet.Cells[row, 18].Text;
+                    candidate.cvPath = worksheet.Cells[row, 19].Text;
+                    candidate.isDelete = false;
+
+                    if (double.TryParse(candidate.contact_No, out double number))
+                    {
                         candidate.contact_No = number.ToString("F0", CultureInfo.InvariantCulture);
                     }
+
                     Candidates.Add(candidate);
                 }
             }
-            await _context.candidateDetails.AddRangeAsync(Candidates); // Add candidates to database
+
+            await _context.candidateDetails.AddRangeAsync(Candidates);
             n = await _context.SaveChangesAsync();
-            if (n == 0)   // If no record is updated
-                return false;
-            return true;
+            return n > 0;
         }
+
         public static DateTime ConvertExcelDate(double excelDate)
         {
             // Excel uses January 1, 1900, as the base date
